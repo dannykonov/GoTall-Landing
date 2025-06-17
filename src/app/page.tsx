@@ -202,6 +202,87 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* App Mockups Preview */}
+      <section className="py-20 px-4 bg-primary-dark-gray/20">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-5xl font-circular font-bold text-white mb-6">
+              See GoTall in action
+            </h2>
+            <p className="text-xl text-primary-gray max-w-2xl mx-auto">
+              Get a preview of the GoTall app experience with these key features designed to optimize your growth journey.
+            </p>
+          </motion.div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-center"
+            >
+              <div className="mb-6 mx-auto max-w-sm">
+                <img 
+                  src="/GoTall Mockups/homescreen.png" 
+                  alt="GoTall Home Screen"
+                  className="w-full h-auto rounded-2xl shadow-2xl"
+                />
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-3">Home Dashboard</h3>
+              <p className="text-primary-gray">
+                Track your progress, view daily goals, and get personalized recommendations all in one place.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-center"
+            >
+              <div className="mb-6 mx-auto max-w-sm">
+                <img 
+                  src="/GoTall Mockups/nutrition.png" 
+                  alt="GoTall Nutrition Tracker"
+                  className="w-full h-auto rounded-2xl shadow-2xl"
+                />
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-3">Nutrition Tracking</h3>
+              <p className="text-primary-gray">
+                Monitor your nutrient intake with AI-powered recommendations for optimal growth support.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="text-center"
+            >
+              <div className="mb-6 mx-auto max-w-sm">
+                <img 
+                  src="/GoTall Mockups/excersices.png" 
+                  alt="GoTall Exercise Plans"
+                  className="w-full h-auto rounded-2xl shadow-2xl"
+                />
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-3">Exercise Plans</h3>
+              <p className="text-primary-gray">
+                Follow guided workouts and stretching routines specifically designed to promote height growth.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* How It Works */}
       <section className="py-20 px-4 bg-primary-dark-gray/30">
         <div className="max-w-7xl mx-auto">
