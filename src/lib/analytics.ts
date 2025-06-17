@@ -166,30 +166,10 @@ export const getAnalytics = async (startDate?: string, endDate?: string) => {
     
     console.log(`Date range: ${start} to ${end}`)
     
-    // Try to get aggregated data first
-    try {
-      const { data: aggregatedData, error: aggError } = await supabase
-        .from('visit_analytics')
-        .select('*')
-        .gte('date', start)
-        .lte('date', end)
-        .is('hour', null)
-        .order('date', { ascending: false })
-      
-      if (!aggError && aggregatedData && aggregatedData.length > 0) {
-        console.log('Using aggregated data:', aggregatedData.length, 'records')
-        return aggregatedData.map(row => ({
-          date: row.date,
-          total_visits: row.total_visits,
-          unique_sessions: row.unique_sessions,
-          top_pages: []
-        }))
-      }
-    } catch (aggError) {
-      console.warn('Aggregated data not available, using raw data')
-    }
+    // Skip visit_analytics table and always use raw data for accuracy
+    console.log('Using raw visits data for accurate calculations')
     
-    // Fallback to raw data processing
+    // Fetch raw data processing
     const { data: visitsData, error: visitsError } = await supabase
       .from('visits')
       .select('*')

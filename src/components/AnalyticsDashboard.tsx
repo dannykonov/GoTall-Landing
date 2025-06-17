@@ -106,8 +106,24 @@ export default function AnalyticsDashboard() {
     }
   }
 
-  const totalVisits = analytics.reduce((sum, day) => sum + day.total_visits, 0)
-  const totalSessions = analytics.reduce((sum, day) => sum + day.unique_sessions, 0)
+  // Fix: Properly aggregate analytics data by date to avoid double-counting hourly records
+  const dailyAggregates = analytics.reduce((acc, record) => {
+    if (!acc[record.date]) {
+      acc[record.date] = {
+        totalVisits: 0,
+        uniqueSessions: 0
+      }
+    }
+    acc[record.date].totalVisits += record.total_visits
+    acc[record.date].uniqueSessions = Math.max(acc[record.date].uniqueSessions, record.unique_sessions)
+    return acc
+  }, {} as Record<string, { totalVisits: number; uniqueSessions: number }>)
+
+  const totalVisits = Object.values(dailyAggregates).reduce((sum, day) => sum + day.totalVisits, 0)
+  const totalSessions = Object.values(dailyAggregates).reduce((sum, day) => sum + day.uniqueSessions, 0)
+  
+  // Calculate unique days for proper average calculation
+  const uniqueDays = Object.keys(dailyAggregates).length
 
   const deviceStats = recentVisits.reduce((acc, visit) => {
     acc[visit.device_type] = (acc[visit.device_type] || 0) + 1
@@ -203,7 +219,7 @@ export default function AnalyticsDashboard() {
               <div>
                 <p className="text-gray-400 text-sm">Avg. Sessions/Day</p>
                 <p className="text-3xl font-bold text-white">
-                  {analytics.length ? Math.round(totalSessions / analytics.length) : 0}
+                  {uniqueDays ? Math.round(totalSessions / uniqueDays) : 0}
                 </p>
               </div>
               <BarChart3 className="w-8 h-8 text-green-400" />
