@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 import FeaturePage from '@/components/FeaturePage'
 import WaitlistModal from '@/components/WaitlistModal'
 
@@ -66,6 +67,48 @@ const whyItMattersPoints = [
 export default function ProgressPage() {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false)
 
+  const progressMockupsSection = (
+    <section className="py-20 px-4 bg-primary-dark-gray/20">
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl md:text-5xl font-circular font-bold text-white mb-6">
+            Progress tracking in action
+          </h2>
+          <p className="text-xl text-primary-gray max-w-2xl mx-auto">
+            See how GoTall helps you visualize your growth journey with comprehensive tracking and AI-powered insights.
+          </p>
+        </motion.div>
+        
+        <div className="flex justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-center max-w-md"
+          >
+            <div className="mb-6 mx-auto max-w-sm">
+              <img 
+                src="/GoTall Mockups/homescreen.png" 
+                alt="GoTall Progress Dashboard"
+                className="w-full h-auto rounded-2xl shadow-2xl"
+              />
+            </div>
+            <h3 className="text-2xl font-bold text-white mb-3">Growth Dashboard</h3>
+            <p className="text-primary-gray">
+              Monitor your height progress with detailed analytics, growth projections, and personalized insights all in one comprehensive dashboard.
+            </p>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  )
+
   return (
     <>
       <FeaturePage
@@ -84,6 +127,7 @@ export default function ProgressPage() {
         howItWorks={howItWorksSteps}
         whyItMatters={whyItMattersPoints}
         onWaitlistClick={() => setIsWaitlistOpen(true)}
+        additionalContent={progressMockupsSection}
       />
       <WaitlistModal
         isOpen={isWaitlistOpen}

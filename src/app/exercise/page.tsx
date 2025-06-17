@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 import FeaturePage from '@/components/FeaturePage'
 import WaitlistModal from '@/components/WaitlistModal'
 
@@ -66,6 +67,68 @@ const whyItMattersPoints = [
 export default function ExercisePage() {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false)
 
+  const exerciseMockupsSection = (
+    <section className="py-20 px-4 bg-primary-dark-gray/20">
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl md:text-5xl font-circular font-bold text-white mb-6">
+            Exercise plans in action
+          </h2>
+          <p className="text-xl text-primary-gray max-w-2xl mx-auto">
+            See how GoTall guides you through targeted exercises and posture improvements designed to maximize your height potential.
+          </p>
+        </motion.div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-center"
+          >
+            <div className="mb-6 mx-auto max-w-sm">
+              <img 
+                src="/GoTall Mockups/excersices.png" 
+                alt="GoTall Exercise Plans"
+                className="w-full h-auto rounded-2xl shadow-2xl"
+              />
+            </div>
+            <h3 className="text-2xl font-bold text-white mb-3">Daily Goals</h3>
+            <p className="text-primary-gray">
+              Track your daily exercise goals and maintain consistency with personalized workout plans and progress monitoring.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-center"
+          >
+            <div className="mb-6 mx-auto max-w-sm">
+              <img 
+                src="/GoTall Mockups/posture.png" 
+                alt="GoTall Posture Improvement"
+                className="w-full h-auto rounded-2xl shadow-2xl"
+              />
+            </div>
+            <h3 className="text-2xl font-bold text-white mb-3">Posture Improvement</h3>
+            <p className="text-primary-gray">
+              Follow guided posture exercises and corrections to instantly improve your height appearance and support long-term spinal health.
+            </p>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  )
+
   return (
     <>
       <FeaturePage
@@ -84,6 +147,7 @@ export default function ExercisePage() {
         howItWorks={howItWorksSteps}
         whyItMatters={whyItMattersPoints}
         onWaitlistClick={() => setIsWaitlistOpen(true)}
+        additionalContent={exerciseMockupsSection}
       />
       <WaitlistModal
         isOpen={isWaitlistOpen}

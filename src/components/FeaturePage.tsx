@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { motion } from 'framer-motion'
 import Navigation from '@/components/Navigation'
 
@@ -29,6 +30,7 @@ interface FeaturePageProps {
   howItWorks: HowItWorksStep[]
   whyItMatters: WhyItMattersPoint[]
   onWaitlistClick: () => void
+  additionalContent?: React.ReactNode
 }
 
 export default function FeaturePage({
@@ -39,7 +41,8 @@ export default function FeaturePage({
   reviews,
   howItWorks,
   whyItMatters,
-  onWaitlistClick
+  onWaitlistClick,
+  additionalContent
 }: FeaturePageProps) {
   return (
     <div className="min-h-screen bg-black text-white">
@@ -65,6 +68,9 @@ export default function FeaturePage({
           </button>
         </div>
       </motion.section>
+
+      {/* Additional Content (e.g., Mockups) */}
+      {additionalContent}
 
       {/* How It Works Section */}
       <motion.section
