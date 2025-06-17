@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Check, AlertCircle } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
+import { useWaitlistTracking } from '@/hooks/useAnalytics'
 
 interface WaitlistModalProps {
   isOpen: boolean
@@ -15,6 +16,15 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [error, setError] = useState('')
+  
+  const { trackWaitlistOpen, trackWaitlistSubmit, trackWaitlistClose } = useWaitlistTracking()
+
+  // Track when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      trackWaitlistOpen()
+    }
+  }, [isOpen, trackWaitlistOpen])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -37,6 +47,9 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
       setIsSuccess(true)
       setFormData({ name: '', email: '' })
       
+      // Track successful submission
+      trackWaitlistSubmit(true, formData.email)
+      
       // Auto close after 3 seconds
       setTimeout(() => {
         setIsSuccess(false)
@@ -44,6 +57,8 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
       }, 3000)
     } catch (error: any) {
       setError(error.message || 'Something went wrong. Please try again.')
+      // Track failed submission
+      trackWaitlistSubmit(false, formData.email)
     } finally {
       setIsLoading(false)
     }
@@ -53,6 +68,7 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
     setFormData({ name: '', email: '' })
     setError('')
     setIsSuccess(false)
+    trackWaitlistClose()
     onClose()
   }
 

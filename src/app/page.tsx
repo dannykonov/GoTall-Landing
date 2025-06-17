@@ -17,9 +17,11 @@ import {
 import Navigation from '@/components/Navigation'
 import WaitlistModal from '@/components/WaitlistModal'
 import Link from 'next/link'
+import { useAnalytics } from '@/hooks/useAnalytics'
 
 export default function HomePage() {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false)
+  const { track } = useAnalytics()
 
   const features = [
     {
@@ -139,7 +141,10 @@ export default function HomePage() {
             </p>
             
             <button 
-              onClick={() => setIsWaitlistOpen(true)}
+              onClick={() => {
+                track('hero_cta_clicked')
+                setIsWaitlistOpen(true)
+              }}
               className="bg-primary-neon text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-neon/90 transition-colors inline-flex items-center group"
             >
               Join the Waitlist
@@ -176,7 +181,10 @@ export default function HomePage() {
                 transition={{ delay: index * 0.1 }}
               >
                 <Link href={feature.href}>
-                  <div className="bg-primary-dark-gray rounded-2xl p-8 border border-gray-700 hover:border-primary-neon/50 transition-all duration-300 group cursor-pointer h-full">
+                  <div 
+                    className="bg-primary-dark-gray rounded-2xl p-8 border border-gray-700 hover:border-primary-neon/50 transition-all duration-300 group cursor-pointer h-full"
+                    onClick={() => track('feature_card_clicked', { feature: feature.title })}
+                  >
                     <div className="w-12 h-12 bg-primary-neon/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary-neon/20 transition-colors">
                       <feature.icon className="w-6 h-6 text-primary-neon" />
                     </div>
@@ -285,7 +293,10 @@ export default function HomePage() {
           
           <div className="text-center">
             <Link href="/community">
-              <button className="bg-primary-neon text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-neon/90 transition-colors inline-flex items-center group">
+              <button 
+                className="bg-primary-neon text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-neon/90 transition-colors inline-flex items-center group"
+                onClick={() => track('community_preview_clicked')}
+              >
                 Join the Community
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </button>
@@ -309,7 +320,10 @@ export default function HomePage() {
               Join the waitlist and be the first to experience the future of height optimization.
             </p>
             <button 
-              onClick={() => setIsWaitlistOpen(true)}
+              onClick={() => {
+                track('final_cta_clicked')
+                setIsWaitlistOpen(true)
+              }}
               className="bg-primary-neon text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-neon/90 transition-colors inline-flex items-center group"
             >
               Join Waitlist

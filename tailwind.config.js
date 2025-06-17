@@ -10,9 +10,10 @@ module.exports = {
       colors: {
         'primary-neon': '#B5FF00',
         'primary-dark-gray': '#111111',
+        'primary-gray': '#CCCCCC',
       },
       fontFamily: {
-        'circular': ['Circular Std', 'Inter', 'sans-serif'],
+        'circular': ['Inter', 'sans-serif'],
       },
     },
   },

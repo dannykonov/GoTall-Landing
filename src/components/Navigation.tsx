@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Menu, X, ChevronDown } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useNavigationTracking } from '@/hooks/useAnalytics'
 
 interface NavigationProps {
   onWaitlistClick?: () => void
@@ -14,6 +15,8 @@ export default function Navigation({ onWaitlistClick }: NavigationProps) {
   const [isMounted, setIsMounted] = useState(false)
   const [isSticky, setIsSticky] = useState(false)
   const [featuresOpen, setFeaturesOpen] = useState(false)
+
+  const { trackFeatureClick, trackCommunityClick, trackLogoClick } = useNavigationTracking()
 
   useEffect(() => {
     setIsMounted(true)
@@ -43,7 +46,7 @@ export default function Navigation({ onWaitlistClick }: NavigationProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center space-x-2" onClick={trackLogoClick}>
             <div className="w-8 h-8 bg-primary-neon rounded-lg flex items-center justify-center">
               <span className="text-black font-bold text-sm">GT</span>
             </div>
@@ -80,6 +83,7 @@ export default function Navigation({ onWaitlistClick }: NavigationProps) {
                         key={feature.name}
                         href={feature.href}
                         className="block px-4 py-3 text-white hover:text-primary-neon hover:bg-gray-800 transition-colors first:rounded-t-lg last:rounded-b-lg"
+                        onClick={() => trackFeatureClick(feature.name)}
                       >
                         {feature.name}
                       </Link>
@@ -89,7 +93,11 @@ export default function Navigation({ onWaitlistClick }: NavigationProps) {
               </AnimatePresence>
             </div>
 
-            <Link href="/community" className="text-white hover:text-primary-neon transition-colors">
+            <Link 
+              href="/community" 
+              className="text-white hover:text-primary-neon transition-colors"
+              onClick={trackCommunityClick}
+            >
               Community
             </Link>
           </div>
@@ -133,12 +141,17 @@ export default function Navigation({ onWaitlistClick }: NavigationProps) {
                   key={feature.name}
                   href={feature.href}
                   className="block px-3 py-2 text-white hover:text-primary-neon transition-colors"
+                  onClick={() => trackFeatureClick(feature.name)}
                 >
                   {feature.name}
                 </Link>
               ))}
               
-              <Link href="/community" className="block px-3 py-2 text-white hover:text-primary-neon transition-colors">
+              <Link 
+                href="/community" 
+                className="block px-3 py-2 text-white hover:text-primary-neon transition-colors"
+                onClick={trackCommunityClick}
+              >
                 Community
               </Link>
               
