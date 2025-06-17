@@ -81,7 +81,6 @@ export default function ExercisePage() {
           "Recovery monitoring to prevent overtraining"
         ]}
         reviews={exerciseReviews}
-        screenshotAlt="Exercise tracking and form guidance interface"
         howItWorks={howItWorksSteps}
         whyItMatters={whyItMattersPoints}
         onWaitlistClick={() => setIsWaitlistOpen(true)}

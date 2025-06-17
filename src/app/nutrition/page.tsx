@@ -81,7 +81,6 @@ export default function NutritionPage() {
           "Regular updates based on your progress and changing needs"
         ]}
         reviews={nutritionReviews}
-        screenshotAlt="Nutrition tracking and meal planning interface"
         howItWorks={howItWorksSteps}
         whyItMatters={whyItMattersPoints}
         onWaitlistClick={() => setIsWaitlistOpen(true)}

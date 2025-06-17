@@ -81,7 +81,6 @@ export default function ProgressPage() {
           "Monthly progress reports with actionable insights"
         ]}
         reviews={progressReviews}
-        screenshotAlt="Progress tracking and analytics dashboard"
         howItWorks={howItWorksSteps}
         whyItMatters={whyItMattersPoints}
         onWaitlistClick={() => setIsWaitlistOpen(true)}

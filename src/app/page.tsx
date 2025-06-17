@@ -121,7 +121,6 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="mb-8"
           >
             <div className="inline-flex items-center bg-primary-neon/10 border border-primary-neon/20 rounded-full px-4 py-2 mb-6">
               <Star className="w-4 h-4 text-primary-neon mr-2" />
@@ -146,27 +145,6 @@ export default function HomePage() {
               Join the Waitlist
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </button>
-          </motion.div>
-          
-          {/* App Screenshot Placeholder */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative max-w-4xl mx-auto"
-          >
-            <div className="bg-gradient-to-br from-primary-dark-gray to-black rounded-3xl p-8 border border-gray-700 shadow-2xl">
-              <div className="bg-black rounded-2xl p-6 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-neon/10 to-transparent" />
-                <div className="relative z-10 text-center">
-                  <div className="w-16 h-16 bg-primary-neon rounded-2xl mx-auto mb-4 flex items-center justify-center">
-                    <TrendingUp className="w-8 h-8 text-black" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-white mb-2">App Screenshot</h3>
-                  <p className="text-primary-gray">Beautiful, minimal interface coming soon</p>
-                </div>
-              </div>
-            </div>
           </motion.div>
         </div>
       </section>
@@ -325,75 +303,21 @@ export default function HomePage() {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl md:text-5xl font-circular font-bold text-white mb-6">
-              Ready to start growing?
+              Ready to unlock your growth potential?
             </h2>
             <p className="text-xl text-primary-gray mb-8">
-              Join thousands already on their growth journey. Be the first to know when GoTall launches.
+              Join the waitlist and be the first to experience the future of height optimization.
             </p>
             <button 
               onClick={() => setIsWaitlistOpen(true)}
               className="bg-primary-neon text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-neon/90 transition-colors inline-flex items-center group"
             >
-              Let's Grow Together
+              Join Waitlist
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </button>
           </motion.div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-primary-dark-gray/50 py-12 px-4 border-t border-gray-800">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-primary-neon rounded-lg flex items-center justify-center">
-                  <span className="text-black font-bold text-sm">GT</span>
-                </div>
-                <span className="text-white font-circular font-bold text-xl">GoTall</span>
-              </div>
-              <p className="text-primary-gray">
-                Unlock your growth potential with data-driven health optimization.
-              </p>
-            </div>
-            
-            <div>
-              <h4 className="text-white font-semibold mb-4">Features</h4>
-              <div className="space-y-2">
-                {['Nutrition', 'Sleep', 'Exercise', 'Progress'].map((item) => (
-                  <Link key={item} href={`/${item.toLowerCase()}`} className="block text-primary-gray hover:text-primary-neon transition-colors">
-                    {item}
-                  </Link>
-                ))}
-              </div>
-            </div>
-            
-            <div>
-              <h4 className="text-white font-semibold mb-4">Product</h4>
-              <div className="space-y-2">
-                <Link href="/" className="block text-primary-gray hover:text-primary-neon transition-colors">Home</Link>
-                <Link href="/community" className="block text-primary-gray hover:text-primary-neon transition-colors">Community</Link>
-                <button onClick={() => setIsWaitlistOpen(true)} className="block text-primary-gray hover:text-primary-neon transition-colors">Join Waitlist</button>
-              </div>
-            </div>
-            
-            <div>
-              <h4 className="text-white font-semibold mb-4">Newsletter</h4>
-              <p className="text-primary-gray mb-4">Get growth tips and updates</p>
-              <button 
-                onClick={() => setIsWaitlistOpen(true)}
-                className="bg-primary-neon text-black px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-neon/90 transition-colors"
-              >
-                Subscribe
-              </button>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-800 pt-8 text-center text-primary-gray">
-            <p>&copy; 2025 GoTall. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
 
       <WaitlistModal 
         isOpen={isWaitlistOpen} 

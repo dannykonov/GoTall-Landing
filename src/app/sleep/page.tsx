@@ -81,7 +81,6 @@ export default function SleepPage() {
           "Customized wake-up times for optimal recovery"
         ]}
         reviews={sleepReviews}
-        screenshotAlt="Sleep tracking and optimization interface"
         howItWorks={howItWorksSteps}
         whyItMatters={whyItMattersPoints}
         onWaitlistClick={() => setIsWaitlistOpen(true)}

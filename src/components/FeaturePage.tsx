@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Image from 'next/image'
 import Navigation from '@/components/Navigation'
 
 interface Review {
@@ -27,7 +26,6 @@ interface FeaturePageProps {
   description: string
   features: string[]
   reviews: Review[]
-  screenshotAlt: string
   howItWorks: HowItWorksStep[]
   whyItMatters: WhyItMattersPoint[]
   onWaitlistClick: () => void
@@ -39,7 +37,6 @@ export default function FeaturePage({
   description,
   features,
   reviews,
-  screenshotAlt,
   howItWorks,
   whyItMatters,
   onWaitlistClick
@@ -69,33 +66,11 @@ export default function FeaturePage({
         </div>
       </motion.section>
 
-      {/* Screenshot Section */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        className="py-16 px-4"
-      >
-        <div className="max-w-4xl mx-auto">
-          <div className="relative w-full h-[600px] bg-primary-dark-gray rounded-xl overflow-hidden border border-gray-700">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-20 h-20 bg-primary-neon/20 rounded-xl mx-auto mb-4 flex items-center justify-center">
-                  <span className="text-primary-neon text-2xl font-bold">📱</span>
-                </div>
-                <p className="text-gray-400 text-lg font-medium">App Screenshot</p>
-                <p className="text-gray-500 text-sm mt-2">{screenshotAlt}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </motion.section>
-
       {/* How It Works Section */}
       <motion.section
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.4 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
         className="py-20 px-4 bg-primary-dark-gray/30"
       >
         <div className="max-w-4xl mx-auto">
@@ -132,7 +107,7 @@ export default function FeaturePage({
       <motion.section
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.6 }}
+        transition={{ duration: 0.6, delay: 0.4 }}
         className="py-20 px-4"
       >
         <div className="max-w-4xl mx-auto">
@@ -161,7 +136,7 @@ export default function FeaturePage({
       <motion.section
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.8 }}
+        transition={{ duration: 0.6, delay: 0.6 }}
         className="py-20 px-4 bg-primary-dark-gray/30"
       >
         <div className="max-w-4xl mx-auto">
@@ -191,7 +166,7 @@ export default function FeaturePage({
       <motion.section
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 1.0 }}
+        transition={{ duration: 0.6, delay: 0.8 }}
         className="py-20 px-4"
       >
         <div className="max-w-4xl mx-auto">
@@ -233,7 +208,7 @@ export default function FeaturePage({
       <motion.section
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 1.2 }}
+        transition={{ duration: 0.6, delay: 1.0 }}
         className="py-20 px-4 bg-gradient-to-r from-primary-neon/10 to-primary-neon/5"
       >
         <div className="max-w-2xl mx-auto text-center">
