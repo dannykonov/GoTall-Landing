@@ -126,7 +126,7 @@ export default function HomePage() {
           >
             <div className="inline-flex items-center bg-primary-neon/10 border border-primary-neon/20 rounded-full px-4 py-2 mb-6">
               <Star className="w-4 h-4 text-primary-neon mr-2" />
-              <span className="text-primary-neon text-sm font-medium">Now in Beta</span>
+              <span className="text-primary-neon text-sm font-medium">Backed by Science</span>
             </div>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-circular font-bold text-white mb-6 leading-tight">
@@ -280,6 +280,53 @@ export default function HomePage() {
               </p>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* Backed by Science Section */}
+      <section className="py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            {/* CDC Logo Placeholder */}
+            <div className="mb-8">
+              <div className="w-20 h-20 mx-auto rounded-2xl flex items-center justify-center mb-4">
+                <img 
+                  src="/CDC Logo Updated 2024.png" 
+                  alt="CDC Logo"
+                  className="w-20 h-auto"
+                />
+              </div>
+            </div>
+            
+            <h2 className="text-3xl md:text-5xl font-circular font-bold text-white mb-6">
+              Built on Science. Informed by Data.
+            </h2>
+            
+            <p className="text-xl text-primary-gray max-w-4xl mx-auto mb-8 leading-relaxed">
+              GoTall uses insights and recommendations based on data from trusted health organizations, including the CDC, to help users make healthy lifestyle choices that may support natural growth potential.
+            </p>
+            
+            <div className="mb-8">
+              <a 
+                href="https://www.cdc.gov" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-primary-neon hover:text-primary-neon/80 font-semibold text-lg underline underline-offset-4 transition-colors"
+                onClick={() => track('cdc_resources_clicked')}
+              >
+                View CDC Resources
+              </a>
+            </div>
+            
+            <p className="text-sm text-primary-gray/80 max-w-3xl mx-auto">
+              <strong>Note:</strong> GoTall is not affiliated with or endorsed by the CDC. All health guidance is based on publicly available research.
+            </p>
+          </motion.div>
         </div>
       </section>
 
