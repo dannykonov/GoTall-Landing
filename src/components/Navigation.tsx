@@ -100,6 +100,13 @@ export default function Navigation({ onWaitlistClick }: NavigationProps) {
             >
               Community
             </Link>
+
+            <Link 
+              href="/support" 
+              className="text-white hover:text-primary-neon transition-colors"
+            >
+              Support
+            </Link>
           </div>
 
           {/* CTA Button */}
@@ -153,6 +160,13 @@ export default function Navigation({ onWaitlistClick }: NavigationProps) {
                 onClick={trackCommunityClick}
               >
                 Community
+              </Link>
+
+              <Link 
+                href="/support" 
+                className="block px-3 py-2 text-white hover:text-primary-neon transition-colors"
+              >
+                Support
               </Link>
               
               <button 
