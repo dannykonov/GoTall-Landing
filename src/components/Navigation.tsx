@@ -6,17 +6,15 @@ import { Menu, X, ChevronDown } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigationTracking } from '@/hooks/useAnalytics'
 
-interface NavigationProps {
-  onWaitlistClick?: () => void
-}
+interface NavigationProps {}
 
-export default function Navigation({ onWaitlistClick }: NavigationProps) {
+export default function Navigation({}: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
   const [isSticky, setIsSticky] = useState(false)
   const [featuresOpen, setFeaturesOpen] = useState(false)
 
-  const { trackFeatureClick, trackCommunityClick, trackLogoClick } = useNavigationTracking()
+  const { trackFeatureClick, trackCommunityClick, trackLogoClick, trackNavigationClick } = useNavigationTracking()
 
   useEffect(() => {
     setIsMounted(true)
@@ -111,12 +109,14 @@ export default function Navigation({ onWaitlistClick }: NavigationProps) {
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <button 
-              onClick={onWaitlistClick}
-              className="bg-primary-neon text-black px-6 py-2 rounded-lg font-medium hover:bg-primary-neon/90 transition-colors"
-            >
-              Join Waitlist
-            </button>
+            <Link href="https://apps.apple.com/us/app/gotall/id6747467975" target="_blank" rel="noopener noreferrer">
+              <button 
+                onClick={() => trackNavigationClick('desktop')}
+                className="bg-primary-neon text-black px-6 py-2 rounded-lg font-medium hover:bg-primary-neon/90 transition-colors"
+              >
+                Download App
+              </button>
+            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -169,12 +169,14 @@ export default function Navigation({ onWaitlistClick }: NavigationProps) {
                 Support
               </Link>
               
-              <button 
-                onClick={onWaitlistClick}
-                className="w-full mt-4 bg-primary-neon text-black px-6 py-2 rounded-lg font-medium hover:bg-primary-neon/90 transition-colors"
-              >
-                Join Waitlist
-              </button>
+              <Link href="https://apps.apple.com/us/app/gotall/id6747467975" target="_blank" rel="noopener noreferrer">
+                <button 
+                  onClick={() => trackNavigationClick('mobile')}
+                  className="w-full mt-4 bg-primary-neon text-black px-6 py-2 rounded-lg font-medium hover:bg-primary-neon/90 transition-colors"
+                >
+                  Download App
+                </button>
+              </Link>
             </div>
           </motion.div>
         )}

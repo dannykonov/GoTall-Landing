@@ -23,32 +23,6 @@ export function useAnalytics() {
   return { track }
 }
 
-// Specialized hooks for common events
-export function useWaitlistTracking() {
-  const { track } = useAnalytics()
-
-  const trackWaitlistOpen = useCallback(() => {
-    track('waitlist_modal_opened')
-  }, [track])
-
-  const trackWaitlistSubmit = useCallback((success: boolean, email?: string) => {
-    track('waitlist_form_submitted', { 
-      success, 
-      email_domain: email ? email.split('@')[1] : undefined 
-    })
-  }, [track])
-
-  const trackWaitlistClose = useCallback(() => {
-    track('waitlist_modal_closed')
-  }, [track])
-
-  return {
-    trackWaitlistOpen,
-    trackWaitlistSubmit,
-    trackWaitlistClose
-  }
-}
-
 export function useNavigationTracking() {
   const { track } = useAnalytics()
 
@@ -64,9 +38,14 @@ export function useNavigationTracking() {
     track('logo_clicked')
   }, [track])
 
+  const trackNavigationClick = useCallback((deviceType: string) => {
+    track('nav_cta_clicked', { device: deviceType })
+  }, [track])
+
   return {
     trackFeatureClick,
     trackCommunityClick,
-    trackLogoClick
+    trackLogoClick,
+    trackNavigationClick
   }
 } 

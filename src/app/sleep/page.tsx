@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import FeaturePage from '@/components/FeaturePage'
-import WaitlistModal from '@/components/WaitlistModal'
 
 const sleepReviews = [
   {
@@ -22,6 +21,12 @@ const sleepReviews = [
     text: "The sleep tracking and recommendations are incredibly detailed. It's helped me optimize my rest for better growth results.",
     rating: 4,
     avatar: "/avatars/james.jpg"
+  },
+  {
+    name: "Ryan Smith",
+    text: "The sleep tracking and recommendations are incredibly detailed. It's helped me optimize my rest for better growth results.",
+    rating: 4,
+    avatar: "/avatars/ryan.jpg"
   }
 ]
 
@@ -41,6 +46,10 @@ const howItWorksSteps = [
   {
     title: "Build Better Habits",
     description: "Follow sleep hygiene recommendations and track your progress toward optimal sleep patterns."
+  },
+  {
+    title: "Receive Detailed Weekly Reports",
+    description: "Receive detailed weekly reports to understand your sleep patterns and how they correlate with your growth progress."
   }
 ]
 
@@ -60,35 +69,30 @@ const whyItMattersPoints = [
   {
     title: "Recovery and Repair",
     description: "Deep sleep allows your body to repair tissues, strengthen bones, and process growth hormones effectively."
+  },
+  {
+    title: "Regulation of Circadian Rhythm",
+    description: "Consistent sleep schedules regulate your circadian rhythm, which is crucial for predictable growth hormone release and overall health."
   }
 ]
 
 export default function SleepPage() {
-  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false)
-
   return (
-    <>
-      <FeaturePage
-        title="Sleep Optimization"
-        subtitle="Maximize growth hormone release with better sleep"
-        description="Our advanced sleep tracking system helps you optimize your rest for maximum growth hormone production. Get personalized sleep schedules, cycle tracking, and environmental recommendations."
-        features={[
-          "Smart sleep cycle tracking to optimize growth hormone release",
-          "Personalized bedtime recommendations based on your schedule",
-          "Environmental factors monitoring (temperature, light, noise)",
-          "Sleep quality scoring with detailed breakdown",
-          "Integration with popular sleep tracking devices",
-          "Customized wake-up times for optimal recovery"
-        ]}
-        reviews={sleepReviews}
-        howItWorks={howItWorksSteps}
-        whyItMatters={whyItMattersPoints}
-        onWaitlistClick={() => setIsWaitlistOpen(true)}
-      />
-      <WaitlistModal
-        isOpen={isWaitlistOpen}
-        onClose={() => setIsWaitlistOpen(false)}
-      />
-    </>
+    <FeaturePage
+      title="Sleep Tracking"
+      subtitle="Optimize your sleep for maximum growth hormone release"
+      description="Quality sleep is when your body produces the most growth hormone. Our smart sleep tracking helps you improve sleep quality, find your optimal sleep schedule, and wake up energized."
+      features={[
+        "Personalized sleep schedule recommendations",
+        "AI-driven insights to improve sleep quality",
+        "Smart alarm to wake you up in your lightest sleep phase",
+        "Correlation analysis between sleep and growth progress",
+        "Guided meditations and relaxation sounds for better sleep",
+        "Integration with wearables like Apple Watch and Oura Ring"
+      ]}
+      reviews={sleepReviews}
+      howItWorks={howItWorksSteps}
+      whyItMatters={whyItMattersPoints}
+    />
   )
 } 

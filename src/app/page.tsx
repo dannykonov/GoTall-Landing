@@ -15,12 +15,10 @@ import {
   ThumbsUp
 } from 'lucide-react'
 import Navigation from '@/components/Navigation'
-import WaitlistModal from '@/components/WaitlistModal'
 import Link from 'next/link'
 import { useAnalytics } from '@/hooks/useAnalytics'
 
 export default function HomePage() {
-  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false)
   const { track } = useAnalytics()
 
   const features = [
@@ -114,7 +112,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-black">
-      <Navigation onWaitlistClick={() => setIsWaitlistOpen(true)} />
+      <Navigation />
       
       {/* Hero Section */}
       <section className="pt-20 pb-20 px-4">
@@ -140,16 +138,15 @@ export default function HomePage() {
               <span className="text-primary-neon font-semibold"> 2–3 inches in 6 months</span>.
             </p>
             
-            <button 
-              onClick={() => {
-                track('hero_cta_clicked')
-                setIsWaitlistOpen(true)
-              }}
-              className="bg-primary-neon text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-neon/90 transition-colors inline-flex items-center group"
-            >
-              Join the Waitlist
-              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-            </button>
+            <Link href="https://apps.apple.com/us/app/gotall/id6747467975" target="_blank" rel="noopener noreferrer">
+              <button 
+                onClick={() => track('hero_cta_clicked')}
+                className="bg-primary-neon text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-neon/90 transition-colors inline-flex items-center group"
+              >
+                Download the App
+                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </Link>
           </motion.div>
         </div>
       </section>
@@ -447,24 +444,18 @@ export default function HomePage() {
             <p className="text-xl text-primary-gray mb-8">
               Join the waitlist and be the first to experience the future of height optimization.
             </p>
-            <button 
-              onClick={() => {
-                track('final_cta_clicked')
-                setIsWaitlistOpen(true)
-              }}
-              className="bg-primary-neon text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-neon/90 transition-colors inline-flex items-center group"
-            >
-              Join Waitlist
-              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-            </button>
+            <Link href="https://apps.apple.com/us/app/gotall/id6747467975" target="_blank" rel="noopener noreferrer">
+              <button 
+                onClick={() => track('final_cta_clicked')}
+                className="bg-primary-neon text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-neon/90 transition-colors inline-flex items-center group"
+              >
+                Download the App
+                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </Link>
           </motion.div>
         </div>
       </section>
-
-      <WaitlistModal 
-        isOpen={isWaitlistOpen} 
-        onClose={() => setIsWaitlistOpen(false)} 
-      />
     </div>
   )
 }

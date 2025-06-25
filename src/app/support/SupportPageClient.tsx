@@ -14,10 +14,8 @@ import {
   HelpCircle
 } from 'lucide-react'
 import Navigation from '@/components/Navigation'
-import WaitlistModal from '@/components/WaitlistModal'
 
 export default function SupportPageClient() {
-  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [formData, setFormData] = useState({
     name: '',
@@ -71,7 +69,7 @@ export default function SupportPageClient() {
 
   return (
     <div className="min-h-screen bg-black">
-      <Navigation onWaitlistClick={() => setIsWaitlistOpen(true)} />
+      <Navigation />
       
       {/* Hero Section */}
       <section className="pt-20 pb-16 px-4">
@@ -148,7 +146,7 @@ export default function SupportPageClient() {
                 <ul className="space-y-2 text-primary-gray">
                   <li className="flex items-center">
                     <div className="w-2 h-2 bg-primary-neon rounded-full mr-3"></div>
-                    Account and waitlist questions
+                    Account and subscription questions
                   </li>
                   <li className="flex items-center">
                     <div className="w-2 h-2 bg-primary-neon rounded-full mr-3"></div>
@@ -337,7 +335,6 @@ export default function SupportPageClient() {
               Join thousands of others waiting for GoTall to launch.
             </p>
             <button 
-              onClick={() => setIsWaitlistOpen(true)}
               className="bg-primary-neon text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-neon/90 transition-colors inline-flex items-center group"
             >
               Join the Waitlist
@@ -346,8 +343,6 @@ export default function SupportPageClient() {
           </motion.div>
         </div>
       </section>
-
-      <WaitlistModal isOpen={isWaitlistOpen} onClose={() => setIsWaitlistOpen(false)} />
     </div>
   )
 } 

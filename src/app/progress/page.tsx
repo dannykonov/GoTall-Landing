@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import FeaturePage from '@/components/FeaturePage'
-import WaitlistModal from '@/components/WaitlistModal'
 
 const progressReviews = [
   {
@@ -23,6 +22,12 @@ const progressReviews = [
     text: "The detailed analytics and progress charts help me understand what's working and what needs adjustment.",
     rating: 4,
     avatar: "/avatars/john.jpg"
+  },
+  {
+    name: "Ryan Smith",
+    text: "The progress tracking features are incredible. Being able to see my growth journey visualized keeps me motivated.",
+    rating: 5,
+    avatar: "/avatars/ryan.jpg"
   }
 ]
 
@@ -41,7 +46,7 @@ const howItWorksSteps = [
   },
   {
     title: "Actionable Insights",
-    description: "Receive personalized recommendations based on your progress data to optimize your growth journey."
+    description: "Receive weekly and monthly reports summarizing your progress, with actionable insights for continuous improvement."
   }
 ]
 
@@ -61,11 +66,14 @@ const whyItMattersPoints = [
   {
     title: "Growth Predictions",
     description: "AI-powered projections help set realistic expectations and plan for your growth potential."
+  },
+  {
+    title: "Understanding Your Progress",
+    description: "Understanding your progress helps you stay consistent and make informed decisions about your health habits."
   }
 ]
 
 export default function ProgressPage() {
-  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false)
 
   const progressMockupsSection = (
     <section className="py-20 px-4 bg-primary-dark-gray/20">
@@ -110,29 +118,22 @@ export default function ProgressPage() {
   )
 
   return (
-    <>
-      <FeaturePage
-        title="Progress Tracking"
-        subtitle="Visualize and predict your growth journey"
-        description="Track your height progress with advanced analytics and predictive modeling. Get detailed insights into your growth patterns and personalized projections based on your data."
-        features={[
-          "Daily height tracking with morning/evening variations",
-          "Advanced analytics with growth pattern recognition",
-          "AI-powered height prediction based on multiple factors",
-          "Visual progress charts and milestone tracking",
-          "Comprehensive health metrics dashboard",
-          "Monthly progress reports with actionable insights"
-        ]}
-        reviews={progressReviews}
-        howItWorks={howItWorksSteps}
-        whyItMatters={whyItMattersPoints}
-        onWaitlistClick={() => setIsWaitlistOpen(true)}
-        additionalContent={progressMockupsSection}
-      />
-      <WaitlistModal
-        isOpen={isWaitlistOpen}
-        onClose={() => setIsWaitlistOpen(false)}
-      />
-    </>
+    <FeaturePage
+      title="Progress Tracking"
+      subtitle="Visualize your growth journey with detailed analytics"
+      description="Our progress tracking system allows you to monitor your height, nutrition, sleep, and exercise data all in one place. Get insights, celebrate milestones, and stay motivated."
+      features={[
+        "Interactive charts to visualize your growth over time",
+        "Milestone tracking for short-term and long-term goals",
+        "Correlation analysis between habits and growth",
+        "Secure photo log to visually track posture changes",
+        "Comprehensive health dashboard with all your data",
+        "Gamified experience with achievements and rewards"
+      ]}
+      reviews={progressReviews}
+      howItWorks={howItWorksSteps}
+      whyItMatters={whyItMattersPoints}
+      additionalContent={progressMockupsSection}
+    />
   )
 } 

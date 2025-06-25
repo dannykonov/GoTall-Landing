@@ -4,11 +4,12 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Users, MessageCircle, ThumbsUp, TrendingUp, Clock, Search, Filter, ArrowRight } from 'lucide-react'
 import Navigation from '@/components/Navigation'
-import WaitlistModal from '@/components/WaitlistModal'
+import Link from 'next/link'
+import { useAnalytics } from '@/hooks/useAnalytics'
 
 export default function CommunityPage() {
-  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false)
   const [activeFilter, setActiveFilter] = useState('trending')
+  const { track } = useAnalytics()
 
   const posts = [
     {
@@ -95,7 +96,7 @@ export default function CommunityPage() {
 
   return (
     <div className="min-h-screen bg-black">
-      <Navigation onWaitlistClick={() => setIsWaitlistOpen(true)} />
+      <Navigation />
       
       {/* Hero Section */}
       <section className="pt-24 pb-16 px-4">
@@ -117,13 +118,15 @@ export default function CommunityPage() {
               Ask questions. Share progress. Get inspired.
             </p>
             
-            <button 
-              onClick={() => setIsWaitlistOpen(true)}
-              className="bg-primary-neon text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-neon/90 transition-colors inline-flex items-center group"
-            >
-              Join the Community
-              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-            </button>
+            <Link href="https://apps.apple.com/us/app/gotall/id6747467975" target="_blank" rel="noopener noreferrer">
+              <button 
+                onClick={() => track('community_hero_cta_clicked')}
+                className="bg-primary-neon text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-neon/90 transition-colors inline-flex items-center group"
+              >
+                Download to Join Community
+                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </Link>
           </motion.div>
         </div>
       </section>
@@ -238,20 +241,17 @@ export default function CommunityPage() {
           {/* Join CTA */}
           <div className="mt-12 text-center">
             <p className="text-primary-gray mb-4">Want to join the conversation?</p>
-            <button 
-              onClick={() => setIsWaitlistOpen(true)}
-              className="bg-primary-neon text-black px-6 py-3 rounded-lg font-medium hover:bg-primary-neon/90 transition-colors"
-            >
-              Join Waitlist to Access Community
-            </button>
+            <Link href="https://apps.apple.com/us/app/gotall/id6747467975" target="_blank" rel="noopener noreferrer">
+              <button 
+                onClick={() => track('community_bottom_cta_clicked')}
+                className="bg-primary-neon text-black px-6 py-3 rounded-lg font-medium hover:bg-primary-neon/90 transition-colors"
+              >
+                Download the App to Join
+              </button>
+            </Link>
           </div>
         </div>
       </section>
-
-      <WaitlistModal 
-        isOpen={isWaitlistOpen} 
-        onClose={() => setIsWaitlistOpen(false)} 
-      />
     </div>
   )
 } 

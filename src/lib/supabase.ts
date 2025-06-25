@@ -5,13 +5,6 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholde
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
-export type WaitlistEntry = {
-  id?: number
-  name?: string
-  email: string
-  created_at?: string
-}
-
 // Check if Supabase is properly configured
 export const isSupabaseConfigured = () => {
   return process.env.NEXT_PUBLIC_SUPABASE_URL && 

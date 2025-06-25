@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import FeaturePage from '@/components/FeaturePage'
-import WaitlistModal from '@/components/WaitlistModal'
 
 const nutritionReviews = [
   {
@@ -23,6 +22,12 @@ const nutritionReviews = [
     text: "The personalized nutrition advice is spot-on. I've learned so much about how different foods affect growth.",
     rating: 4,
     avatar: "/avatars/mike.jpg"
+  },
+  {
+    name: "Ryan Smith",
+    text: "The personalized nutrition advice is spot-on. I've learned so much about how different foods affect growth.",
+    rating: 4,
+    avatar: "/avatars/ryan.jpg"
   }
 ]
 
@@ -42,6 +47,10 @@ const howItWorksSteps = [
   {
     title: "Monitor Your Progress",
     description: "Track how your nutrition impacts your growth journey with detailed analytics and insights."
+  },
+  {
+    title: "Receive Daily Meal Plans",
+    description: "Receive daily meal plans and grocery lists tailored to your height growth goals, making healthy eating effortless."
   }
 ]
 
@@ -61,11 +70,14 @@ const whyItMattersPoints = [
   {
     title: "Energy for Development",
     description: "Sufficient calories ensure your body has the energy needed for growth processes and cellular development."
+  },
+  {
+    title: "Proper Nutrition",
+    description: "Proper nutrition ensures your body has the necessary resources to support bone growth and overall development."
   }
 ]
 
 export default function NutritionPage() {
-  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false)
 
   const nutritionMockupsSection = (
     <section className="py-20 px-4 bg-primary-dark-gray/20">
@@ -130,30 +142,22 @@ export default function NutritionPage() {
   )
 
   return (
-    <>
-      <FeaturePage
-        title="Nutrition Optimization"
-        subtitle="Fuel your growth with personalized nutrition plans"
-        description="Our advanced nutrition tracking system helps you optimize your diet for maximum height potential. Get personalized meal plans, nutrient tracking, and real-time recommendations based on your goals."
-        features={[
-          "Personalized meal plans based on your age, current height, and growth goals",
-          "Real-time nutrient tracking with focus on growth-promoting vitamins and minerals",
-          "Smart recommendations for food combinations that maximize nutrient absorption",
-          "Weekly meal prep suggestions and shopping lists",
-          "Integration with popular food delivery services",
-          "Regular updates based on your progress and changing needs"
-        ]}
-        reviews={nutritionReviews}
-        howItWorks={howItWorksSteps}
-        whyItMatters={whyItMattersPoints}
-        onWaitlistClick={() => setIsWaitlistOpen(true)}
-        additionalContent={nutritionMockupsSection}
-      />
-      
-      <WaitlistModal
-        isOpen={isWaitlistOpen}
-        onClose={() => setIsWaitlistOpen(false)}
-      />
-    </>
+    <FeaturePage
+      title="Nutrition Tracking"
+      subtitle="Fuel your growth with science-backed nutrition"
+      description="Our nutrition system helps you track calories, protein, and essential nutrients for optimal growth. Get personalized meal plans and insights to fuel your body effectively."
+      features={[
+        "AI-powered meal recommendations",
+        "Calorie and macronutrient tracking",
+        "Nutrient deficiency alerts",
+        "Grocery list generator",
+        "Hydration reminders",
+        "Integration with food databases"
+      ]}
+      reviews={nutritionReviews}
+      howItWorks={howItWorksSteps}
+      whyItMatters={whyItMattersPoints}
+      additionalContent={nutritionMockupsSection}
+    />
   )
 } 

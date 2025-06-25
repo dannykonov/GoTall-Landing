@@ -1,9 +1,7 @@
 'use client'
 
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import FeaturePage from '@/components/FeaturePage'
-import WaitlistModal from '@/components/WaitlistModal'
 
 const exerciseReviews = [
   {
@@ -65,7 +63,6 @@ const whyItMattersPoints = [
 ]
 
 export default function ExercisePage() {
-  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false)
 
   const exerciseMockupsSection = (
     <section className="py-20 px-4 bg-primary-dark-gray/20">
@@ -130,29 +127,22 @@ export default function ExercisePage() {
   )
 
   return (
-    <>
-      <FeaturePage
-        title="Exercise Optimization"
-        subtitle="Growth-promoting exercises tailored to your body"
-        description="Our exercise system is designed specifically to promote height growth through targeted movements and proper form. Get personalized workout plans, form guidance, and progress tracking."
-        features={[
-          "Personalized exercise plans based on your growth phase",
-          "3D form guidance for optimal exercise execution",
-          "Progressive overload tracking for consistent results",
-          "Focus on exercises that promote bone growth",
-          "Integration with fitness trackers and smart devices",
-          "Recovery monitoring to prevent overtraining"
-        ]}
-        reviews={exerciseReviews}
-        howItWorks={howItWorksSteps}
-        whyItMatters={whyItMattersPoints}
-        onWaitlistClick={() => setIsWaitlistOpen(true)}
-        additionalContent={exerciseMockupsSection}
-      />
-      <WaitlistModal
-        isOpen={isWaitlistOpen}
-        onClose={() => setIsWaitlistOpen(false)}
-      />
-    </>
+    <FeaturePage
+      title="Exercise Optimization"
+      subtitle="Growth-promoting exercises tailored to your body"
+      description="Our exercise system is designed specifically to promote height growth through targeted movements and proper form. Get personalized workout plans, form guidance, and progress tracking."
+      features={[
+        "Personalized exercise plans based on your growth phase",
+        "3D form guidance for optimal exercise execution",
+        "Progressive overload tracking for consistent results",
+        "Focus on exercises that promote bone growth",
+        "Integration with fitness trackers and smart devices",
+        "Recovery monitoring to prevent overtraining"
+      ]}
+      reviews={exerciseReviews}
+      howItWorks={howItWorksSteps}
+      whyItMatters={whyItMattersPoints}
+      additionalContent={exerciseMockupsSection}
+    />
   )
 } 

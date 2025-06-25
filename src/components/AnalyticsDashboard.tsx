@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { BarChart3, Users, Eye, Calendar, Clock, Monitor, Smartphone, Tablet, UserPlus, TrendingUp } from 'lucide-react'
-import { getAnalytics, getRecentVisits, getPopularPages, getWaitlistAnalytics, getRecentSignups } from '@/lib/analytics'
+import { BarChart3, Users, Eye, Calendar, Clock, Monitor, Smartphone, Tablet, MousePointerClick, TrendingUp } from 'lucide-react'
+import { getAnalytics, getRecentVisits, getPopularPages, getClickAnalytics } from '@/lib/analytics'
 
 interface AnalyticsData {
   date: string
@@ -25,35 +25,19 @@ interface Visit {
   created_at: string
 }
 
-interface WaitlistAnalytics {
-  total_signups: number
-  signups_today: number
-  signups_yesterday: number
-  signups_this_week: number
-  signups_this_month: number
-  daily_breakdown: { date: string; signups: number }[]
-}
-
-interface Signup {
-  id: string
-  name: string
-  email: string
-  created_at: string
+interface ClickAnalytics {
+  total_clicks: number
+  click_breakdown: Record<string, number>
 }
 
 export default function AnalyticsDashboard() {
   const [analytics, setAnalytics] = useState<AnalyticsData[]>([])
   const [recentVisits, setRecentVisits] = useState<Visit[]>([])
   const [popularPages, setPopularPages] = useState<Array<{ page: string; count: number }>>([])
-  const [waitlistData, setWaitlistData] = useState<WaitlistAnalytics>({
-    total_signups: 0,
-    signups_today: 0,
-    signups_yesterday: 0,
-    signups_this_week: 0,
-    signups_this_month: 0,
-    daily_breakdown: []
+  const [clickData, setClickData] = useState<ClickAnalytics>({
+    total_clicks: 0,
+    click_breakdown: {}
   })
-  const [recentSignups, setRecentSignups] = useState<Signup[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [timeRange, setTimeRange] = useState(7) // days
 
@@ -66,38 +50,31 @@ export default function AnalyticsDashboard() {
     try {
       console.log('=== LOADING ANALYTICS DATA ===')
       
-      const [analyticsData, visitsData, pagesData, waitlistAnalytics, signupsData] = await Promise.all([
+      const [analyticsData, visitsData, pagesData, clicksData] = await Promise.all([
         getAnalytics(),
         getRecentVisits(50),
         getPopularPages(timeRange),
-        getWaitlistAnalytics(),
-        getRecentSignups(15)
+        getClickAnalytics()
       ])
       
       console.log('Analytics data:', analyticsData)
       console.log('Recent visits data:', visitsData)
       console.log('Popular pages data:', pagesData)
-      console.log('Waitlist analytics:', waitlistAnalytics)
-      console.log('Recent signups:', signupsData)
+      console.log('Click analytics:', clicksData)
       
       setAnalytics(analyticsData || [])
       setRecentVisits(visitsData || [])
       setPopularPages(pagesData || [])
-      setWaitlistData(waitlistAnalytics || {
-        total_signups: 0,
-        signups_today: 0,
-        signups_yesterday: 0,
-        signups_this_week: 0,
-        signups_this_month: 0,
-        daily_breakdown: []
+      setClickData(clicksData || {
+        total_clicks: 0,
+        click_breakdown: {}
       })
-      setRecentSignups(signupsData || [])
       
       console.log('=== DATA SET TO STATE ===')
       console.log('Analytics state:', analyticsData?.length || 0, 'records')
       console.log('Recent visits state:', visitsData?.length || 0, 'records')
       console.log('Popular pages state:', pagesData?.length || 0, 'records')
-      console.log('Waitlist state:', waitlistAnalytics)
+      console.log('Clicks state:', clicksData)
       
     } catch (error) {
       console.error('Failed to load analytics:', error)
@@ -141,7 +118,7 @@ export default function AnalyticsDashboard() {
   console.log('Recent visits length:', recentVisits.length)
   console.log('Popular pages length:', popularPages.length)
   console.log('Device stats:', deviceStats)
-  console.log('Waitlist data:', waitlistData)
+  console.log('Click data:', clickData)
 
   if (isLoading) {
     return (
@@ -234,210 +211,117 @@ export default function AnalyticsDashboard() {
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-400 text-sm">Total Signups</p>
-                <p className="text-3xl font-bold text-orange-400">{waitlistData.total_signups}</p>
+                <p className="text-gray-400 text-sm">App Clicks</p>
+                <p className="text-3xl font-bold text-orange-400">{clickData.total_clicks}</p>
               </div>
-              <UserPlus className="w-8 h-8 text-orange-400" />
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="bg-primary-dark-gray rounded-xl p-6 border border-gray-700"
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-400 text-sm">Signups Today</p>
-                <p className="text-3xl font-bold text-emerald-400">{waitlistData.signups_today}</p>
-                <p className="text-xs text-gray-500">Yesterday: {waitlistData.signups_yesterday}</p>
-              </div>
-              <TrendingUp className="w-8 h-8 text-emerald-400" />
+              <MousePointerClick className="w-8 h-8 text-orange-400" />
             </div>
           </motion.div>
         </div>
 
-        {/* Waitlist Analytics Row */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="bg-primary-dark-gray rounded-xl p-6 border border-gray-700"
-          >
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold">This Week</h2>
-              <Calendar className="w-6 h-6 text-indigo-400" />
-            </div>
-            <p className="text-2xl font-bold text-indigo-400">{waitlistData.signups_this_week}</p>
-            <p className="text-sm text-gray-400">signups this week</p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            className="bg-primary-dark-gray rounded-xl p-6 border border-gray-700"
-          >
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold">This Month</h2>
-              <Calendar className="w-6 h-6 text-pink-400" />
-            </div>
-            <p className="text-2xl font-bold text-pink-400">{waitlistData.signups_this_month}</p>
-            <p className="text-sm text-gray-400">signups this month</p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
-            className="bg-primary-dark-gray rounded-xl p-6 border border-gray-700"
-          >
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold">Recent Signups</h2>
-              <Users className="w-6 h-6 text-cyan-400" />
-            </div>
-            <p className="text-2xl font-bold text-cyan-400">{recentSignups.length}</p>
-            <p className="text-sm text-gray-400">in the last 15 signups</p>
-          </motion.div>
-        </div>
-
-        {/* Popular Pages */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.8 }}
-            className="bg-primary-dark-gray rounded-xl p-6 border border-gray-700"
-          >
-            <h2 className="text-xl font-bold mb-4">Popular Pages</h2>
-            <div className="space-y-3">
-              {popularPages.length > 0 ? (
-                popularPages.slice(0, 5).map((page, index) => (
-                  <div key={page.page} className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <span className="text-primary-neon font-bold">{index + 1}</span>
-                      <span className="text-white">{page.page}</span>
-                    </div>
-                    <span className="text-gray-400">{page.count} visits</span>
-                  </div>
-                ))
-              ) : (
-                <p className="text-gray-400">No page data available</p>
-              )}
-            </div>
-          </motion.div>
-
-          {/* Device Types */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.9 }}
-            className="bg-primary-dark-gray rounded-xl p-6 border border-gray-700"
-          >
-            <h2 className="text-xl font-bold mb-4">Device Types</h2>
-            <div className="space-y-3">
-              {Object.keys(deviceStats).length > 0 ? (
-                Object.entries(deviceStats).map(([device, count]) => {
-                  const Icon = device === 'mobile' ? Smartphone : device === 'tablet' ? Tablet : Monitor
-                  const percentage = recentVisits.length ? Math.round((count / recentVisits.length) * 100) : 0
-                  
-                  return (
-                    <div key={device} className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <Icon className="w-5 h-5 text-primary-neon" />
-                        <span className="text-white capitalize">{device}</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <span className="text-gray-400">{count}</span>
-                        <span className="text-primary-neon text-sm">({percentage}%)</span>
-                      </div>
-                    </div>
-                  )
-                })
-              ) : (
-                <p className="text-gray-400">No device data available</p>
-              )}
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Recent Tables */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        {/* Main Content */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Recent Visits */}
-          <motion.div
+          <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.0 }}
-            className="bg-primary-dark-gray rounded-xl p-6 border border-gray-700"
+            transition={{ delay: 0.2 }}
+            className="lg:col-span-2 bg-primary-dark-gray rounded-xl p-6 border border-gray-700"
           >
             <h2 className="text-xl font-bold mb-4">Recent Visits</h2>
             <div className="overflow-x-auto">
-              {recentVisits.length > 0 ? (
-                <table className="w-full text-left">
-                  <thead>
-                    <tr className="border-b border-gray-600">
-                      <th className="pb-3 text-gray-400">Time</th>
-                      <th className="pb-3 text-gray-400">Page</th>
-                      <th className="pb-3 text-gray-400">Device</th>
-                      <th className="pb-3 text-gray-400">Browser</th>
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="border-b border-gray-700">
+                    <th className="p-2 text-sm text-gray-400">Time</th>
+                    <th className="p-2 text-sm text-gray-400">Path</th>
+                    <th className="p-2 text-sm text-gray-400">Device</th>
+                    <th className="p-2 text-sm text-gray-400">Browser</th>
+                    <th className="p-2 text-sm text-gray-400">OS</th>
+                    <th className="p-2 text-sm text-gray-400">Location</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {recentVisits.slice(0, 10).map(visit => (
+                    <tr key={visit.id} className="border-b border-gray-800 hover:bg-gray-800/50">
+                      <td className="p-2 text-sm whitespace-nowrap">
+                        <div className="flex items-center">
+                          <Clock className="w-4 h-4 mr-2 text-gray-500" />
+                          {new Date(visit.created_at).toLocaleTimeString()}
+                        </div>
+                      </td>
+                      <td className="p-2 text-sm">{visit.page_path}</td>
+                      <td className="p-2 text-sm">{visit.device_type}</td>
+                      <td className="p-2 text-sm">{visit.browser}</td>
+                      <td className="p-2 text-sm">{visit.os}</td>
+                      <td className="p-2 text-sm">{visit.city || 'Unknown'}, {visit.country || 'N/A'}</td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {recentVisits.slice(0, 10).map((visit) => (
-                      <tr key={visit.id} className="border-b border-gray-700">
-                        <td className="py-3 text-gray-300 text-xs">
-                          {new Date(visit.created_at).toLocaleString()}
-                        </td>
-                        <td className="py-3 text-white">{visit.page_path}</td>
-                        <td className="py-3 text-gray-300 capitalize">{visit.device_type}</td>
-                        <td className="py-3 text-gray-300">{visit.browser}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              ) : (
-                <p className="text-gray-400">No recent visits data available</p>
-              )}
+                  ))}
+                </tbody>
+              </table>
             </div>
           </motion.div>
 
-          {/* Recent Signups */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1 }}
-            className="bg-primary-dark-gray rounded-xl p-6 border border-gray-700"
-          >
-            <h2 className="text-xl font-bold mb-4">Recent Waitlist Signups</h2>
-            <div className="overflow-x-auto">
-              {recentSignups.length > 0 ? (
-                <table className="w-full text-left">
-                  <thead>
-                    <tr className="border-b border-gray-600">
-                      <th className="pb-3 text-gray-400">Name</th>
-                      <th className="pb-3 text-gray-400">Email</th>
-                      <th className="pb-3 text-gray-400">Joined</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {recentSignups.slice(0, 10).map((signup) => (
-                      <tr key={signup.id} className="border-b border-gray-700">
-                        <td className="py-3 text-white font-medium">{signup.name}</td>
-                        <td className="py-3 text-gray-300 truncate max-w-xs">{signup.email}</td>
-                        <td className="py-3 text-gray-300 text-xs">
-                          {new Date(signup.created_at).toLocaleString()}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              ) : (
-                <p className="text-gray-400">No recent signups available</p>
-              )}
-            </div>
-          </motion.div>
+          {/* Popular Pages & Devices */}
+          <div className="space-y-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="bg-primary-dark-gray rounded-xl p-6 border border-gray-700"
+            >
+              <h2 className="text-xl font-bold mb-4">Popular Pages</h2>
+              <ul className="space-y-3">
+                {popularPages.map(page => (
+                  <li key={page.page} className="flex justify-between items-center text-sm">
+                    <span className="truncate">{page.page}</span>
+                    <span className="font-bold">{page.count} views</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="bg-primary-dark-gray rounded-xl p-6 border border-gray-700"
+            >
+              <h2 className="text-xl font-bold mb-4">Click Breakdown</h2>
+              <ul className="space-y-3">
+                {Object.entries(clickData.click_breakdown).map(([event, count]) => (
+                  <li key={event} className="flex justify-between items-center text-sm">
+                    <span className="truncate">{event}</span>
+                    <span className="font-bold">{count} clicks</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="bg-primary-dark-gray rounded-xl p-6 border border-gray-700"
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-gray-400 text-sm">Device Types</p>
+                </div>
+                <div className="flex items-center space-x-2">
+                  {Object.keys(deviceStats).map((device) => {
+                    const Icon = device === 'mobile' ? Smartphone : device === 'tablet' ? Tablet : Monitor
+                    return (
+                      <div key={device} className="flex items-center space-x-2">
+                        <Icon className="w-5 h-5 text-primary-neon" />
+                        <span className="text-white capitalize">{device}</span>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </div>

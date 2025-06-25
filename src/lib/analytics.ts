@@ -122,29 +122,16 @@ export const trackPageVisit = async (customPath?: string): Promise<void> => {
 export const trackEvent = async (eventName: string, eventData?: Record<string, any>): Promise<void> => {
   try {
     if (typeof window === 'undefined') return
-    
-    const sessionId = getSessionId()
-    const pagePath = window.location.pathname
-    
-    // For custom events, we'll store them in the same visits table with a special format
-    const visitData = {
-      session_id: sessionId,
-      page_path: `${pagePath}#event:${eventName}`,
-      referrer: eventData ? JSON.stringify(eventData) : null,
-      user_agent: navigator.userAgent,
-      device_type: getDeviceType(),
-      browser: getBrowser(),
-      os: getOS(),
-      created_at: new Date().toISOString(),
-    }
-    
+
     const { error } = await supabase
-      .from('visits')
-      .insert([visitData])
+      .from('app_clicks')
+      .insert([{
+        event_name: eventName,
+        metadata: eventData || null
+      }])
     
     if (error) {
-      // Only log if it's not a permission error we can ignore
-      if (error.code !== '42501') {
+      if (error.code !== '42501') { 
         console.warn('Event tracking error:', error)
       }
     } else {
@@ -278,151 +265,35 @@ export const getPopularPages = async (days: number = 7) => {
   }
 }
 
-// Get waitlist analytics
-export const getWaitlistAnalytics = async () => {
+export const getClickAnalytics = async () => {
   try {
-    console.log('Fetching waitlist analytics...')
-    
-    // Try to use the RPC function first
-    try {
-      const { data: summaryData, error: summaryError } = await supabase
-        .rpc('get_waitlist_summary')
-      
-      if (!summaryError && summaryData && summaryData.length > 0) {
-        console.log('Waitlist summary from RPC:', summaryData[0])
-        return summaryData[0]
-      } else {
-        console.warn('RPC function failed:', summaryError)
-      }
-    } catch (rpcError) {
-      console.warn('RPC function not available:', rpcError)
-    }
-    
-    // Fallback to direct queries with better error handling
-    console.log('Using direct queries as fallback...')
-    
-    try {
-      // Get current date in proper format
-      const now = new Date()
-      const today = now.toISOString().split('T')[0]
-      const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString().split('T')[0]
-      
-      console.log('Query dates:', { today, yesterday })
-      
-      // Test basic connection first
-      const { data: testData, error: testError } = await supabase
-        .from('waitlist')
-        .select('id')
-        .limit(1)
-      
-      if (testError) {
-        console.error('Waitlist table access test failed:', testError)
-        throw testError
-      }
-      
-      console.log('Waitlist table accessible, test data:', testData)
-      
-      // Get all counts in parallel with detailed logging
-      const queries = await Promise.allSettled([
-        supabase.from('waitlist').select('*', { count: 'exact', head: true }),
-        supabase.from('waitlist').select('*', { count: 'exact', head: true })
-          .gte('created_at', today + 'T00:00:00.000Z')
-          .lt('created_at', today + 'T23:59:59.999Z'),
-        supabase.from('waitlist').select('*', { count: 'exact', head: true })
-          .gte('created_at', yesterday + 'T00:00:00.000Z')
-          .lt('created_at', yesterday + 'T23:59:59.999Z'),
-        supabase.from('waitlist').select('*', { count: 'exact', head: true })
-          .gte('created_at', now.getFullYear() + '-W' + String(Math.ceil(now.getDate() / 7)).padStart(2, '0') + '-1T00:00:00.000Z'),
-        supabase.from('waitlist').select('*', { count: 'exact', head: true })
-          .gte('created_at', now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-01T00:00:00.000Z')
-      ])
-      
-      console.log('Query results:', queries)
-      
-      const totalResult = queries[0].status === 'fulfilled' ? queries[0].value : { count: 0, error: queries[0].reason }
-      const todayResult = queries[1].status === 'fulfilled' ? queries[1].value : { count: 0, error: queries[1].reason }
-      const yesterdayResult = queries[2].status === 'fulfilled' ? queries[2].value : { count: 0, error: queries[2].reason }
-      const weekResult = queries[3].status === 'fulfilled' ? queries[3].value : { count: 0, error: queries[3].reason }
-      const monthResult = queries[4].status === 'fulfilled' ? queries[4].value : { count: 0, error: queries[4].reason }
-      
-      console.log('Processed results:', {
-        total: totalResult.count,
-        today: todayResult.count,
-        yesterday: yesterdayResult.count,
-        week: weekResult.count,
-        month: monthResult.count
-      })
-      
-      const result = {
-        total_signups: totalResult.count || 0,
-        signups_today: todayResult.count || 0,
-        signups_yesterday: yesterdayResult.count || 0,
-        signups_this_week: weekResult.count || 0,
-        signups_this_month: monthResult.count || 0,
-        daily_breakdown: []
-      }
-      
-      console.log('Final waitlist analytics result:', result)
-      return result
-      
-    } catch (directError) {
-      console.error('Direct queries failed:', directError)
-      
-      // Last resort: try to get just the basic count
-      try {
-        const { count } = await supabase
-          .from('waitlist')
-          .select('*', { count: 'exact', head: true })
-        
-        console.log('Basic count query result:', count)
-        
-        return {
-          total_signups: count || 0,
-          signups_today: 0,
-          signups_yesterday: 0,
-          signups_this_week: 0,
-          signups_this_month: 0,
-          daily_breakdown: []
-        }
-      } catch (basicError) {
-        console.error('Even basic count failed:', basicError)
-        throw basicError
-      }
-    }
-    
-  } catch (error) {
-    console.error('Failed to get waitlist analytics:', error)
-    return {
-      total_signups: 0,
-      signups_today: 0,
-      signups_yesterday: 0,
-      signups_this_week: 0,
-      signups_this_month: 0,
-      daily_breakdown: []
-    }
-  }
-}
+    const { count, error } = await supabase
+      .from('app_clicks')
+      .select('*', { count: 'exact', head: true });
 
-// Get recent waitlist signups
-export const getRecentSignups = async (limit: number = 20) => {
-  try {
-    console.log('Fetching recent signups...')
-    
-    const { data, error } = await supabase
-      .from('waitlist')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .limit(limit)
-    
-    if (error) {
-      console.error('Failed to get recent signups:', error)
-      return []
-    }
-    
-    console.log('Recent signups:', data?.length || 0)
-    return data || []
+    if (error) throw error;
+
+    const { data: breakdown, error: breakdownError } = await supabase
+      .from('app_clicks')
+      .select('event_name');
+
+    if(breakdownError) throw breakdownError;
+
+    const click_breakdown = breakdown.reduce((acc, curr) => {
+      const eventName = curr.event_name || 'unknown';
+      acc[eventName] = (acc[eventName] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+
+    return {
+      total_clicks: count || 0,
+      click_breakdown,
+    };
   } catch (error) {
-    console.error('Failed to get recent signups:', error)
-    return []
+    console.error('Failed to get click analytics:', error);
+    return {
+      total_clicks: 0,
+      click_breakdown: {},
+    };
   }
 } 

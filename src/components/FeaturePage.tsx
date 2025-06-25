@@ -3,6 +3,9 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import Navigation from '@/components/Navigation'
+import { useAnalytics } from '@/hooks/useAnalytics'
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 
 interface Review {
   name: string
@@ -29,7 +32,6 @@ interface FeaturePageProps {
   reviews: Review[]
   howItWorks: HowItWorksStep[]
   whyItMatters: WhyItMattersPoint[]
-  onWaitlistClick: () => void
   additionalContent?: React.ReactNode
 }
 
@@ -41,12 +43,13 @@ export default function FeaturePage({
   reviews,
   howItWorks,
   whyItMatters,
-  onWaitlistClick,
   additionalContent
 }: FeaturePageProps) {
+  const { track } = useAnalytics()
+
   return (
     <div className="min-h-screen bg-black text-white">
-      <Navigation onWaitlistClick={onWaitlistClick} />
+      <Navigation />
       
       {/* Hero Section */}
       <motion.section 
@@ -61,10 +64,11 @@ export default function FeaturePage({
           <p className="text-lg text-gray-300 max-w-3xl mx-auto mb-12">{description}</p>
           
           <button 
-            onClick={onWaitlistClick}
-            className="bg-primary-neon text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-neon/90 transition-colors"
+            onClick={() => track('feature_page_cta_clicked', { feature: title })}
+            className="bg-primary-neon text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-neon/90 transition-colors inline-flex items-center group"
           >
-            Join Waitlist
+            Download the App
+            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
       </motion.section>
@@ -217,19 +221,22 @@ export default function FeaturePage({
         transition={{ duration: 0.6, delay: 1.0 }}
         className="py-20 px-4 bg-gradient-to-r from-primary-neon/10 to-primary-neon/5"
       >
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-circular font-bold mb-6">
-            Ready to optimize your {title.toLowerCase()}?
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-5xl font-circular font-bold text-white mb-6">
+            Ready to start your growth journey?
           </h2>
-          <p className="text-xl text-gray-400 mb-8">
-            Join thousands of others who are already seeing results with GoTall
+          <p className="text-xl text-primary-gray mb-8">
+            Download the GoTall app today and unlock your full potential.
           </p>
-          <button 
-            onClick={onWaitlistClick}
-            className="bg-primary-neon text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-neon/90 transition-colors"
-          >
-            Join Waitlist Now
-          </button>
+          <Link href="https://apps.apple.com/us/app/gotall/id6747467975" target="_blank" rel="noopener noreferrer">
+            <button 
+              onClick={() => track('feature_page_cta_clicked', { feature: title })}
+              className="bg-primary-neon text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-neon/90 transition-colors inline-flex items-center group"
+            >
+              Download the App
+              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </Link>
         </div>
       </motion.section>
 
