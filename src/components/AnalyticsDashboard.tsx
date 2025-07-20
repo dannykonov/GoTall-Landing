@@ -26,8 +26,11 @@ interface Visit {
 }
 
 interface ClickAnalytics {
-  total_clicks: number
-  click_breakdown: Record<string, number>
+  total_clicks: number;
+  click_breakdown: Record<string, number>;
+  platform_breakdown: Record<string, number>;
+  ios_clicks: number;
+  android_clicks: number;
 }
 
 export default function AnalyticsDashboard() {
@@ -36,7 +39,10 @@ export default function AnalyticsDashboard() {
   const [popularPages, setPopularPages] = useState<Array<{ page: string; count: number }>>([])
   const [clickData, setClickData] = useState<ClickAnalytics>({
     total_clicks: 0,
-    click_breakdown: {}
+    click_breakdown: {},
+    platform_breakdown: {},
+    ios_clicks: 0,
+    android_clicks: 0,
   })
   const [isLoading, setIsLoading] = useState(true)
   const [timeRange, setTimeRange] = useState(7) // days
@@ -67,7 +73,10 @@ export default function AnalyticsDashboard() {
       setPopularPages(pagesData || [])
       setClickData(clicksData || {
         total_clicks: 0,
-        click_breakdown: {}
+        click_breakdown: {},
+        platform_breakdown: {},
+        ios_clicks: 0,
+        android_clicks: 0,
       })
       
       console.log('=== DATA SET TO STATE ===')
@@ -217,6 +226,24 @@ export default function AnalyticsDashboard() {
               <MousePointerClick className="w-8 h-8 text-orange-400" />
             </div>
           </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="bg-primary-dark-gray rounded-xl p-6 border border-gray-700"
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-400 text-sm">Platform Clicks</p>
+                <p className="text-3xl font-bold text-purple-400">{clickData.total_clicks}</p>
+                <p className="text-xs text-gray-500 mt-1">
+                  iOS: {clickData.ios_clicks} | Android: {clickData.android_clicks}
+                </p>
+              </div>
+              <TrendingUp className="w-8 h-8 text-purple-400" />
+            </div>
+          </motion.div>
         </div>
 
         {/* Main Content */}
@@ -296,6 +323,36 @@ export default function AnalyticsDashboard() {
                   </li>
                 ))}
               </ul>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.45 }}
+              className="bg-primary-dark-gray rounded-xl p-6 border border-gray-700"
+            >
+              <h2 className="text-xl font-bold mb-4">Platform Breakdown</h2>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center p-3 bg-gray-800 rounded-lg">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
+                      <span className="text-white font-bold text-sm">🍎</span>
+                    </div>
+                    <span className="text-white font-medium">iOS (App Store)</span>
+                  </div>
+                  <span className="text-2xl font-bold text-primary-neon">{clickData.ios_clicks}</span>
+                </div>
+                
+                <div className="flex justify-between items-center p-3 bg-gray-800 rounded-lg">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
+                      <span className="text-white font-bold text-sm">🤖</span>
+                    </div>
+                    <span className="text-white font-medium">Android (Google Play)</span>
+                  </div>
+                  <span className="text-2xl font-bold text-green-400">{clickData.android_clicks}</span>
+                </div>
+              </div>
             </motion.div>
 
             <motion.div

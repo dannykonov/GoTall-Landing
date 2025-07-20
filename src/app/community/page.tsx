@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Users, MessageCircle, ThumbsUp, TrendingUp, Clock, Search, Filter, ArrowRight } from 'lucide-react'
 import Navigation from '@/components/Navigation'
-import Link from 'next/link'
+import DownloadButtons from '@/components/DownloadButtons'
 import { useAnalytics } from '@/hooks/useAnalytics'
 
 export default function CommunityPage() {
@@ -118,15 +118,11 @@ export default function CommunityPage() {
               Ask questions. Share progress. Get inspired.
             </p>
             
-            <Link href="https://apps.apple.com/us/app/gotall/id6747467975" target="_blank" rel="noopener noreferrer">
-              <button 
-                onClick={() => track('community_hero_cta_clicked')}
-                className="bg-primary-neon text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-neon/90 transition-colors inline-flex items-center group"
-              >
-                Download to Join Community
-                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-              </button>
-            </Link>
+            <DownloadButtons 
+              variant="single" 
+              size="lg" 
+              trackingPrefix="community_hero"
+            />
           </motion.div>
         </div>
       </section>
@@ -241,14 +237,11 @@ export default function CommunityPage() {
           {/* Join CTA */}
           <div className="mt-12 text-center">
             <p className="text-primary-gray mb-4">Want to join the conversation?</p>
-            <Link href="https://apps.apple.com/us/app/gotall/id6747467975" target="_blank" rel="noopener noreferrer">
-              <button 
-                onClick={() => track('community_bottom_cta_clicked')}
-                className="bg-primary-neon text-black px-6 py-3 rounded-lg font-medium hover:bg-primary-neon/90 transition-colors"
-              >
-                Download the App to Join
-              </button>
-            </Link>
+            <DownloadButtons 
+              variant="dual" 
+              size="md" 
+              trackingPrefix="community_bottom"
+            />
           </div>
         </div>
       </section>

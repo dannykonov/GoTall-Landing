@@ -15,6 +15,7 @@ import {
   ThumbsUp
 } from 'lucide-react'
 import Navigation from '@/components/Navigation'
+import DownloadButtons from '@/components/DownloadButtons'
 import Link from 'next/link'
 import { useAnalytics } from '@/hooks/useAnalytics'
 
@@ -115,60 +116,59 @@ export default function HomePage() {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="pt-20 pb-20 px-4">
-        <div className="max-w-7xl mx-auto text-center">
+      <section className="pt-16 sm:pt-20 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-12">
+        <div className="max-w-6xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center bg-primary-neon/10 border border-primary-neon/20 rounded-full px-4 py-2 mb-6">
+            <div className="inline-flex items-center bg-primary-neon/10 border border-primary-neon/20 rounded-full px-3 sm:px-4 py-2 mb-4 sm:mb-6">
               <Star className="w-4 h-4 text-primary-neon mr-2" />
               <span className="text-primary-neon text-sm font-medium">Backed by Science</span>
             </div>
             
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-circular font-bold text-white mb-6 leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-circular font-bold text-white mb-4 sm:mb-6 leading-tight">
               Unlock Your
               <span className="text-primary-neon block">Growth Potential</span>
               with GoTall
             </h1>
             
-            <p className="text-xl md:text-2xl text-primary-gray mb-8 max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl md:text-2xl text-primary-gray mb-6 sm:mb-8 max-w-3xl mx-auto px-4 sm:px-0">
               Track your height journey, optimize health habits, and grow up to 
               <span className="text-primary-neon font-semibold"> 2–3 inches in 6 months</span>.
             </p>
             
-            <Link href="https://apps.apple.com/us/app/gotall/id6747467975" target="_blank" rel="noopener noreferrer">
-              <button 
-                onClick={() => track('hero_cta_clicked')}
-                className="bg-primary-neon text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-neon/90 transition-colors inline-flex items-center group"
-              >
-                Download the App
-                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-              </button>
-            </Link>
+            <div className="flex justify-center px-4 sm:px-0">
+              <DownloadButtons 
+                variant="single" 
+                size="lg" 
+                trackingPrefix="hero"
+                className="w-full max-w-md sm:max-w-none"
+              />
+            </div>
           </motion.div>
         </div>
       </section>
 
       {/* Features Overview */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-12">
+        <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-12 sm:mb-16"
           >
-            <h2 className="text-3xl md:text-5xl font-circular font-bold text-white mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-circular font-bold text-white mb-4 sm:mb-6">
               Everything you need to grow
             </h2>
-            <p className="text-xl text-primary-gray max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-primary-gray max-w-2xl mx-auto px-4 sm:px-0">
               Comprehensive tools and insights designed to maximize your height potential through data-driven optimization.
             </p>
           </motion.div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {features.map((feature, index) => (
               <motion.div
                 key={feature.title}
@@ -179,16 +179,16 @@ export default function HomePage() {
               >
                 <Link href={feature.href}>
                   <div 
-                    className="bg-primary-dark-gray rounded-2xl p-8 border border-gray-700 hover:border-primary-neon/50 transition-all duration-300 group cursor-pointer h-full"
+                    className="bg-primary-dark-gray rounded-2xl p-6 sm:p-8 border border-gray-700 hover:border-primary-neon/50 transition-all duration-300 group cursor-pointer h-full"
                     onClick={() => track('feature_card_clicked', { feature: feature.title })}
                   >
-                    <div className="w-12 h-12 bg-primary-neon/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary-neon/20 transition-colors">
+                    <div className="w-12 h-12 bg-primary-neon/10 rounded-xl flex items-center justify-center mb-4 sm:mb-6 group-hover:bg-primary-neon/20 transition-colors">
                       <feature.icon className="w-6 h-6 text-primary-neon" />
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-primary-neon transition-colors">
+                    <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3 group-hover:text-primary-neon transition-colors">
                       {feature.title}
                     </h3>
-                    <p className="text-primary-gray">
+                    <p className="text-primary-gray text-sm sm:text-base">
                       {feature.description}
                     </p>
                   </div>
@@ -200,18 +200,18 @@ export default function HomePage() {
       </section>
 
       {/* App Mockups Preview */}
-      <section className="py-20 px-4 bg-primary-dark-gray/20">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-12 bg-primary-dark-gray/20">
+        <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-12 sm:mb-16"
           >
-            <h2 className="text-3xl md:text-5xl font-circular font-bold text-white mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-circular font-bold text-white mb-4 sm:mb-6">
               See GoTall in action
             </h2>
-            <p className="text-xl text-primary-gray max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-primary-gray max-w-2xl mx-auto px-4 sm:px-0">
               Get a preview of the GoTall app experience with these key features designed to optimize your growth journey.
             </p>
           </motion.div>
@@ -231,8 +231,8 @@ export default function HomePage() {
                   className="w-full h-auto rounded-2xl shadow-2xl"
                 />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-3">Home Dashboard</h3>
-              <p className="text-primary-gray">
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">Home Dashboard</h3>
+              <p className="text-primary-gray text-sm sm:text-base">
                 Track your progress, view daily goals, and get personalized recommendations all in one place.
               </p>
             </motion.div>
@@ -251,8 +251,8 @@ export default function HomePage() {
                   className="w-full h-auto rounded-2xl shadow-2xl"
                 />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-3">Nutrition Tracking</h3>
-              <p className="text-primary-gray">
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">Nutrition Tracking</h3>
+              <p className="text-primary-gray text-sm sm:text-base">
                 Monitor your nutrient intake with AI-powered recommendations for optimal growth support.
               </p>
             </motion.div>
@@ -271,8 +271,8 @@ export default function HomePage() {
                   className="w-full h-auto rounded-2xl shadow-2xl"
                 />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-3">Exercise Plans</h3>
-              <p className="text-primary-gray">
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">Exercise Plans</h3>
+              <p className="text-primary-gray text-sm sm:text-base">
                 Follow guided workouts and stretching routines specifically designed to promote height growth.
               </p>
             </motion.div>
@@ -281,7 +281,7 @@ export default function HomePage() {
       </section>
 
       {/* Backed by Science Section */}
-      <section className="py-20 px-4">
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-12">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -290,37 +290,37 @@ export default function HomePage() {
             className="text-center"
           >
             {/* CDC Logo Placeholder */}
-            <div className="mb-8">
-              <div className="w-20 h-20 mx-auto rounded-2xl flex items-center justify-center mb-4">
+            <div className="mb-6 sm:mb-8">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-2xl flex items-center justify-center mb-4">
                 <img 
                   src="/CDC Logo Updated 2024.png" 
                   alt="CDC Logo"
-                  className="w-20 h-auto"
+                  className="w-16 sm:w-20 h-auto"
                 />
               </div>
             </div>
             
-            <h2 className="text-3xl md:text-5xl font-circular font-bold text-white mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-circular font-bold text-white mb-4 sm:mb-6">
               Built on Science. Informed by Data.
             </h2>
             
-            <p className="text-xl text-primary-gray max-w-4xl mx-auto mb-8 leading-relaxed">
+            <p className="text-lg sm:text-xl text-primary-gray max-w-4xl mx-auto mb-6 sm:mb-8 leading-relaxed px-4 sm:px-0">
               GoTall uses insights and recommendations based on data from trusted health organizations, including the CDC, to help users make healthy lifestyle choices that may support natural growth potential.
             </p>
             
-            <div className="mb-8">
+            <div className="mb-6 sm:mb-8">
               <a 
                 href="https://www.cdc.gov" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-primary-neon hover:text-primary-neon/80 font-semibold text-lg underline underline-offset-4 transition-colors"
+                className="text-primary-neon hover:text-primary-neon/80 font-semibold text-base sm:text-lg underline underline-offset-4 transition-colors"
                 onClick={() => track('cdc_resources_clicked')}
               >
                 View CDC Resources
               </a>
             </div>
             
-            <p className="text-sm text-primary-gray/80 max-w-3xl mx-auto">
+            <p className="text-sm text-primary-gray/80 max-w-3xl mx-auto px-4 sm:px-0">
               <strong>Note:</strong> GoTall is not affiliated with or endorsed by the CDC. All health guidance is based on publicly available research.
             </p>
           </motion.div>
@@ -328,23 +328,23 @@ export default function HomePage() {
       </section>
 
       {/* How It Works */}
-      <section className="py-20 px-4 bg-primary-dark-gray/30">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-12 bg-primary-dark-gray/30">
+        <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-12 sm:mb-16"
           >
-            <h2 className="text-3xl md:text-5xl font-circular font-bold text-white mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-circular font-bold text-white mb-4 sm:mb-6">
               How it works
             </h2>
-            <p className="text-xl text-primary-gray max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-primary-gray max-w-2xl mx-auto px-4 sm:px-0">
               Get started on your growth journey in four simple steps
             </p>
           </motion.div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {steps.map((step, index) => (
               <motion.div
                 key={step.number}
@@ -354,11 +354,11 @@ export default function HomePage() {
                 transition={{ delay: index * 0.1 }}
                 className="text-center"
               >
-                <div className="w-16 h-16 bg-primary-neon rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <span className="text-2xl font-bold text-black">{step.number}</span>
+                <div className="w-14 h-14 sm:w-16 sm:h-16 bg-primary-neon rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                  <span className="text-xl sm:text-2xl font-bold text-black">{step.number}</span>
                 </div>
-                <h3 className="text-xl font-bold text-white mb-3">{step.title}</h3>
-                <p className="text-primary-gray">{step.description}</p>
+                <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3">{step.title}</h3>
+                <p className="text-primary-gray text-sm sm:text-base">{step.description}</p>
               </motion.div>
             ))}
           </div>
@@ -366,18 +366,18 @@ export default function HomePage() {
       </section>
 
       {/* Social Proof / Community Preview */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-12">
+        <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-12 sm:mb-16"
           >
-            <h2 className="text-3xl md:text-5xl font-circular font-bold text-white mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-circular font-bold text-white mb-4 sm:mb-6">
               Join the community
             </h2>
-            <p className="text-xl text-primary-gray max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-primary-gray max-w-2xl mx-auto px-4 sm:px-0">
               Connect with thousands chasing their growth goals, share progress, and get support
             </p>
           </motion.div>
@@ -390,26 +390,26 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-primary-dark-gray rounded-2xl p-6 border border-gray-700"
+                className="bg-primary-dark-gray rounded-2xl p-4 sm:p-6 border border-gray-700"
               >
                 <div className="flex items-center mb-4">
                   <div className="w-10 h-10 rounded-full bg-primary-neon/10 flex items-center justify-center mr-3">
                     <span className="text-lg">{post.avatar}</span>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-white">{post.user}</h4>
-                    <p className="text-sm text-primary-gray">{post.timeAgo}</p>
+                    <div className="font-semibold text-white">{post.user}</div>
+                    <div className="text-sm text-primary-gray">{post.timeAgo}</div>
                   </div>
                 </div>
-                <p className="text-white mb-4">{post.content}</p>
-                <div className="flex items-center space-x-4 text-primary-gray text-sm">
-                  <div className="flex items-center space-x-1">
-                    <ThumbsUp className="w-4 h-4" />
-                    <span>{post.likes}</span>
+                <p className="text-primary-gray text-sm sm:text-base mb-4">{post.content}</p>
+                <div className="flex items-center space-x-4 text-sm text-primary-gray">
+                  <div className="flex items-center">
+                    <ThumbsUp className="w-4 h-4 mr-1" />
+                    {post.likes}
                   </div>
-                  <div className="flex items-center space-x-1">
-                    <MessageCircle className="w-4 h-4" />
-                    <span>{post.replies}</span>
+                  <div className="flex items-center">
+                    <MessageCircle className="w-4 h-4 mr-1" />
+                    {post.replies}
                   </div>
                 </div>
               </motion.div>
@@ -419,11 +419,11 @@ export default function HomePage() {
           <div className="text-center">
             <Link href="/community">
               <button 
-                className="bg-primary-neon text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-neon/90 transition-colors inline-flex items-center group"
+                className="bg-primary-neon text-black px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-primary-neon/90 transition-colors inline-flex items-center group"
                 onClick={() => track('community_preview_clicked')}
               >
                 Join the Community
-                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </button>
             </Link>
           </div>
@@ -431,28 +431,27 @@ export default function HomePage() {
       </section>
 
       {/* Final CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-r from-primary-neon/10 to-primary-neon/5">
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-12 bg-gradient-to-r from-primary-neon/10 to-primary-neon/5">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-5xl font-circular font-bold text-white mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-circular font-bold text-white mb-4 sm:mb-6">
               Ready to unlock your growth potential?
             </h2>
-            <p className="text-xl text-primary-gray mb-8">
+            <p className="text-lg sm:text-xl text-primary-gray mb-6 sm:mb-8 px-4 sm:px-0">
               Join the waitlist and be the first to experience the future of height optimization.
             </p>
-            <Link href="https://apps.apple.com/us/app/gotall/id6747467975" target="_blank" rel="noopener noreferrer">
-              <button 
-                onClick={() => track('final_cta_clicked')}
-                className="bg-primary-neon text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-neon/90 transition-colors inline-flex items-center group"
-              >
-                Download the App
-                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-              </button>
-            </Link>
+            <div className="flex justify-center px-4 sm:px-0">
+              <DownloadButtons 
+                variant="single" 
+                size="lg" 
+                trackingPrefix="final"
+                className="w-full max-w-md sm:max-w-none"
+              />
+            </div>
           </motion.div>
         </div>
       </section>

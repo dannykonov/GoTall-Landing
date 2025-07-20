@@ -123,19 +123,48 @@ export const trackEvent = async (eventName: string, eventData?: Record<string, a
   try {
     if (typeof window === 'undefined') return
 
-    const { error } = await supabase
-      .from('app_clicks')
-      .insert([{
-        event_name: eventName,
-        metadata: eventData || null
-      }])
-    
-    if (error) {
-      if (error.code !== '42501') { 
-        console.warn('Event tracking error:', error)
+    // Check if this is a platform-specific click event
+    if (eventName.includes('_ios_clicked') || eventName.includes('_android_clicked')) {
+      const platform = eventName.includes('_ios_clicked') ? 'ios' : 'android'
+      const sessionId = getSessionId()
+      
+      const { error } = await supabase
+        .from('app_clicks')
+        .insert([{
+          event_name: eventName,
+          platform: platform,
+          metadata: {
+            ...eventData,
+            session_id: sessionId,
+            device_type: getDeviceType(),
+            browser: getBrowser(),
+            os: getOS()
+          }
+        }])
+      
+      if (error) {
+        if (error.code !== '42501') { 
+          console.warn('Platform click tracking error:', error)
+        }
+      } else {
+        console.log('Platform click tracked:', eventName, platform)
       }
     } else {
-      console.log('Event tracked:', eventName)
+      // Fallback to original app_clicks table for non-platform events
+      const { error } = await supabase
+        .from('app_clicks')
+        .insert([{
+          event_name: eventName,
+          metadata: eventData || null
+        }])
+      
+      if (error) {
+        if (error.code !== '42501') { 
+          console.warn('Event tracking error:', error)
+        }
+      } else {
+        console.log('Event tracked:', eventName)
+      }
     }
   } catch (error) {
     console.warn('Failed to track event:', error)
@@ -267,33 +296,55 @@ export const getPopularPages = async (days: number = 7) => {
 
 export const getClickAnalytics = async () => {
   try {
-    const { count, error } = await supabase
+    // Get all click data, overriding the default 1000-row limit from Supabase.
+    const { data: allClicks, error } = await supabase
       .from('app_clicks')
-      .select('*', { count: 'exact', head: true });
+      .select('event_name, platform')
+      .limit(5000); // Set a high limit to fetch all records
 
-    if (error) throw error;
+    if (error) {
+      console.error('Supabase error while fetching clicks:', error);
+      throw error;
+    }
 
-    const { data: breakdown, error: breakdownError } = await supabase
-      .from('app_clicks')
-      .select('event_name');
+    if (!allClicks) {
+      return { total_clicks: 0, click_breakdown: {}, platform_breakdown: {}, ios_clicks: 0, android_clicks: 0 };
+    }
 
-    if(breakdownError) throw breakdownError;
+    const total_clicks = allClicks.length;
 
-    const click_breakdown = breakdown.reduce((acc, curr) => {
-      const eventName = curr.event_name || 'unknown';
-      acc[eventName] = (acc[eventName] || 0) + 1;
+    // Process event breakdown
+    const click_breakdown = allClicks.reduce((acc, curr) => {
+      acc[curr.event_name || 'unknown'] = (acc[curr.event_name || 'unknown'] || 0) + 1;
       return acc;
     }, {} as Record<string, number>);
 
+    // Process platform breakdown
+    const platform_breakdown = allClicks.reduce((acc, curr) => {
+      if (curr.platform) {
+        acc[curr.platform] = (acc[curr.platform] || 0) + 1;
+      }
+      return acc;
+    }, {} as Record<string, number>);
+
+    const ios_clicks = platform_breakdown['ios'] || 0;
+    const android_clicks = platform_breakdown['android'] || 0;
+
     return {
-      total_clicks: count || 0,
+      total_clicks,
       click_breakdown,
+      platform_breakdown,
+      ios_clicks,
+      android_clicks,
     };
   } catch (error) {
     console.error('Failed to get click analytics:', error);
     return {
       total_clicks: 0,
       click_breakdown: {},
+      platform_breakdown: {},
+      ios_clicks: 0,
+      android_clicks: 0,
     };
   }
-} 
+}; 

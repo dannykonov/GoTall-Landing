@@ -6,6 +6,7 @@ import Navigation from '@/components/Navigation'
 import { useAnalytics } from '@/hooks/useAnalytics'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+import DownloadButtons from '@/components/DownloadButtons'
 
 interface Review {
   name: string
@@ -63,13 +64,11 @@ export default function FeaturePage({
           <p className="text-xl md:text-2xl text-gray-400 mb-8">{subtitle}</p>
           <p className="text-lg text-gray-300 max-w-3xl mx-auto mb-12">{description}</p>
           
-          <button 
-            onClick={() => track('feature_page_cta_clicked', { feature: title })}
-            className="bg-primary-neon text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-neon/90 transition-colors inline-flex items-center group"
-          >
-            Download the App
-            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-          </button>
+          <DownloadButtons 
+            variant="single" 
+            size="lg" 
+            trackingPrefix="feature_hero"
+          />
         </div>
       </motion.section>
 
@@ -228,15 +227,11 @@ export default function FeaturePage({
           <p className="text-xl text-primary-gray mb-8">
             Download the GoTall app today and unlock your full potential.
           </p>
-          <Link href="https://apps.apple.com/us/app/gotall/id6747467975" target="_blank" rel="noopener noreferrer">
-            <button 
-              onClick={() => track('feature_page_cta_clicked', { feature: title })}
-              className="bg-primary-neon text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-neon/90 transition-colors inline-flex items-center group"
-            >
-              Download the App
-              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-            </button>
-          </Link>
+          <DownloadButtons 
+            variant="single" 
+            size="lg" 
+            trackingPrefix="feature_final"
+          />
         </div>
       </motion.section>
 
