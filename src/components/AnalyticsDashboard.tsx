@@ -152,6 +152,15 @@ export default function AnalyticsDashboard() {
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-circular font-bold">Analytics Dashboard</h1>
           <div className="flex items-center space-x-4">
+            <button
+              onClick={() => {
+                console.log('🧪 Manual analytics refresh triggered');
+                loadAnalyticsData();
+              }}
+              className="bg-primary-neon text-black px-4 py-2 rounded-lg font-semibold hover:bg-primary-neon/90 transition-colors"
+            >
+              🔄 Refresh Data
+            </button>
             <select
               value={timeRange}
               onChange={(e) => setTimeRange(Number(e.target.value))}
@@ -236,7 +245,7 @@ export default function AnalyticsDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-400 text-sm">Platform Clicks</p>
-                <p className="text-3xl font-bold text-purple-400">{clickData.total_clicks}</p>
+                <p className="text-3xl font-bold text-purple-400">{clickData.ios_clicks + clickData.android_clicks}</p>
                 <p className="text-xs text-gray-500 mt-1">
                   iOS: {clickData.ios_clicks} | Android: {clickData.android_clicks}
                 </p>

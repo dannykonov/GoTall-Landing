@@ -296,20 +296,60 @@ export const getPopularPages = async (days: number = 7) => {
 
 export const getClickAnalytics = async () => {
   try {
-    // Get all click data, overriding the default 1000-row limit from Supabase.
-    const { data: allClicks, error } = await supabase
-      .from('app_clicks')
-      .select('event_name, platform')
-      .limit(5000); // Set a high limit to fetch all records
+    console.log('🔍 Starting getClickAnalytics...')
+    
+    // Fetch ALL click data by using pagination
+    let allClicks: any[] = [];
+    let page = 0;
+    const pageSize = 1000; // Supabase's max per page
+    let hasMore = true;
 
-    if (error) {
-      console.error('Supabase error while fetching clicks:', error);
-      throw error;
+    while (hasMore) {
+      console.log(`📄 Fetching page ${page + 1} (offset: ${page * pageSize})...`);
+      
+      const { data: pageData, error } = await supabase
+        .from('app_clicks')
+        .select('event_name, platform, created_at')
+        .range(page * pageSize, (page + 1) * pageSize - 1)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error(`❌ Supabase error on page ${page + 1}:`, error);
+        break;
+      }
+
+      if (!pageData || pageData.length === 0) {
+        console.log(`📄 No more data on page ${page + 1}, stopping pagination`);
+        hasMore = false;
+        break;
+      }
+
+      console.log(`📄 Page ${page + 1}: Got ${pageData.length} records`);
+      allClicks.push(...pageData);
+
+      // If we got less than pageSize, we've reached the end
+      if (pageData.length < pageSize) {
+        console.log(`📄 Last page reached (got ${pageData.length} < ${pageSize})`);
+        hasMore = false;
+      }
+
+      page++;
+      
+      // Safety break to prevent infinite loops
+      if (page > 10) {
+        console.warn('⚠️ Stopping pagination after 10 pages for safety');
+        break;
+      }
     }
 
-    if (!allClicks) {
+    console.log(`📊 Total records fetched: ${allClicks.length}`);
+
+    if (allClicks.length === 0) {
+      console.log('ℹ️ No clicks data found in app_clicks table')
       return { total_clicks: 0, click_breakdown: {}, platform_breakdown: {}, ios_clicks: 0, android_clicks: 0 };
     }
+
+    console.log(`✅ Found ${allClicks.length} total clicks in app_clicks table`)
 
     const total_clicks = allClicks.length;
 
@@ -323,6 +363,15 @@ export const getClickAnalytics = async () => {
     const platform_breakdown = allClicks.reduce((acc, curr) => {
       if (curr.platform) {
         acc[curr.platform] = (acc[curr.platform] || 0) + 1;
+      } else {
+        // If no platform specified, try to infer from event name
+        if (curr.event_name?.includes('_ios_') || curr.event_name?.includes('ios')) {
+          acc['ios'] = (acc['ios'] || 0) + 1;
+        } else if (curr.event_name?.includes('_android_') || curr.event_name?.includes('android')) {
+          acc['android'] = (acc['android'] || 0) + 1;
+        } else {
+          acc['unknown'] = (acc['unknown'] || 0) + 1;
+        }
       }
       return acc;
     }, {} as Record<string, number>);
@@ -330,15 +379,19 @@ export const getClickAnalytics = async () => {
     const ios_clicks = platform_breakdown['ios'] || 0;
     const android_clicks = platform_breakdown['android'] || 0;
 
-    return {
+    const result = {
       total_clicks,
       click_breakdown,
       platform_breakdown,
       ios_clicks,
       android_clicks,
     };
+
+    console.log('📈 Final click analytics result:', result);
+    console.log(`📊 Platform summary: iOS=${ios_clicks}, Android=${android_clicks}, Total=${total_clicks}`);
+    return result;
   } catch (error) {
-    console.error('Failed to get click analytics:', error);
+    console.error('💥 Failed to get click analytics:', error);
     return {
       total_clicks: 0,
       click_breakdown: {},
