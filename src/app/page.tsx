@@ -222,18 +222,18 @@ export default function HomePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-center"
+              className="text-center flex flex-col"
             >
-              <div className="mb-6 mx-auto max-w-sm">
+              <div className="mb-6 mx-auto w-full max-w-sm flex justify-center items-center h-[500px]">
                 <img 
-                  src="/GoTall Mockups/homescreen.png" 
-                  alt="GoTall Home Screen"
-                  className="w-full h-auto rounded-2xl shadow-2xl"
+                  src="/GoTall Mockups/project your height.png" 
+                  alt="GoTall Project Your Height"
+                  className="w-full h-96 object-contain rounded-2xl shadow-2xl"
                 />
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">Home Dashboard</h3>
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">Project Your Height</h3>
               <p className="text-primary-gray text-sm sm:text-base">
-                Track your progress, view daily goals, and get personalized recommendations all in one place.
+                See your potential height growth with AI-powered projections and track your journey to reaching your genetic potential.
               </p>
             </motion.div>
 
@@ -242,18 +242,18 @@ export default function HomePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="text-center"
+              className="text-center flex flex-col items-center justify-center"
             >
-              <div className="mb-6 mx-auto max-w-sm">
+              <div className="mb-6 mx-auto w-full max-w-lg flex justify-center items-center h-[500px]">
                 <img 
-                  src="/GoTall Mockups/nutrition.png" 
-                  alt="GoTall Nutrition Tracker"
-                  className="w-full h-auto rounded-2xl shadow-2xl"
+                  src="/GoTall Mockups/coach.png" 
+                  alt="GoTall Coach"
+                  className="w-full h-[450px] object-contain rounded-2xl shadow-2xl"
                 />
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">Nutrition Tracking</h3>
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">Personal Coach</h3>
               <p className="text-primary-gray text-sm sm:text-base">
-                Monitor your nutrient intake with AI-powered recommendations for optimal growth support.
+                Get personalized coaching and guidance tailored to your unique growth journey with expert advice and motivation.
               </p>
             </motion.div>
 
@@ -262,18 +262,18 @@ export default function HomePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className="text-center"
+              className="text-center flex flex-col"
             >
-              <div className="mb-6 mx-auto max-w-sm">
+              <div className="mb-6 mx-auto w-full max-w-sm flex justify-center items-center h-[500px]">
                 <img 
-                  src="/GoTall Mockups/excersices.png" 
-                  alt="GoTall Exercise Plans"
-                  className="w-full h-auto rounded-2xl shadow-2xl"
+                  src="/GoTall Mockups/track habits.png" 
+                  alt="GoTall Track Habits"
+                  className="w-full h-96 object-contain rounded-2xl shadow-2xl"
                 />
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">Exercise Plans</h3>
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">Track Habits</h3>
               <p className="text-primary-gray text-sm sm:text-base">
-                Follow guided workouts and stretching routines specifically designed to promote height growth.
+                Monitor your daily habits and routines to build consistent behaviors that support your height growth journey.
               </p>
             </motion.div>
           </div>

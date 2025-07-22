@@ -102,14 +102,14 @@ export default function ProgressPage() {
           >
             <div className="mb-6 mx-auto max-w-sm">
               <img 
-                src="/GoTall Mockups/homescreen.png" 
-                alt="GoTall Progress Dashboard"
+                src="/GoTall Mockups/project your height.png" 
+                alt="GoTall Project Your Height"
                 className="w-full h-auto rounded-2xl shadow-2xl"
               />
             </div>
-            <h3 className="text-2xl font-bold text-white mb-3">Growth Dashboard</h3>
+            <h3 className="text-2xl font-bold text-white mb-3">Project Your Height</h3>
             <p className="text-primary-gray">
-              Monitor your height progress with detailed analytics, growth projections, and personalized insights all in one comprehensive dashboard.
+              Visualize your height potential with AI-powered growth projections and track your progress toward reaching your genetic height goals.
             </p>
           </motion.div>
         </div>
