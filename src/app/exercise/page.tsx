@@ -89,16 +89,16 @@ export default function ExercisePage() {
             transition={{ delay: 0.1 }}
             className="text-center"
           >
-            <div className="mb-6 mx-auto max-w-sm">
+            <div className="mb-6 mx-auto max-w-xs">
               <img 
-                src="/GoTall Mockups/excersices.png" 
+                src="/GoTall Mockups/excersize.png" 
                 alt="GoTall Exercise Plans"
                 className="w-full h-auto rounded-2xl shadow-2xl"
               />
             </div>
-            <h3 className="text-2xl font-bold text-white mb-3">Daily Goals</h3>
+            <h3 className="text-2xl font-bold text-white mb-3">Exercise Plans</h3>
             <p className="text-primary-gray">
-              Track your daily exercise goals and maintain consistency with personalized workout plans and progress monitoring.
+              Follow guided workouts and stretching routines specifically designed to promote height growth and improve your overall fitness.
             </p>
           </motion.div>
 
@@ -109,16 +109,16 @@ export default function ExercisePage() {
             transition={{ delay: 0.2 }}
             className="text-center"
           >
-            <div className="mb-6 mx-auto max-w-sm">
+            <div className="mb-6 mx-auto max-w-xs">
               <img 
-                src="/GoTall Mockups/posture.png" 
+                src="/GoTall Mockups/postures.png" 
                 alt="GoTall Posture Improvement"
                 className="w-full h-auto rounded-2xl shadow-2xl"
               />
             </div>
-            <h3 className="text-2xl font-bold text-white mb-3">Posture Improvement</h3>
+            <h3 className="text-2xl font-bold text-white mb-3">Posture Training</h3>
             <p className="text-primary-gray">
-              Follow guided posture exercises and corrections to instantly improve your height appearance and support long-term spinal health.
+              Master proper posture techniques and spinal alignment exercises to instantly improve your height appearance and support long-term growth.
             </p>
           </motion.div>
         </div>
