@@ -103,11 +103,10 @@ export default function IOSRedirectPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.6 }}
-              className="space-y-8 sm:space-y-10"
             >
               <button 
                 onClick={handleCopyLink}
-                className="w-full bg-primary-neon text-black font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl hover:bg-primary-neon/90 transition-colors flex items-center justify-center text-sm sm:text-base"
+                className="w-full bg-primary-neon text-black font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl hover:bg-primary-neon/90 transition-colors flex items-center justify-center text-sm sm:text-base mb-8 sm:mb-10"
               >
                 {copied ? (
                   <>
