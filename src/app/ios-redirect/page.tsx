@@ -103,7 +103,7 @@ export default function IOSRedirectPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.6 }}
-              className="space-y-6 sm:space-y-8"
+              className="space-y-8 sm:space-y-10"
             >
               <button 
                 onClick={handleCopyLink}
