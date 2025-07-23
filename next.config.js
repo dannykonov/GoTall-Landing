@@ -10,7 +10,27 @@ const nextConfig = {
     appDir: true,
   },
   webpack: (config, { isServer }) => {
-    // Custom webpack config if needed
+    // Handle WebSocket polyfills for client-side
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+        crypto: false,
+        stream: false,
+        url: false,
+        zlib: false,
+        http: false,
+        https: false,
+        assert: false,
+        os: false,
+        path: false,
+        bufferutil: false,
+        'utf-8-validate': false,
+      }
+    }
+    
     return config
   },
 }

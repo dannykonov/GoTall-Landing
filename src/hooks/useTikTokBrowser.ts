@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { detectTikTokBrowser, openInExternalBrowser, TikTokBrowserInfo } from '@/lib/tiktok-detector'
+import { detectTikTokBrowser, openInExternalBrowser, TikTokBrowserInfo, handleTikTokDownload } from '@/lib/tiktok-detector'
 
 export function useTikTokBrowser() {
   const [browserInfo, setBrowserInfo] = useState<TikTokBrowserInfo>({
@@ -16,10 +16,15 @@ export function useTikTokBrowser() {
     return await openInExternalBrowser(url, fallbackMessage)
   }
 
+  const handleDownload = async (platform: 'ios' | 'android') => {
+    return await handleTikTokDownload(platform)
+  }
+
   return {
     isTikTokBrowser: browserInfo.isTikTokBrowser,
     userAgent: browserInfo.userAgent,
     platform: browserInfo.platform,
-    openInExternalBrowser: handleExternalLink
+    openInExternalBrowser: handleExternalLink,
+    handleDownload
   }
 } 
