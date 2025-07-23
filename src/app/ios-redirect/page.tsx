@@ -81,13 +81,6 @@ export default function IOSRedirectPage() {
                   <span className="flex-shrink-0 w-6 h-6 bg-primary-neon/20 rounded-full flex items-center justify-center">
                     <span className="text-primary-neon font-bold text-sm">1</span>
                   </span>
-                  <span className="text-primary-gray">Search for "GoTall" in the App Store</span>
-                </div>
-                <div className="text-center text-primary-gray text-sm">OR</div>
-                <div className="flex items-start space-x-3">
-                  <span className="flex-shrink-0 w-6 h-6 bg-primary-neon/20 rounded-full flex items-center justify-center">
-                    <span className="text-primary-neon font-bold text-sm">2</span>
-                  </span>
                   <span className="text-primary-gray">Copy and paste this link in Safari:</span>
                 </div>
                 <div className="bg-black rounded-lg p-3 border border-gray-600">
@@ -98,7 +91,7 @@ export default function IOSRedirectPage() {
                 <div className="text-center text-primary-gray text-sm">OR</div>
                 <div className="flex items-start space-x-3">
                   <span className="flex-shrink-0 w-6 h-6 bg-primary-neon/20 rounded-full flex items-center justify-center">
-                    <span className="text-primary-neon font-bold text-sm">3</span>
+                    <span className="text-primary-neon font-bold text-sm">2</span>
                   </span>
                   <span className="text-primary-gray">Open this link in your external browser</span>
                 </div>
