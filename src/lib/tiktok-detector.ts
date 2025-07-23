@@ -49,168 +49,22 @@ export async function openInExternalBrowser(url: string, fallbackMessage?: strin
     return true
   }
 
-  // Enhanced methods for TikTok browser
-  const methods = [
-    // Method 1: Try to open in new window with different target
-    () => {
-      try {
-        const newWindow = window.open(url, '_blank', 'noopener,noreferrer,popup')
-        if (newWindow) {
-          newWindow.focus()
-          return true
-        }
-      } catch (e) {
-        console.log('Window.open with popup failed')
-      }
-      return false
-    },
-    
-    // Method 2: Try to open in new window without target
-    () => {
-      try {
-        const newWindow = window.open(url)
-        if (newWindow) {
-          newWindow.focus()
-          return true
-        }
-      } catch (e) {
-        console.log('Window.open without target failed')
-      }
-      return false
-    },
-
-    // Method 3: Try to trigger external browser with special URL scheme
-    () => {
-      try {
-        const externalUrl = `external://${url}`
-        window.location.href = externalUrl
-        return true
-      } catch (e) {
-        console.log('External URL scheme failed')
-      }
-      return false
-    },
-
-    // Method 4: Try to use intent URL for Android
-    () => {
-      try {
-        const intentUrl = `intent://${url.replace(/^https?:\/\//, '')}#Intent;scheme=https;package=com.android.chrome;end`
-        window.location.href = intentUrl
-        return true
-      } catch (e) {
-        console.log('Intent URL failed')
-      }
-      return false
-    },
-
-    // Method 5: Try to use custom URL scheme
-    () => {
-      try {
-        const customUrl = `gotall://download?url=${encodeURIComponent(url)}`
-        window.location.href = customUrl
-        return true
-      } catch (e) {
-        console.log('Custom URL scheme failed')
-      }
-      return false
-    },
-
-    // Method 6: Try to use iframe method
-    () => {
-      try {
-        const iframe = document.createElement('iframe')
-        iframe.style.display = 'none'
-        iframe.src = url
-        document.body.appendChild(iframe)
-        setTimeout(() => {
-          document.body.removeChild(iframe)
-        }, 1000)
-        return true
-      } catch (e) {
-        console.log('Iframe method failed')
-      }
-      return false
-    },
-
-    // Method 7: Try to use location.assign
-    () => {
-      try {
-        window.location.assign(url)
-        return true
-      } catch (e) {
-        console.log('Location.assign failed')
-      }
-      return false
-    },
-
-    // Method 8: Try to use location.replace
-    () => {
-      try {
-        window.location.replace(url)
-        return true
-      } catch (e) {
-        console.log('Location.replace failed')
-      }
-      return false
-    },
-
-    // Method 9: Try to use link element
-    () => {
-      try {
-        const link = document.createElement('a')
-        link.href = url
-        link.target = '_blank'
-        link.rel = 'noopener noreferrer'
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
-        return true
-      } catch (e) {
-        console.log('Link element method failed')
-      }
-      return false
-    },
-
-    // Method 10: Try to copy to clipboard and show instructions
-    async () => {
-      try {
-        await navigator.clipboard.writeText(url)
-        const message = fallbackMessage || 'Link copied to clipboard! Please paste it in your external browser to download the app.'
-        alert(message)
-        return true
-      } catch (e) {
-        console.log('Clipboard method failed')
-      }
-      return false
-    },
-    
-    // Final fallback: direct navigation
-    () => {
-      try {
-        window.location.href = url
-        return true
-      } catch (e) {
-        console.log('Direct navigation failed')
-      }
-      return false
+  // For TikTok browser, try to open our custom landing page first
+  try {
+    // Extract platform from URL
+    let platform = 'ios'
+    if (url.includes('play.google.com')) {
+      platform = 'android'
     }
-  ]
-
-  // Try each method with a small delay between attempts
-  for (let i = 0; i < methods.length; i++) {
-    try {
-      const result = await methods[i]()
-      if (result) {
-        // Add a small delay before trying the next method
-        await new Promise(resolve => setTimeout(resolve, 100))
-        return true
-      }
-    } catch (e) {
-      console.log('Method failed:', e)
-    }
+    
+    // Try redirect page first (immediate redirect)
+    const redirectPageUrl = `${window.location.origin}/redirect?platform=${platform}`
+    window.open(redirectPageUrl, '_blank', 'noopener,noreferrer')
+    return true
+  } catch (e) {
+    console.log('Failed to open redirect page:', e)
+    return false
   }
-
-  return false
 }
 
 export function showTikTokInstructions(): void {
@@ -227,8 +81,83 @@ Android: https://play.google.com/store/apps/details?id=app.gotall.play&pli=1
   alert(instructions)
 }
 
-// New function to handle TikTok-specific download flow
+// New function to handle TikTok-specific download flow using landing page
 export async function handleTikTokDownload(platform: 'ios' | 'android'): Promise<boolean> {
+  const { isTikTokBrowser } = detectTikTokBrowser()
+  
+  if (!isTikTokBrowser) {
+    return false
+  }
+
+  try {
+    // Try multiple approaches for TikTok
+    const approaches = [
+      // Approach 1: Try redirect page (immediate redirect)
+      () => {
+        const redirectPageUrl = `${window.location.origin}/redirect?platform=${platform}`
+        const newWindow = window.open(redirectPageUrl, '_blank', 'noopener,noreferrer')
+        if (newWindow) {
+          newWindow.focus()
+          return true
+        }
+        return false
+      },
+      
+      // Approach 2: Try download page (with countdown)
+      () => {
+        const downloadPageUrl = `${window.location.origin}/download?platform=${platform}`
+        const newWindow = window.open(downloadPageUrl, '_blank', 'noopener,noreferrer')
+        if (newWindow) {
+          newWindow.focus()
+          return true
+        }
+        return false
+      },
+      
+      // Approach 3: Try direct app store with enhanced methods
+      () => {
+        const urls = {
+          ios: 'https://apps.apple.com/us/app/gotall/id6747467975',
+          android: 'https://play.google.com/store/apps/details?id=app.gotall.play&pli=1'
+        }
+        
+        const url = urls[platform]
+        const newWindow = window.open(url, '_blank', 'noopener,noreferrer,popup')
+        if (newWindow) {
+          newWindow.focus()
+          return true
+        }
+        return false
+      },
+      
+      // Approach 4: Try with location.href
+      () => {
+        const redirectPageUrl = `${window.location.origin}/redirect?platform=${platform}`
+        window.location.href = redirectPageUrl
+        return true
+      }
+    ]
+
+    for (const approach of approaches) {
+      try {
+        const result = approach()
+        if (result) {
+          return true
+        }
+      } catch (e) {
+        console.log('Approach failed:', e)
+      }
+    }
+
+    return false
+  } catch (e) {
+    console.log('Failed to open download page:', e)
+    return false
+  }
+}
+
+// Alternative function that tries to open app store directly with enhanced methods
+export async function handleDirectAppStoreDownload(platform: 'ios' | 'android'): Promise<boolean> {
   const { isTikTokBrowser } = detectTikTokBrowser()
   
   if (!isTikTokBrowser) {
@@ -242,41 +171,88 @@ export async function handleTikTokDownload(platform: 'ios' | 'android'): Promise
 
   const url = urls[platform]
   
-  // Try multiple approaches for TikTok
-  const approaches = [
-    // Approach 1: Try to open with a delay
-    async () => {
-      await new Promise(resolve => setTimeout(resolve, 500))
-      return await openInExternalBrowser(url)
-    },
-    
-    // Approach 2: Try to show instructions first, then attempt download
-    async () => {
-      showTikTokInstructions()
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      return await openInExternalBrowser(url)
-    },
-    
-    // Approach 3: Try to copy link and show manual instructions
-    async () => {
+  // Enhanced methods for direct app store access
+  const methods = [
+    // Method 1: Try with different window features
+    () => {
       try {
-        await navigator.clipboard.writeText(url)
-        alert(`Link copied! Please:\n1. Open your external browser\n2. Paste the link\n3. Download the app`)
+        const newWindow = window.open(url, '_blank', 'noopener,noreferrer,popup,scrollbars=yes,resizable=yes')
+        if (newWindow) {
+          newWindow.focus()
+          return true
+        }
+      } catch (e) {
+        console.log('Window.open with features failed')
+      }
+      return false
+    },
+    
+    // Method 2: Try with user gesture simulation
+    () => {
+      try {
+        const link = document.createElement('a')
+        link.href = url
+        link.target = '_blank'
+        link.rel = 'noopener noreferrer'
+        link.style.display = 'none'
+        document.body.appendChild(link)
+        
+        // Simulate user interaction
+        const event = new MouseEvent('click', {
+          view: window,
+          bubbles: true,
+          cancelable: true
+        })
+        link.dispatchEvent(event)
+        
+        setTimeout(() => {
+          document.body.removeChild(link)
+        }, 100)
+        
         return true
       } catch (e) {
-        return false
+        console.log('User gesture simulation failed')
       }
+      return false
+    },
+    
+    // Method 3: Try with iframe method
+    () => {
+      try {
+        const iframe = document.createElement('iframe')
+        iframe.style.display = 'none'
+        iframe.src = url
+        document.body.appendChild(iframe)
+        setTimeout(() => {
+          document.body.removeChild(iframe)
+        }, 2000)
+        return true
+      } catch (e) {
+        console.log('Iframe method failed')
+      }
+      return false
+    },
+    
+    // Method 4: Try with location.assign
+    () => {
+      try {
+        window.location.assign(url)
+        return true
+      } catch (e) {
+        console.log('Location.assign failed')
+      }
+      return false
     }
   ]
 
-  for (const approach of approaches) {
+  for (const method of methods) {
     try {
-      const result = await approach()
+      const result = method()
       if (result) {
         return true
       }
     } catch (e) {
-      console.log('Approach failed:', e)
+      console.log('Method failed:', e)
     }
   }
 

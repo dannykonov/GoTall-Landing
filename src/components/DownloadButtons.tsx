@@ -34,11 +34,11 @@ export default function DownloadButtons({
     handlePlatformClick('ios')
     
     if (isTikTokBrowser) {
-      // Use enhanced TikTok handling for App Store
+      // Use landing page approach for TikTok
       const success = await handleDownload('ios')
       
       if (!success) {
-        // Show modal with instructions
+        // Fallback to modal with instructions
         setModalState({ isOpen: true, platform: 'ios' })
       }
     } else {
@@ -51,11 +51,11 @@ export default function DownloadButtons({
     handlePlatformClick('android')
     
     if (isTikTokBrowser) {
-      // Use enhanced TikTok handling for Google Play
+      // Use landing page approach for TikTok
       const success = await handleDownload('android')
       
       if (!success) {
-        // Show modal with instructions
+        // Fallback to modal with instructions
         setModalState({ isOpen: true, platform: 'android' })
       }
     } else {
