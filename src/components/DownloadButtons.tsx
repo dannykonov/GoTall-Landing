@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAnalytics } from '@/hooks/useAnalytics'
 import { useTikTokBrowser } from '@/hooks/useTikTokBrowser'
 import TikTokDownloadModal from './TikTokDownloadModal'
@@ -25,6 +25,12 @@ export default function DownloadButtons({
     isOpen: false,
     platform: null
   })
+  const [origin, setOrigin] = useState('')
+
+  useEffect(() => {
+    // Set origin only on client side
+    setOrigin(window.location.origin)
+  }, [])
 
   const handlePlatformClick = (platform: 'ios' | 'android') => {
     track(`${trackingPrefix}_${platform}_clicked`, { platform })
@@ -80,13 +86,23 @@ export default function DownloadButtons({
     lg: 'w-6 h-6'
   }
 
+  // Don't render until we have the origin (client-side only)
+  if (!origin) {
+    return (
+      <div className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center w-full sm:w-auto ${className}`}>
+        <div className="bg-gray-200 animate-pulse rounded-xl h-[60px] w-full sm:min-w-[200px]"></div>
+        <div className="bg-gray-200 animate-pulse rounded-xl h-[60px] w-full sm:min-w-[200px]"></div>
+      </div>
+    )
+  }
+
   if (variant === 'single') {
     return (
       <>
         <div className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center w-full sm:w-auto ${className}`}>
           {/* iOS Button with target="_blank" and rel="noopener" */}
           <a 
-            href={`${window.location.origin}/ios-redirect`}
+            href={`${origin}/ios-redirect`}
             target="_blank"
             rel="noopener noreferrer"
             onClick={handleAppStoreClick}
@@ -109,7 +125,7 @@ export default function DownloadButtons({
 
           {/* Android Button with target="_blank" and rel="noopener" */}
           <a 
-            href={`${window.location.origin}/android-redirect`}
+            href={`${origin}/android-redirect`}
             target="_blank"
             rel="noopener noreferrer"
             onClick={handleGooglePlayClick}
@@ -148,7 +164,7 @@ export default function DownloadButtons({
       <div className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center w-full sm:w-auto ${className}`}>
         {/* iOS Button with target="_blank" and rel="noopener" */}
         <a 
-          href={`${window.location.origin}/ios-redirect`}
+          href={`${origin}/ios-redirect`}
           target="_blank"
           rel="noopener noreferrer"
           onClick={handleAppStoreClick}
@@ -168,7 +184,7 @@ export default function DownloadButtons({
 
         {/* Android Button with target="_blank" and rel="noopener" */}
         <a 
-          href={`${window.location.origin}/android-redirect`}
+          href={`${origin}/android-redirect`}
           target="_blank"
           rel="noopener noreferrer"
           onClick={handleGooglePlayClick}
