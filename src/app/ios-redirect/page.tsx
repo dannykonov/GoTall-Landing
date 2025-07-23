@@ -61,11 +61,11 @@ export default function IOSRedirectPage() {
 
             {/* Title */}
             <h1 className="text-3xl sm:text-4xl font-circular font-bold text-white mb-4">
-              Opening App Store...
+              Opening Failed
             </h1>
             
             <p className="text-lg sm:text-xl text-primary-gray mb-8">
-              Redirecting you to download GoTall on iOS
+              TikTok's browser blocked the automatic redirect. Here's how to download GoTall:
             </p>
 
             {/* Instructions card */}
@@ -75,7 +75,7 @@ export default function IOSRedirectPage() {
               transition={{ delay: 0.2, duration: 0.6 }}
               className="bg-primary-dark-gray rounded-2xl p-6 sm:p-8 border border-gray-700 mb-8"
             >
-              <h3 className="text-xl font-bold text-white mb-4">If this doesn't work:</h3>
+              <h3 className="text-xl font-bold text-white mb-4">Download GoTall manually:</h3>
               <div className="space-y-4 text-left">
                 <div className="flex items-start space-x-3">
                   <span className="flex-shrink-0 w-6 h-6 bg-primary-neon/20 rounded-full flex items-center justify-center">
@@ -108,7 +108,7 @@ export default function IOSRedirectPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.6 }}
-              className="space-y-4"
+              className="space-y-6"
             >
               <button 
                 onClick={handleCopyLink}
