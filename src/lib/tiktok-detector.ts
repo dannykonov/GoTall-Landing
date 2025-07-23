@@ -49,7 +49,7 @@ export async function openInExternalBrowser(url: string, fallbackMessage?: strin
     return true
   }
 
-  // For TikTok browser, try to open our custom landing page first
+  // For TikTok browser, use the simple redirect page approach
   try {
     // Extract platform from URL
     let platform = 'ios'
@@ -57,9 +57,9 @@ export async function openInExternalBrowser(url: string, fallbackMessage?: strin
       platform = 'android'
     }
     
-    // Try redirect page first (immediate redirect)
-    const redirectPageUrl = `${window.location.origin}/redirect?platform=${platform}`
-    window.open(redirectPageUrl, '_blank', 'noopener,noreferrer')
+    // Use the simple redirect pages as shown in the images
+    const redirectUrl = `${window.location.origin}/${platform}-redirect`
+    window.open(redirectUrl, '_blank', 'noopener,noreferrer')
     return true
   } catch (e) {
     console.log('Failed to open redirect page:', e)
@@ -81,7 +81,7 @@ Android: https://play.google.com/store/apps/details?id=app.gotall.play&pli=1
   alert(instructions)
 }
 
-// New function to handle TikTok-specific download flow using landing page
+// Updated function to use the simple redirect page approach
 export async function handleTikTokDownload(platform: 'ios' | 'android'): Promise<boolean> {
   const { isTikTokBrowser } = detectTikTokBrowser()
   
@@ -90,12 +90,14 @@ export async function handleTikTokDownload(platform: 'ios' | 'android'): Promise
   }
 
   try {
-    // Try multiple approaches for TikTok
-    const approaches = [
-      // Approach 1: Try redirect page (immediate redirect)
+    // Use the simple redirect pages as shown in the images
+    const redirectUrl = `${window.location.origin}/${platform}-redirect`
+    
+    // Try multiple methods to open the redirect page
+    const methods = [
+      // Method 1: Direct window.open with target="_blank"
       () => {
-        const redirectPageUrl = `${window.location.origin}/redirect?platform=${platform}`
-        const newWindow = window.open(redirectPageUrl, '_blank', 'noopener,noreferrer')
+        const newWindow = window.open(redirectUrl, '_blank', 'noopener,noreferrer')
         if (newWindow) {
           newWindow.focus()
           return true
@@ -103,10 +105,9 @@ export async function handleTikTokDownload(platform: 'ios' | 'android'): Promise
         return false
       },
       
-      // Approach 2: Try download page (with countdown)
+      // Method 2: Try without target
       () => {
-        const downloadPageUrl = `${window.location.origin}/download?platform=${platform}`
-        const newWindow = window.open(downloadPageUrl, '_blank', 'noopener,noreferrer')
+        const newWindow = window.open(redirectUrl)
         if (newWindow) {
           newWindow.focus()
           return true
@@ -114,44 +115,38 @@ export async function handleTikTokDownload(platform: 'ios' | 'android'): Promise
         return false
       },
       
-      // Approach 3: Try direct app store with enhanced methods
+      // Method 3: Use location.href
       () => {
-        const urls = {
-          ios: 'https://apps.apple.com/us/app/gotall/id6747467975',
-          android: 'https://play.google.com/store/apps/details?id=app.gotall.play&pli=1'
-        }
-        
-        const url = urls[platform]
-        const newWindow = window.open(url, '_blank', 'noopener,noreferrer,popup')
-        if (newWindow) {
-          newWindow.focus()
-          return true
-        }
-        return false
-      },
-      
-      // Approach 4: Try with location.href
-      () => {
-        const redirectPageUrl = `${window.location.origin}/redirect?platform=${platform}`
-        window.location.href = redirectPageUrl
+        window.location.href = redirectUrl
         return true
+      },
+      
+      // Method 4: Try JavaScript redirect page as fallback
+      () => {
+        const jsRedirectUrl = `${window.location.origin}/open-${platform}`
+        const newWindow = window.open(jsRedirectUrl, '_blank', 'noopener,noreferrer')
+        if (newWindow) {
+          newWindow.focus()
+          return true
+        }
+        return false
       }
     ]
 
-    for (const approach of approaches) {
+    for (const method of methods) {
       try {
-        const result = approach()
+        const result = method()
         if (result) {
           return true
         }
       } catch (e) {
-        console.log('Approach failed:', e)
+        console.log('Method failed:', e)
       }
     }
 
     return false
   } catch (e) {
-    console.log('Failed to open download page:', e)
+    console.log('Failed to open redirect page:', e)
     return false
   }
 }
