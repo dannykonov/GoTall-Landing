@@ -75,7 +75,7 @@ export default function IOSRedirectPage() {
               transition={{ delay: 0.2, duration: 0.6 }}
               className="bg-primary-dark-gray rounded-2xl p-6 sm:p-8 border border-gray-700 mb-8"
             >
-              <h3 className="text-xl font-bold text-white mb-4">Download GoTall manually:</h3>
+              <h3 className="text-xl font-bold text-white mb-4">Choose one option to download GoTall:</h3>
               <div className="space-y-4 text-left">
                 <div className="flex items-start space-x-3">
                   <span className="flex-shrink-0 w-6 h-6 bg-primary-neon/20 rounded-full flex items-center justify-center">
@@ -83,6 +83,7 @@ export default function IOSRedirectPage() {
                   </span>
                   <span className="text-primary-gray">Search for "GoTall" in the App Store</span>
                 </div>
+                <div className="text-center text-primary-gray text-sm">OR</div>
                 <div className="flex items-start space-x-3">
                   <span className="flex-shrink-0 w-6 h-6 bg-primary-neon/20 rounded-full flex items-center justify-center">
                     <span className="text-primary-neon font-bold text-sm">2</span>
@@ -94,6 +95,7 @@ export default function IOSRedirectPage() {
                     https://apps.apple.com/us/app/gotall/id6747467975
                   </code>
                 </div>
+                <div className="text-center text-primary-gray text-sm">OR</div>
                 <div className="flex items-start space-x-3">
                   <span className="flex-shrink-0 w-6 h-6 bg-primary-neon/20 rounded-full flex items-center justify-center">
                     <span className="text-primary-neon font-bold text-sm">3</span>
