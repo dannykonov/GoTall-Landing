@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowLeft, Copy, Check } from 'lucide-react'
+import { ArrowLeft, Copy, Check, ExternalLink } from 'lucide-react'
 import { useState } from 'react'
 import Link from 'next/link'
 
@@ -24,6 +24,10 @@ export default function IOSRedirectPage() {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     }
+  }
+
+  const handleOpenExternal = () => {
+    window.open('https://apps.apple.com/us/app/gotall/id6747467975', '_blank', 'noopener,noreferrer')
   }
 
   return (
@@ -115,10 +119,19 @@ export default function IOSRedirectPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.6 }}
+              className="space-y-3"
             >
               <button 
+                onClick={handleOpenExternal}
+                className="w-full bg-primary-neon text-black font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl hover:bg-primary-neon/90 transition-colors flex items-center justify-center text-sm sm:text-base"
+              >
+                <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                Open in External Browser
+              </button>
+
+              <button 
                 onClick={handleCopyLink}
-                className="w-full bg-primary-neon text-black font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl hover:bg-primary-neon/90 transition-colors flex items-center justify-center text-sm sm:text-base mb-8 sm:mb-10"
+                className="w-full bg-transparent text-primary-neon border-2 border-primary-neon font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl hover:bg-primary-neon/10 transition-colors flex items-center justify-center text-sm sm:text-base"
               >
                 {copied ? (
                   <>
@@ -137,7 +150,7 @@ export default function IOSRedirectPage() {
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full bg-transparent text-primary-neon border-2 border-primary-neon font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl hover:bg-primary-neon/10 transition-colors text-sm sm:text-base"
+                  className="w-full bg-transparent text-primary-gray border border-primary-gray font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl hover:bg-primary-gray/10 transition-colors text-sm sm:text-base"
                 >
                   Return to Landing Page
                 </motion.button>

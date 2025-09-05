@@ -37,6 +37,10 @@ export default function TikTokDownloadModal({ isOpen, onClose, platform }: TikTo
     window.open(url, '_blank', 'noopener,noreferrer')
   }
 
+  const handleOpenExternal = () => {
+    window.open(url, '_blank', 'noopener,noreferrer')
+  }
+
   const toggleQR = () => {
     setShowQR(!showQR)
   }
@@ -118,14 +122,38 @@ export default function TikTokDownloadModal({ isOpen, onClose, platform }: TikTo
                   
                   <div className="space-y-3">
                     <button
+                      onClick={handleOpenExternal}
+                      className="w-full py-3 px-4 bg-primary-neon text-black rounded-xl font-semibold hover:bg-primary-neon/90 transition-all duration-200 flex items-center justify-center"
+                    >
+                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                      Open in External Browser
+                    </button>
+                    
+                    <button
                       onClick={handleCopyLink}
-                      className={`w-full py-3 px-4 rounded-xl font-semibold transition-all duration-200 ${
+                      className={`w-full py-3 px-4 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center ${
                         copied 
                           ? 'bg-green-500 text-white' 
-                          : 'bg-primary-neon text-black hover:bg-primary-neon/90'
+                          : 'bg-transparent text-primary-neon border-2 border-primary-neon hover:bg-primary-neon/10'
                       }`}
                     >
-                      {copied ? '✓ Link Copied!' : 'Copy Download Link'}
+                      {copied ? (
+                        <>
+                          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                          Link Copied!
+                        </>
+                      ) : (
+                        <>
+                          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                          </svg>
+                          Copy Download Link
+                        </>
+                      )}
                     </button>
                     
                     <button
@@ -133,13 +161,6 @@ export default function TikTokDownloadModal({ isOpen, onClose, platform }: TikTo
                       className="w-full py-3 px-4 border-2 border-gray-300 rounded-xl font-semibold text-gray-700 hover:bg-gray-50 transition-all duration-200"
                     >
                       Show QR Code Instead
-                    </button>
-                    
-                    <button
-                      onClick={handleTryAgain}
-                      className="w-full py-3 px-4 border-2 border-gray-300 rounded-xl font-semibold text-gray-700 hover:bg-gray-50 transition-all duration-200"
-                    >
-                      Try Opening Again
                     </button>
                     
                     <button
