@@ -75,9 +75,15 @@ export default function TikTokDownloadModal({ isOpen, onClose, platform }: TikTo
                 Download GoTall
               </h3>
               
-              <p className="text-gray-600 mb-6">
-                TikTok's browser can't open the {platformName} directly. Here's how to download:
+              <p className="text-gray-600 mb-4">
+                TikTok doesn't allow app store links. Here's how to download GoTall:
               </p>
+              
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-6">
+                <p className="text-blue-800 text-sm">
+                  <strong>Note:</strong> TikTok restricts external app store links for security reasons. This is normal behavior, not an error.
+                </p>
+              </div>
               
               {!showQR ? (
                 <>

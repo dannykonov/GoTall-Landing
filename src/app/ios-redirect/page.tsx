@@ -61,12 +61,19 @@ export default function IOSRedirectPage() {
 
             {/* Title */}
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-circular font-bold text-white mb-3 sm:mb-4">
-              Opening Failed
+              Download GoTall
             </h1>
             
-            <p className="text-base sm:text-lg md:text-xl text-primary-gray mb-6 sm:mb-8 px-2 sm:px-0">
-              TikTok's browser blocked the automatic redirect. Here's how to download GoTall:
+            <p className="text-base sm:text-lg md:text-xl text-primary-gray mb-4 sm:mb-6 px-2 sm:px-0">
+              Unfortunately, TikTok's browser doesn't allow direct links to app stores. Here's how to download GoTall:
             </p>
+
+            {/* Info box */}
+            <div className="bg-primary-neon/10 border border-primary-neon/20 rounded-lg p-3 sm:p-4 mb-6 sm:mb-8">
+              <p className="text-primary-neon text-sm sm:text-base">
+                <strong>Note:</strong> TikTok restricts external app store links for security reasons. This is normal behavior, not an error.
+              </p>
+            </div>
 
             {/* Instructions card */}
             <motion.div
@@ -75,25 +82,30 @@ export default function IOSRedirectPage() {
               transition={{ delay: 0.2, duration: 0.6 }}
               className="bg-primary-dark-gray rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 border border-gray-700 mb-6 sm:mb-8"
             >
-              <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">Choose one option to download GoTall:</h3>
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">Follow these steps to download GoTall:</h3>
               <div className="space-y-3 sm:space-y-4 text-left">
                 <div className="flex items-start space-x-2 sm:space-x-3">
                   <span className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 bg-primary-neon/20 rounded-full flex items-center justify-center">
                     <span className="text-primary-neon font-bold text-xs sm:text-sm">1</span>
                   </span>
-                  <span className="text-primary-gray text-sm sm:text-base">Copy and paste this link in Safari:</span>
+                  <span className="text-primary-gray text-sm sm:text-base">Copy the download link below</span>
                 </div>
                 <div className="bg-black rounded-lg p-2 sm:p-3 border border-gray-600">
                   <code className="text-primary-neon text-xs sm:text-sm break-all">
                     https://apps.apple.com/us/app/gotall/id6747467975
                   </code>
                 </div>
-                <div className="text-center text-primary-gray text-xs sm:text-sm">OR</div>
                 <div className="flex items-start space-x-2 sm:space-x-3">
                   <span className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 bg-primary-neon/20 rounded-full flex items-center justify-center">
                     <span className="text-primary-neon font-bold text-xs sm:text-sm">2</span>
                   </span>
-                  <span className="text-primary-gray text-sm sm:text-base">Open this link in your external browser</span>
+                  <span className="text-primary-gray text-sm sm:text-base">Open Safari or another browser</span>
+                </div>
+                <div className="flex items-start space-x-2 sm:space-x-3">
+                  <span className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 bg-primary-neon/20 rounded-full flex items-center justify-center">
+                    <span className="text-primary-neon font-bold text-xs sm:text-sm">3</span>
+                  </span>
+                  <span className="text-primary-gray text-sm sm:text-base">Paste the link and download GoTall</span>
                 </div>
               </div>
             </motion.div>
