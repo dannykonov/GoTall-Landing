@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowLeft, Copy, Check, ExternalLink } from 'lucide-react'
+import { ArrowLeft, Copy, Check } from 'lucide-react'
 import { useState } from 'react'
 import Link from 'next/link'
 
@@ -24,10 +24,6 @@ export default function IOSRedirectPage() {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     }
-  }
-
-  const handleOpenExternal = () => {
-    window.open('https://apps.apple.com/us/app/gotall/id6747467975', '_blank', 'noopener,noreferrer')
   }
 
   return (
@@ -86,30 +82,25 @@ export default function IOSRedirectPage() {
               transition={{ delay: 0.2, duration: 0.6 }}
               className="bg-primary-dark-gray rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 border border-gray-700 mb-6 sm:mb-8"
             >
-              <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">Follow these steps to download GoTall:</h3>
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">Choose one option to download GoTall:</h3>
               <div className="space-y-3 sm:space-y-4 text-left">
                 <div className="flex items-start space-x-2 sm:space-x-3">
                   <span className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 bg-primary-neon/20 rounded-full flex items-center justify-center">
                     <span className="text-primary-neon font-bold text-xs sm:text-sm">1</span>
                   </span>
-                  <span className="text-primary-gray text-sm sm:text-base">Copy the download link below</span>
+                  <span className="text-primary-gray text-sm sm:text-base">Use TikTok's "Open in External Browser" button (recommended)</span>
+                </div>
+                <div className="text-center text-primary-gray text-xs sm:text-sm">OR</div>
+                <div className="flex items-start space-x-2 sm:space-x-3">
+                  <span className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 bg-primary-neon/20 rounded-full flex items-center justify-center">
+                    <span className="text-primary-neon font-bold text-xs sm:text-sm">2</span>
+                  </span>
+                  <span className="text-primary-gray text-sm sm:text-base">Copy and paste this link in Safari:</span>
                 </div>
                 <div className="bg-black rounded-lg p-2 sm:p-3 border border-gray-600">
                   <code className="text-primary-neon text-xs sm:text-sm break-all">
                     https://apps.apple.com/us/app/gotall/id6747467975
                   </code>
-                </div>
-                <div className="flex items-start space-x-2 sm:space-x-3">
-                  <span className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 bg-primary-neon/20 rounded-full flex items-center justify-center">
-                    <span className="text-primary-neon font-bold text-xs sm:text-sm">2</span>
-                  </span>
-                  <span className="text-primary-gray text-sm sm:text-base">Open Safari or another browser</span>
-                </div>
-                <div className="flex items-start space-x-2 sm:space-x-3">
-                  <span className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 bg-primary-neon/20 rounded-full flex items-center justify-center">
-                    <span className="text-primary-neon font-bold text-xs sm:text-sm">3</span>
-                  </span>
-                  <span className="text-primary-gray text-sm sm:text-base">Paste the link and download GoTall</span>
                 </div>
               </div>
             </motion.div>
@@ -119,19 +110,10 @@ export default function IOSRedirectPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.6 }}
-              className="space-y-3"
             >
               <button 
-                onClick={handleOpenExternal}
-                className="w-full bg-primary-neon text-black font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl hover:bg-primary-neon/90 transition-colors flex items-center justify-center text-sm sm:text-base"
-              >
-                <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                Open in External Browser
-              </button>
-
-              <button 
                 onClick={handleCopyLink}
-                className="w-full bg-transparent text-primary-neon border-2 border-primary-neon font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl hover:bg-primary-neon/10 transition-colors flex items-center justify-center text-sm sm:text-base"
+                className="w-full bg-primary-neon text-black font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl hover:bg-primary-neon/90 transition-colors flex items-center justify-center text-sm sm:text-base mb-8 sm:mb-10"
               >
                 {copied ? (
                   <>
@@ -150,7 +132,7 @@ export default function IOSRedirectPage() {
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full bg-transparent text-primary-gray border border-primary-gray font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl hover:bg-primary-gray/10 transition-colors text-sm sm:text-base"
+                  className="w-full bg-transparent text-primary-neon border-2 border-primary-neon font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl hover:bg-primary-neon/10 transition-colors text-sm sm:text-base"
                 >
                   Return to Landing Page
                 </motion.button>

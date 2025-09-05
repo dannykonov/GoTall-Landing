@@ -23,48 +23,39 @@ export default function AndroidRedirectPage() {
           </div>
 
           <div className="bg-green-50 rounded-lg p-4">
-            <h3 className="font-semibold text-green-900 mb-2">Follow these steps to download GoTall:</h3>
+            <h3 className="font-semibold text-green-900 mb-2">Choose one option to download GoTall:</h3>
             <div className="space-y-3 text-sm text-green-800">
               <div className="flex items-start space-x-2">
                 <span className="font-medium">1.</span>
-                <span>Copy the download link below</span>
+                <span>Use TikTok's "Open in External Browser" button (recommended)</span>
+              </div>
+              <div className="text-center text-green-600 text-xs">OR</div>
+              <div className="flex items-start space-x-2">
+                <span className="font-medium">2.</span>
+                <span>Copy and paste this link in Chrome:</span>
               </div>
               <div className="bg-green-100 rounded p-2 mb-2">
                 <code className="text-xs break-all text-green-900">https://play.google.com/store/apps/details?id=app.gotall.play&pli=1</code>
-              </div>
-              <div className="flex items-start space-x-2">
-                <span className="font-medium">2.</span>
-                <span>Open Chrome or another browser</span>
-              </div>
-              <div className="flex items-start space-x-2">
-                <span className="font-medium">3.</span>
-                <span>Paste the link and download GoTall</span>
               </div>
             </div>
           </div>
 
           <div className="flex flex-col space-y-3">
-            <button 
-              onClick={() => {
-                window.open('https://play.google.com/store/apps/details?id=app.gotall.play&pli=1', '_blank', 'noopener,noreferrer');
-              }}
-              className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center justify-center"
+            <a 
+              href="https://play.google.com/store/apps/details?id=app.gotall.play&pli=1" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
             >
-              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
               Open in External Browser
-            </button>
+            </a>
             <button 
               onClick={() => {
                 navigator.clipboard.writeText('https://play.google.com/store/apps/details?id=app.gotall.play&pli=1');
                 alert('Link copied to clipboard!');
               }}
-              className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-3 px-6 rounded-lg transition-colors flex items-center justify-center"
+              className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-3 px-6 rounded-lg transition-colors"
             >
-              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-              </svg>
               Copy Link
             </button>
           </div>
