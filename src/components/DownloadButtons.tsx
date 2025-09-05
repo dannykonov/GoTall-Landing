@@ -36,7 +36,8 @@ export default function DownloadButtons({
     track(`${trackingPrefix}_${platform}_clicked`, { platform })
   }
 
-  const handleAppStoreClick = async () => {
+  const handleAppStoreClick = async (e: React.MouseEvent) => {
+    e.preventDefault() // Prevent the default link navigation
     handlePlatformClick('ios')
     
     if (isTikTokBrowser) {
@@ -53,7 +54,8 @@ export default function DownloadButtons({
     }
   }
 
-  const handleGooglePlayClick = async () => {
+  const handleGooglePlayClick = async (e: React.MouseEvent) => {
+    e.preventDefault() // Prevent the default link navigation
     handlePlatformClick('android')
     
     if (isTikTokBrowser) {
@@ -102,7 +104,7 @@ export default function DownloadButtons({
         <div className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center w-full sm:w-auto ${className}`}>
           {/* iOS Button with target="_blank" and rel="noopener" */}
           <a 
-            href={`${origin}/ios-redirect`}
+            href="https://apps.apple.com/us/app/gotall/id6747467975"
             target="_blank"
             rel="noopener noreferrer"
             onClick={handleAppStoreClick}
@@ -125,7 +127,7 @@ export default function DownloadButtons({
 
           {/* Android Button with target="_blank" and rel="noopener" */}
           <a 
-            href={`${origin}/android-redirect`}
+            href="https://play.google.com/store/apps/details?id=app.gotall.play&pli=1"
             target="_blank"
             rel="noopener noreferrer"
             onClick={handleGooglePlayClick}
@@ -164,7 +166,7 @@ export default function DownloadButtons({
       <div className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center w-full sm:w-auto ${className}`}>
         {/* iOS Button with target="_blank" and rel="noopener" */}
         <a 
-          href={`${origin}/ios-redirect`}
+          href="https://apps.apple.com/us/app/gotall/id6747467975"
           target="_blank"
           rel="noopener noreferrer"
           onClick={handleAppStoreClick}
@@ -184,7 +186,7 @@ export default function DownloadButtons({
 
         {/* Android Button with target="_blank" and rel="noopener" */}
         <a 
-          href={`${origin}/android-redirect`}
+          href="https://play.google.com/store/apps/details?id=app.gotall.play&pli=1"
           target="_blank"
           rel="noopener noreferrer"
           onClick={handleGooglePlayClick}
