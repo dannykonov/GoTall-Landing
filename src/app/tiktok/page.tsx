@@ -4,11 +4,13 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Navigation from '@/components/Navigation'
 import { useAnalytics } from '@/hooks/useAnalytics'
+import { useTikTokBrowser } from '@/hooks/useTikTokBrowser'
 import TikTokDownloadModal from '@/components/TikTokDownloadModal'
 
 export default function TikTokLandingPage() {
   const { track } = useAnalytics()
   const [qrOpen, setQrOpen] = useState(false)
+  const { isTikTokBrowser, handleDownload } = useTikTokBrowser()
 
   const handleCopyLink = async () => {
     try {
@@ -25,6 +27,17 @@ export default function TikTokLandingPage() {
   }
 
   const handleCloseQR = () => setQrOpen(false)
+
+  const handleGooglePlayClick = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    track('tiktok_android_clicked', { platform: 'android' })
+    if (isTikTokBrowser) {
+      const success = await handleDownload('android')
+      if (!success) setQrOpen(true)
+    } else {
+      window.open('https://play.google.com/store/apps/details?id=app.gotall.play&pli=1', '_blank', 'noopener,noreferrer')
+    }
+  }
 
   return (
     <div className="min-h-screen bg-black">
@@ -58,6 +71,29 @@ export default function TikTokLandingPage() {
                 alt="Search GoTall on the App Store"
                 className="w-full h-auto rounded-2xl border border-gray-800 shadow-2xl"
               />
+            </div>
+
+            {/* Android button (identical style to the main page "single" variant) */}
+            <div className="flex justify-center mb-6 sm:mb-8">
+              <a 
+                href="https://play.google.com/store/apps/details?id=app.gotall.play&pli=1"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={handleGooglePlayClick}
+                className="w-full sm:w-auto max-w-md"
+              >
+                <button
+                  className="bg-black text-white border-2 border-white rounded-xl font-semibold hover:bg-white hover:text-black transition-all duration-200 inline-flex items-center justify-center px-6 py-4 text-lg w-full h-[56px] sm:h-[60px]"
+                >
+                  <svg className="w-6 h-6 mr-3" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
+                  </svg>
+                  <div className="text-left">
+                    <div className="text-xs opacity-80">GET IT ON</div>
+                    <div className="font-bold">Google Play</div>
+                  </div>
+                </button>
+              </a>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
