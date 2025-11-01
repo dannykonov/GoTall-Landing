@@ -133,10 +133,10 @@ export default function SupportPageClient() {
                   </div>
                 </div>
                 <a 
-                  href="mailto:gotallapp@gmail.com"
+                  href="mailto:support@gotall.app"
                   className="inline-flex items-center text-primary-neon hover:text-primary-neon/80 transition-colors font-medium"
                 >
-                  gotallapp@gmail.com
+                  support@gotall.app
                   <Mail className="w-4 h-4 ml-2" />
                 </a>
               </div>
@@ -244,7 +244,7 @@ export default function SupportPageClient() {
                   </div>
 
                   <a
-                    href={`mailto:gotallapp@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`)}`}
+                    href={`mailto:support@gotall.app?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`)}`}
                     className="w-full bg-primary-neon text-black py-3 rounded-lg font-medium hover:bg-primary-neon/90 transition-colors inline-flex items-center justify-center group"
                   >
                     Send Message
