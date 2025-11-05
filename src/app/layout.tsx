@@ -18,6 +18,13 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased">
         {children}
+        <footer className="px-4 sm:px-6 lg:px-12 py-8 border-t border-gray-800 bg-black">
+          <div className="max-w-6xl mx-auto text-center">
+            <p className="text-xs sm:text-sm text-primary-gray">
+              GoTall is owned and operated by <span className="text-white font-medium">Grow Labs LLC</span>.
+            </p>
+          </div>
+        </footer>
       </body>
     </html>
   );
