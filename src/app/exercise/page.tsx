@@ -81,44 +81,24 @@ export default function ExercisePage() {
           </p>
         </motion.div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-4xl mx-auto">
+        <div className="flex justify-center max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-center"
+            className="text-center w-full"
           >
-            <div className="mb-6 mx-auto max-w-xs">
+            <div className="mb-6 mx-auto max-w-md">
               <img 
-                src="/GoTall Mockups/excersize.png" 
-                alt="GoTall Exercise Plans"
+                src="/landing-screenshots/exercises for big iphones copy.png" 
+                alt="GoTall Exercise Routine"
                 className="w-full h-auto rounded-2xl shadow-2xl"
               />
             </div>
-            <h3 className="text-2xl font-bold text-white mb-3">Exercise Plans</h3>
+            <h3 className="text-2xl font-bold text-white mb-3">Exercise Routine</h3>
             <p className="text-primary-gray">
-              Follow guided workouts and stretching routines specifically designed to promote height growth and improve your overall fitness.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-center"
-          >
-            <div className="mb-6 mx-auto max-w-xs">
-              <img 
-                src="/GoTall Mockups/postures.png" 
-                alt="GoTall Posture Improvement"
-                className="w-full h-auto rounded-2xl shadow-2xl"
-              />
-            </div>
-            <h3 className="text-2xl font-bold text-white mb-3">Posture Training</h3>
-            <p className="text-primary-gray">
-              Master proper posture techniques and spinal alignment exercises to instantly improve your height appearance and support long-term growth.
+              Follow guided, height-focused workouts and stretches with a simple daily routine designed to build consistency and support your growth journey.
             </p>
           </motion.div>
         </div>

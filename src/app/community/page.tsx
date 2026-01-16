@@ -177,7 +177,7 @@ export default function CommunityPage() {
                   onClick={() => setActiveFilter(category.key)}
                   className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors ${
                     activeFilter === category.key
-                      ? 'bg-primary-neon text-black'
+                      ? 'bg-brand-gradient text-black'
                       : 'bg-primary-dark-gray text-white hover:bg-gray-700'
                   }`}
                 >

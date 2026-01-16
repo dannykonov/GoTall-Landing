@@ -96,44 +96,24 @@ export default function NutritionPage() {
           </p>
         </motion.div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-4xl mx-auto">
+        <div className="flex justify-center max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-center"
+            className="text-center w-full"
           >
-            <div className="mb-6 mx-auto max-w-sm">
+            <div className="mb-6 mx-auto max-w-md">
               <img 
-                src="/GoTall Mockups/nutrition.png" 
-                alt="GoTall Nutrition Goals"
+                src="/feature-screenshots/nutrition for big iphones.png" 
+                alt="GoTall Nutrition Tracking"
                 className="w-full h-auto rounded-2xl shadow-2xl"
               />
             </div>
-            <h3 className="text-2xl font-bold text-white mb-3">Nutrition Goals</h3>
+            <h3 className="text-2xl font-bold text-white mb-3">Nutrition Tracking</h3>
             <p className="text-primary-gray">
-              Track your daily macros and micronutrients with detailed breakdowns and progress towards your optimal growth nutrition goals.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-center"
-          >
-            <div className="mb-6 mx-auto max-w-sm">
-              <img 
-                src="/GoTall Mockups/coffee.png" 
-                alt="GoTall Smart Recommendations"
-                className="w-full h-auto rounded-2xl shadow-2xl"
-              />
-            </div>
-            <h3 className="text-2xl font-bold text-white mb-3">Smart Recommendations</h3>
-            <p className="text-primary-gray">
-              Get personalized food suggestions and meal recommendations based on your current intake and growth optimization needs.
+              Track your daily macros and micronutrients, hit your goals, and get smarter recommendations based on your intake.
             </p>
           </motion.div>
         </div>

@@ -46,8 +46,12 @@ export default function Navigation({}: NavigationProps) {
         <div className="flex items-center h-14 sm:h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2" onClick={trackLogoClick}>
-            <div className="w-7 h-7 sm:w-8 sm:h-8 bg-primary-neon rounded-lg flex items-center justify-center">
-              <span className="text-black font-bold text-xs sm:text-sm">GT</span>
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg overflow-hidden flex items-center justify-center">
+              <img
+                src="/logo.svg"
+                alt="GoTall logo"
+                className="w-full h-full object-contain"
+              />
             </div>
             <span className="text-white font-circular font-bold text-lg sm:text-xl">GoTall</span>
           </Link>

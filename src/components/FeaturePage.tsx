@@ -98,7 +98,7 @@ export default function FeaturePage({
                 className="bg-black rounded-xl p-6 border border-gray-700"
               >
                 <div className="flex items-start space-x-4">
-                  <div className="w-10 h-10 bg-primary-neon rounded-lg flex items-center justify-center flex-shrink-0">
+                  <div className="w-10 h-10 bg-brand-gradient rounded-lg flex items-center justify-center flex-shrink-0">
                     <span className="text-black font-bold">{index + 1}</span>
                   </div>
                   <div>
@@ -218,7 +218,7 @@ export default function FeaturePage({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 1.0 }}
-        className="py-20 px-4 bg-gradient-to-r from-primary-neon/10 to-primary-neon/5"
+        className="py-20 px-4 bg-gradient-to-r from-brand-start/10 to-brand-end/5"
       >
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-5xl font-circular font-bold text-white mb-6">
@@ -239,8 +239,12 @@ export default function FeaturePage({
       <footer className="bg-black border-t border-primary-dark-gray py-8 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <div className="flex items-center justify-center space-x-2 mb-4">
-            <div className="w-8 h-8 bg-primary-neon rounded-lg flex items-center justify-center">
-              <span className="text-black font-bold text-sm">GT</span>
+            <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center">
+              <img
+                src="/logo.svg"
+                alt="GoTall logo"
+                className="w-full h-full object-contain"
+              />
             </div>
             <span className="text-white font-circular font-bold text-xl">GoTall</span>
           </div>

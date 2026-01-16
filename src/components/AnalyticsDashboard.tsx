@@ -157,7 +157,7 @@ export default function AnalyticsDashboard() {
                 console.log('🧪 Manual analytics refresh triggered');
                 loadAnalyticsData();
               }}
-              className="bg-primary-neon text-black px-4 py-2 rounded-lg font-semibold hover:bg-primary-neon/90 transition-colors"
+              className="bg-brand-gradient text-black px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition-opacity"
             >
               🔄 Refresh Data
             </button>
@@ -217,7 +217,7 @@ export default function AnalyticsDashboard() {
                   {uniqueDays ? Math.round(totalSessions / uniqueDays) : 0}
                 </p>
               </div>
-              <BarChart3 className="w-8 h-8 text-green-400" />
+              <BarChart3 className="w-8 h-8 text-brand-mid" />
             </div>
           </motion.div>
 
@@ -359,7 +359,7 @@ export default function AnalyticsDashboard() {
                     </div>
                     <span className="text-white font-medium">Android (Google Play)</span>
                   </div>
-                  <span className="text-2xl font-bold text-green-400">{clickData.android_clicks}</span>
+                  <span className="text-2xl font-bold text-brand-mid">{clickData.android_clicks}</span>
                 </div>
               </div>
             </motion.div>

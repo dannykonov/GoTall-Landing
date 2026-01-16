@@ -102,7 +102,7 @@ export default function ProgressPage() {
           >
             <div className="mb-6 mx-auto max-w-sm">
               <img 
-                src="/GoTall Mockups/project your height.png" 
+                src="/landing-screenshots/first locked logo.png" 
                 alt="GoTall Project Your Height"
                 className="w-full h-auto rounded-2xl shadow-2xl"
               />

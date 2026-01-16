@@ -113,7 +113,7 @@ export default function IOSRedirectPage() {
             >
               <button 
                 onClick={handleCopyLink}
-                className="w-full bg-primary-neon text-black font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl hover:bg-primary-neon/90 transition-colors flex items-center justify-center text-sm sm:text-base mb-8 sm:mb-10"
+                className="w-full bg-brand-gradient text-black font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center text-sm sm:text-base mb-8 sm:mb-10"
               >
                 {copied ? (
                   <>

@@ -11,12 +11,22 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        // Brand palette (updated 2026-01)
+        // Gradient: #8EF351 -> #2AFD49
+        // Mid: average of the two stops for non-gradient use (borders, text, etc.)
+        "brand-start": "#8EF351",
+        "brand-end": "#2AFD49",
+        "brand-mid": "#5CF84D",
         primary: {
           black: '#000000',
-          neon: '#B5FF00',
+          // Back-compat token used across the app; now points to brand mid.
+          neon: '#5CF84D',
           gray: '#CCCCCC',
           'dark-gray': '#333333',
         }
+      },
+      backgroundImage: {
+        "brand-gradient": "linear-gradient(90deg, #8EF351 0%, #2AFD49 100%)",
       },
       fontFamily: {
         'circular': ['Circular Std', 'sans-serif'],

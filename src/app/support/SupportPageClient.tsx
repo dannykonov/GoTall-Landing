@@ -145,27 +145,27 @@ export default function SupportPageClient() {
                 <h3 className="text-xl font-bold text-white mb-4">What we can help with:</h3>
                 <ul className="space-y-2 text-primary-gray">
                   <li className="flex items-center">
-                    <div className="w-2 h-2 bg-primary-neon rounded-full mr-3"></div>
+                    <div className="w-2 h-2 bg-brand-mid rounded-full mr-3"></div>
                     Account and subscription questions
                   </li>
                   <li className="flex items-center">
-                    <div className="w-2 h-2 bg-primary-neon rounded-full mr-3"></div>
+                    <div className="w-2 h-2 bg-brand-mid rounded-full mr-3"></div>
                     Growth projection explanations
                   </li>
                   <li className="flex items-center">
-                    <div className="w-2 h-2 bg-primary-neon rounded-full mr-3"></div>
+                    <div className="w-2 h-2 bg-brand-mid rounded-full mr-3"></div>
                     App feature guidance
                   </li>
                   <li className="flex items-center">
-                    <div className="w-2 h-2 bg-primary-neon rounded-full mr-3"></div>
+                    <div className="w-2 h-2 bg-brand-mid rounded-full mr-3"></div>
                     Technical support
                   </li>
                   <li className="flex items-center">
-                    <div className="w-2 h-2 bg-primary-neon rounded-full mr-3"></div>
+                    <div className="w-2 h-2 bg-brand-mid rounded-full mr-3"></div>
                     Privacy and security concerns
                   </li>
                   <li className="flex items-center">
-                    <div className="w-2 h-2 bg-primary-neon rounded-full mr-3"></div>
+                    <div className="w-2 h-2 bg-brand-mid rounded-full mr-3"></div>
                     And anything else you need help with
                   </li>
                 </ul>
@@ -245,7 +245,7 @@ export default function SupportPageClient() {
 
                   <a
                     href={`mailto:support@gotall.app?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`)}`}
-                    className="w-full bg-primary-neon text-black py-3 rounded-lg font-medium hover:bg-primary-neon/90 transition-colors inline-flex items-center justify-center group"
+                    className="w-full bg-brand-gradient text-black py-3 rounded-lg font-medium hover:opacity-90 transition-opacity inline-flex items-center justify-center group"
                   >
                     Send Message
                     <Mail className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -326,7 +326,7 @@ export default function SupportPageClient() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-gradient-to-r from-primary-neon/10 to-primary-neon/5 rounded-3xl p-8 border border-primary-neon/20"
+            className="bg-gradient-to-r from-brand-start/10 to-brand-end/5 rounded-3xl p-8 border border-primary-neon/20"
           >
             <h2 className="text-2xl md:text-3xl font-circular font-bold text-white mb-4">
               Ready to start your growth journey?
@@ -335,7 +335,7 @@ export default function SupportPageClient() {
               Join thousands of others waiting for GoTall to launch.
             </p>
             <button 
-              className="bg-primary-neon text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-primary-neon/90 transition-colors inline-flex items-center group"
+              className="bg-brand-gradient text-black px-8 py-4 rounded-lg text-lg font-semibold hover:opacity-90 transition-opacity inline-flex items-center group"
             >
               Join the Waitlist
               <Mail className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />

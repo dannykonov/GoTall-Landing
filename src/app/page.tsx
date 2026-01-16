@@ -226,7 +226,7 @@ export default function HomePage() {
             >
               <div className="mb-6 mx-auto w-full max-w-sm flex justify-center items-center h-[500px]">
                 <img 
-                  src="/GoTall Mockups/project your height.png" 
+                  src="/landing-screenshots/first locked logo.png" 
                   alt="GoTall Project Your Height"
                   className="w-full h-96 object-contain rounded-2xl shadow-2xl"
                 />
@@ -246,7 +246,7 @@ export default function HomePage() {
             >
               <div className="mb-6 mx-auto w-full max-w-lg flex justify-center items-center h-[500px]">
                 <img 
-                  src="/GoTall Mockups/coach.png" 
+                  src="/landing-screenshots/ai coach for big iphones copy.png" 
                   alt="GoTall Coach"
                   className="w-full h-[450px] object-contain rounded-2xl shadow-2xl"
                 />
@@ -266,14 +266,14 @@ export default function HomePage() {
             >
               <div className="mb-6 mx-auto w-full max-w-sm flex justify-center items-center h-[500px]">
                 <img 
-                  src="/GoTall Mockups/track habits.png" 
-                  alt="GoTall Track Habits"
+                  src="/landing-screenshots/exercises for big iphones copy.png" 
+                  alt="GoTall Exercise Routine"
                   className="w-full h-96 object-contain rounded-2xl shadow-2xl"
                 />
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">Track Habits</h3>
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">Exercise Routine</h3>
               <p className="text-primary-gray text-sm sm:text-base">
-                Monitor your daily habits and routines to build consistent behaviors that support your height growth journey.
+                Follow guided, height-focused workouts and stretches with a simple daily routine designed to build consistency and support your growth journey.
               </p>
             </motion.div>
           </div>
@@ -293,8 +293,8 @@ export default function HomePage() {
             <div className="mb-6 sm:mb-8">
               <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-2xl flex items-center justify-center mb-4">
                 <img 
-                  src="/CDC Logo Updated 2024.png" 
-                  alt="CDC Logo"
+                  src="/logo.svg" 
+                  alt="GoTall logo"
                   className="w-16 sm:w-20 h-auto"
                 />
               </div>
@@ -354,7 +354,7 @@ export default function HomePage() {
                 transition={{ delay: index * 0.1 }}
                 className="text-center"
               >
-                <div className="w-14 h-14 sm:w-16 sm:h-16 bg-primary-neon rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 bg-brand-gradient rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
                   <span className="text-xl sm:text-2xl font-bold text-black">{step.number}</span>
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3">{step.title}</h3>
@@ -419,7 +419,7 @@ export default function HomePage() {
           <div className="text-center">
             <Link href="/community">
               <button 
-                className="bg-primary-neon text-black px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-primary-neon/90 transition-colors inline-flex items-center group"
+                className="bg-brand-gradient text-black px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:opacity-90 transition-opacity inline-flex items-center group"
                 onClick={() => track('community_preview_clicked')}
               >
                 Join the Community
@@ -431,7 +431,7 @@ export default function HomePage() {
       </section>
 
       {/* Final CTA Section */}
-      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-12 bg-gradient-to-r from-primary-neon/10 to-primary-neon/5">
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-12 bg-gradient-to-r from-brand-start/10 to-brand-end/5">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

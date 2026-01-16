@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { motion } from 'framer-motion'
 import FeaturePage from '@/components/FeaturePage'
 
 const sleepReviews = [
@@ -77,6 +77,48 @@ const whyItMattersPoints = [
 ]
 
 export default function SleepPage() {
+  const sleepMockupsSection = (
+    <section className="py-20 px-4 bg-primary-dark-gray/20">
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl md:text-5xl font-circular font-bold text-white mb-6">
+            Sleep tracking in action
+          </h2>
+          <p className="text-xl text-primary-gray max-w-2xl mx-auto">
+            See how GoTall helps you build better sleep habits with actionable recommendations and streak tracking.
+          </p>
+        </motion.div>
+
+        <div className="flex justify-center max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-center w-full"
+          >
+            <div className="mb-6 mx-auto max-w-md">
+              <img
+                src="/feature-screenshots/sleep for big iphones copy.png"
+                alt="GoTall Sleep Tracking"
+                className="w-full h-auto rounded-2xl shadow-2xl"
+              />
+            </div>
+            <h3 className="text-2xl font-bold text-white mb-3">Sleep Tracking</h3>
+            <p className="text-primary-gray">
+              Track your sleep quality, stay consistent, and get simple recommendations to optimize recovery and growth hormone release.
+            </p>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  )
+
   return (
     <FeaturePage
       title="Sleep Tracking"
@@ -93,6 +135,7 @@ export default function SleepPage() {
       reviews={sleepReviews}
       howItWorks={howItWorksSteps}
       whyItMatters={whyItMattersPoints}
+      additionalContent={sleepMockupsSection}
     />
   )
 } 
