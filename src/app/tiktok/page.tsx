@@ -89,7 +89,7 @@ export default function TikTokLandingPage() {
 
             <div className="mb-6">
               <img
-                src="/IMG_D7AFEB605EA7-1.jpeg"
+                src="/IMG_1608.jpg"
                 alt="GoTall on the App Store"
                 className="w-full h-auto rounded-xl border border-gray-700"
               />
