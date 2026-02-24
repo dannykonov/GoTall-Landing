@@ -23,6 +23,7 @@ export default function DownloadButtons({
   const { track } = useAnalytics()
   const { isTikTokBrowser, handleDownload } = useTikTokBrowser()
   const shouldUseTikTokRedirect = isTikTokBrowser && ENABLE_TIKTOK_REDIRECT_FLOW
+  const showTikTokLongPressHint = isTikTokBrowser && size !== 'sm'
   const [modalState, setModalState] = useState<{ isOpen: boolean; platform: 'ios' | 'android' | null }>({
     isOpen: false,
     platform: null
@@ -141,6 +142,12 @@ export default function DownloadButtons({
           </motion.a>
         </div>
 
+        {showTikTokLongPressHint && (
+          <p className="mt-3 text-center text-xs sm:text-sm text-primary-gray">
+            If the link does not work, press and hold the button, then press Open Link
+          </p>
+        )}
+
         {modalState.isOpen && modalState.platform && (
           <TikTokDownloadModal
             isOpen={modalState.isOpen}
@@ -186,6 +193,12 @@ export default function DownloadButtons({
           Google Play
         </motion.a>
       </div>
+
+      {showTikTokLongPressHint && (
+        <p className="mt-3 text-center text-xs sm:text-sm text-primary-gray">
+          If the link does not work, press and hold the button, then press Open Link
+        </p>
+      )}
 
       {modalState.isOpen && modalState.platform && (
         <TikTokDownloadModal
