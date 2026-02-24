@@ -12,9 +12,9 @@ export const ENABLE_TIKTOK_REDIRECT_FLOW = parseBooleanEnv(
   false
 )
 
-// true (default for now): force TikTok browser UI/behavior for local preview.
-// set to false when you're done testing.
+// false (default): use real TikTok detection in production.
+// true: force TikTok browser UI/behavior for local preview/testing.
 export const FORCE_TIKTOK_BROWSER = parseBooleanEnv(
   process.env.NEXT_PUBLIC_FORCE_TIKTOK_BROWSER,
-  true
+  false
 )

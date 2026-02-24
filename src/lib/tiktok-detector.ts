@@ -29,12 +29,12 @@ export function detectTikTokBrowser(): TikTokBrowserInfo {
     'tt_webview'
   ]
   
-  // Check if any TikTok patterns are in the user agent
-  const isTikTok = FORCE_TIKTOK_BROWSER ||
-                  tiktokPatterns.some(pattern => userAgent.includes(pattern)) ||
-                  (window as any).TikTok !== undefined ||
-                  (window as any).tt !== undefined ||
-                  (window as any).webkit?.messageHandlers?.TikTok !== undefined
+  // Use conservative detection to avoid false positives on normal web browsers.
+  // Some sites/extensions define globals like window.tt/window.TikTok.
+  const hasTikTokUserAgentPattern = tiktokPatterns.some(pattern => userAgent.includes(pattern))
+  const hasTikTokWebkitBridge = (window as any).webkit?.messageHandlers?.TikTok !== undefined
+
+  const isTikTok = FORCE_TIKTOK_BROWSER || hasTikTokUserAgentPattern || hasTikTokWebkitBridge
 
   return {
     isTikTokBrowser: isTikTok,
