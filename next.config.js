@@ -10,7 +10,6 @@ const nextConfig = {
     appDir: true,
   },
   webpack: (config, { isServer }) => {
-    // Handle WebSocket polyfills for client-side
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
@@ -30,7 +29,17 @@ const nextConfig = {
         'utf-8-validate': false,
       }
     }
-    
+
+    config.externals = config.externals || []
+    if (isServer) {
+      config.externals.push('bufferutil', 'utf-8-validate')
+    }
+
+    config.ignoreWarnings = [
+      { module: /node_modules\/ws/ },
+      { module: /node_modules\/@supabase\/realtime-js/ },
+    ]
+
     return config
   },
 }

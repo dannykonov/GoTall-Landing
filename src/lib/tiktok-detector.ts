@@ -1,3 +1,5 @@
+import { FORCE_TIKTOK_BROWSER } from '@/lib/featureFlags'
+
 export interface TikTokBrowserInfo {
   isTikTokBrowser: boolean
   userAgent: string
@@ -28,7 +30,8 @@ export function detectTikTokBrowser(): TikTokBrowserInfo {
   ]
   
   // Check if any TikTok patterns are in the user agent
-  const isTikTok = tiktokPatterns.some(pattern => userAgent.includes(pattern)) ||
+  const isTikTok = FORCE_TIKTOK_BROWSER ||
+                  tiktokPatterns.some(pattern => userAgent.includes(pattern)) ||
                   (window as any).TikTok !== undefined ||
                   (window as any).tt !== undefined ||
                   (window as any).webkit?.messageHandlers?.TikTok !== undefined

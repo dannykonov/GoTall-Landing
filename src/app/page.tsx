@@ -134,7 +134,7 @@ export default function HomePage() {
               with GoTall
             </h1>
             
-            <p className="text-lg sm:text-xl md:text-2xl text-primary-gray mb-6 sm:mb-8 max-w-3xl mx-auto px-4 sm:px-0">
+            <p className="text-base sm:text-xl md:text-2xl text-primary-gray mb-6 sm:mb-8 max-w-3xl mx-auto px-4 sm:px-0">
               Track your height journey, optimize health habits, and grow up to 
               <span className="text-primary-neon font-semibold"> 2–3 inches in 6 months</span>.
             </p>

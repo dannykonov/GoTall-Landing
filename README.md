@@ -75,6 +75,10 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_public_api_key_here
 # false (default): normal link behavior on TikTok
 # true: enable TikTok-specific redirect fallback flow
 NEXT_PUBLIC_ENABLE_TIKTOK_REDIRECT_FLOW=false
+
+# true (default for now): force TikTok browser UI/behavior for preview
+# false: use actual browser detection
+NEXT_PUBLIC_FORCE_TIKTOK_BROWSER=true
 ```
 
 **Replace the values with your actual Supabase credentials:**
