@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { useAnalytics } from '@/hooks/useAnalytics'
 import { useTikTokBrowser } from '@/hooks/useTikTokBrowser'
+import { ENABLE_TIKTOK_REDIRECT_FLOW } from '@/lib/featureFlags'
 import TikTokDownloadModal from './TikTokDownloadModal'
 
 interface DownloadButtonsProps {
@@ -21,6 +22,7 @@ export default function DownloadButtons({
 }: DownloadButtonsProps) {
   const { track } = useAnalytics()
   const { isTikTokBrowser, handleDownload } = useTikTokBrowser()
+  const shouldUseTikTokRedirect = isTikTokBrowser && ENABLE_TIKTOK_REDIRECT_FLOW
   const [modalState, setModalState] = useState<{ isOpen: boolean; platform: 'ios' | 'android' | null }>({
     isOpen: false,
     platform: null
@@ -37,38 +39,38 @@ export default function DownloadButtons({
   }
 
   const handleAppStoreClick = async (e: React.MouseEvent) => {
-    e.preventDefault() // Prevent the default link navigation
     handlePlatformClick('ios')
-    
-    if (isTikTokBrowser) {
-      // Use landing page approach for TikTok
-      const success = await handleDownload('ios')
-      
-      if (!success) {
-        // Fallback to modal with instructions
-        setModalState({ isOpen: true, platform: 'ios' })
-      }
-    } else {
-      // Normal behavior for regular browsers
-      window.open('https://apps.apple.com/us/app/gotall/id6747467975', '_blank', 'noopener,noreferrer')
+
+    // Default behavior: allow normal anchor navigation.
+    if (!shouldUseTikTokRedirect) {
+      return
+    }
+
+    e.preventDefault()
+
+    // Optional TikTok-specific redirect flow.
+    const success = await handleDownload('ios')
+
+    if (!success) {
+      setModalState({ isOpen: true, platform: 'ios' })
     }
   }
 
   const handleGooglePlayClick = async (e: React.MouseEvent) => {
-    e.preventDefault() // Prevent the default link navigation
     handlePlatformClick('android')
-    
-    if (isTikTokBrowser) {
-      // Use landing page approach for TikTok
-      const success = await handleDownload('android')
-      
-      if (!success) {
-        // Fallback to modal with instructions
-        setModalState({ isOpen: true, platform: 'android' })
-      }
-    } else {
-      // Normal behavior for regular browsers
-      window.open('https://play.google.com/store/apps/details?id=app.gotall.play&pli=1', '_blank', 'noopener,noreferrer')
+
+    // Default behavior: allow normal anchor navigation.
+    if (!shouldUseTikTokRedirect) {
+      return
+    }
+
+    e.preventDefault()
+
+    // Optional TikTok-specific redirect flow.
+    const success = await handleDownload('android')
+
+    if (!success) {
+      setModalState({ isOpen: true, platform: 'android' })
     }
   }
 

@@ -70,6 +70,11 @@ Create a `.env.local` file in the project root:
 # Supabase Configuration
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url_here
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_public_api_key_here
+
+# Feature flags
+# false (default): normal link behavior on TikTok
+# true: enable TikTok-specific redirect fallback flow
+NEXT_PUBLIC_ENABLE_TIKTOK_REDIRECT_FLOW=false
 ```
 
 **Replace the values with your actual Supabase credentials:**
