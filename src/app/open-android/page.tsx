@@ -1,12 +1,15 @@
 'use client'
 
 import { useEffect } from 'react'
+import { getActiveDownloadLinks } from '@/lib/downloadLinks'
 
 export default function OpenAndroidPage() {
+  const { android } = getActiveDownloadLinks()
+
   useEffect(() => {
     // JavaScript redirect to force external browser opening
-    window.location.replace("https://play.google.com/store/apps/details?id=app.gotall.play&pli=1");
-  }, [])
+    window.location.replace(android)
+  }, [android])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">

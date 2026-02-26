@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
+import { getActiveDownloadLinks } from '@/lib/downloadLinks'
 
 interface QRCodeDownloadProps {
   isOpen: boolean
@@ -11,13 +12,9 @@ interface QRCodeDownloadProps {
 
 export default function QRCodeDownload({ isOpen, onClose, platform }: QRCodeDownloadProps) {
   const [qrCodeUrl, setQrCodeUrl] = useState('')
-  
-  const urls = {
-    ios: 'https://apps.apple.com/us/app/gotall/id6747467975',
-    android: 'https://play.google.com/store/apps/details?id=app.gotall.play&pli=1'
-  }
-  
-  const url = urls[platform]
+
+  const downloadLinks = getActiveDownloadLinks()
+  const url = downloadLinks[platform]
   const platformName = platform === 'ios' ? 'App Store' : 'Google Play'
   
   useEffect(() => {

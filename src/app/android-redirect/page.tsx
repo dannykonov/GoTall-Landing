@@ -1,6 +1,10 @@
 'use client'
 
+import { getActiveDownloadLinks } from '@/lib/downloadLinks'
+
 export default function AndroidRedirectPage() {
+  const { android: androidDownloadUrl } = getActiveDownloadLinks()
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-brand-start/10 to-brand-end/10 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
@@ -35,14 +39,14 @@ export default function AndroidRedirectPage() {
                 <span>Copy and paste this link in Chrome:</span>
               </div>
               <div className="bg-white rounded p-2 mb-2 border border-brand-mid/20">
-                <code className="text-xs break-all text-gray-900">https://play.google.com/store/apps/details?id=app.gotall.play&pli=1</code>
+                <code className="text-xs break-all text-gray-900">{androidDownloadUrl}</code>
               </div>
             </div>
           </div>
 
           <div className="flex flex-col space-y-3">
             <a 
-              href="https://play.google.com/store/apps/details?id=app.gotall.play&pli=1" 
+              href={androidDownloadUrl}
               target="_blank" 
               rel="noopener noreferrer"
               className="bg-brand-gradient hover:opacity-90 text-black font-semibold py-3 px-6 rounded-lg transition-opacity"
@@ -51,7 +55,7 @@ export default function AndroidRedirectPage() {
             </a>
             <button 
               onClick={() => {
-                navigator.clipboard.writeText('https://play.google.com/store/apps/details?id=app.gotall.play&pli=1');
+                navigator.clipboard.writeText(androidDownloadUrl);
                 alert('Link copied to clipboard!');
               }}
               className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-3 px-6 rounded-lg transition-colors"

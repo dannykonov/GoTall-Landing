@@ -1,21 +1,19 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useSearchParams } from 'next/navigation'
 import { useAnalytics } from '@/hooks/useAnalytics'
+import { getActiveDownloadLinks } from '@/lib/downloadLinks'
 
-export default function DownloadPage() {
+function DownloadPageContent() {
   const searchParams = useSearchParams()
   const platform = searchParams.get('platform') as 'ios' | 'android' | null
   const { track } = useAnalytics()
   const [countdown, setCountdown] = useState(3)
   const [showManual, setShowManual] = useState(false)
 
-  const urls = {
-    ios: 'https://apps.apple.com/us/app/gotall/id6747467975',
-    android: 'https://play.google.com/store/apps/details?id=app.gotall.play&pli=1'
-  }
+  const urls = getActiveDownloadLinks()
 
   const platformName = platform === 'ios' ? 'App Store' : 'Google Play'
   const browserName = platform === 'ios' ? 'Safari' : 'Chrome'
@@ -170,4 +168,24 @@ export default function DownloadPage() {
       </motion.div>
     </div>
   )
-} 
+}
+
+function DownloadPageFallback() {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl p-8 max-w-md w-full text-center">
+        <h1 className="text-2xl font-bold text-gray-900 mb-4">
+          Preparing download...
+        </h1>
+      </div>
+    </div>
+  )
+}
+
+export default function DownloadPage() {
+  return (
+    <Suspense fallback={<DownloadPageFallback />}>
+      <DownloadPageContent />
+    </Suspense>
+  )
+}

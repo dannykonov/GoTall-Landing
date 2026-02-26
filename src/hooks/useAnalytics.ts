@@ -1,6 +1,7 @@
 import { useEffect, useCallback } from 'react'
 import { usePathname } from 'next/navigation'
 import { trackPageVisit, trackEvent } from '@/lib/analytics'
+import { captureCreatorAttributionFromUrl } from '@/lib/attribution'
 
 export function useAnalytics() {
   const pathname = usePathname()
@@ -9,6 +10,7 @@ export function useAnalytics() {
   useEffect(() => {
     // Small delay to ensure page is fully loaded
     const timeoutId = setTimeout(() => {
+      captureCreatorAttributionFromUrl()
       trackPageVisit(pathname)
     }, 100)
 

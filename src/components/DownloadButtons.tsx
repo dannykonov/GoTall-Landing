@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { useAnalytics } from '@/hooks/useAnalytics'
 import { useTikTokBrowser } from '@/hooks/useTikTokBrowser'
 import { ENABLE_TIKTOK_REDIRECT_FLOW } from '@/lib/featureFlags'
+import { getActiveDownloadLinks } from '@/lib/downloadLinks'
 import TikTokDownloadModal from './TikTokDownloadModal'
 
 interface DownloadButtonsProps {
@@ -30,6 +31,7 @@ export default function DownloadButtons({
     platform: null
   })
   const [origin, setOrigin] = useState('')
+  const downloadLinks = getActiveDownloadLinks()
 
   useEffect(() => {
     // Set origin only on client side
@@ -125,7 +127,7 @@ export default function DownloadButtons({
             <motion.a
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              href="https://apps.apple.com/us/app/gotall/id6747467975"
+              href={downloadLinks.ios}
               target="_blank"
               rel="noopener noreferrer"
               onClick={handleAppStoreClick}
@@ -152,7 +154,7 @@ export default function DownloadButtons({
             <motion.a
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              href="https://play.google.com/store/apps/details?id=app.gotall.play&pli=1"
+              href={downloadLinks.android}
               target="_blank"
               rel="noopener noreferrer"
               onClick={handleGooglePlayClick}
@@ -190,7 +192,7 @@ export default function DownloadButtons({
           <motion.a
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            href="https://apps.apple.com/us/app/gotall/id6747467975"
+            href={downloadLinks.ios}
             target="_blank"
             rel="noopener noreferrer"
             onClick={handleAppStoreClick}
@@ -205,7 +207,7 @@ export default function DownloadButtons({
           <motion.a
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            href="https://play.google.com/store/apps/details?id=app.gotall.play&pli=1"
+            href={downloadLinks.android}
             target="_blank"
             rel="noopener noreferrer"
             onClick={handleGooglePlayClick}

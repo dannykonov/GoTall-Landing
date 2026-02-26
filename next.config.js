@@ -1,13 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   poweredByHeader: false,
   typescript: {
     ignoreBuildErrors: false,
-  },
-  experimental: {
-    appDir: true,
   },
   webpack: (config, { isServer }) => {
     if (!isServer) {
@@ -45,3 +41,4 @@ const nextConfig = {
 }
 
 module.exports = nextConfig 
+import('@opennextjs/cloudflare').then(m => m.initOpenNextCloudflareForDev());

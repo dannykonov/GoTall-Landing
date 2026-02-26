@@ -4,14 +4,16 @@ import { motion } from 'framer-motion'
 import Navigation from '@/components/Navigation'
 import { useAnalytics } from '@/hooks/useAnalytics'
 import { useTikTokBrowser } from '@/hooks/useTikTokBrowser'
+import { getActiveDownloadLinks } from '@/lib/downloadLinks'
 
 export default function TikTokLandingPage() {
   const { track } = useAnalytics()
   const { isTikTokBrowser, handleDownload } = useTikTokBrowser()
+  const downloadLinks = getActiveDownloadLinks()
 
   const handleCopyLink = async () => {
     try {
-      await navigator.clipboard.writeText('https://apps.apple.com/us/app/gotall/id6747467975')
+      await navigator.clipboard.writeText(downloadLinks.ios)
       track('tiktok_ios_copy_link_clicked')
     } catch (e) {
       // noop
@@ -21,7 +23,7 @@ export default function TikTokLandingPage() {
   const handleGooglePlayClick = async (e: React.MouseEvent) => {
     e.preventDefault()
     track('tiktok_android_clicked', { platform: 'android' })
-    window.open('https://play.google.com/store/apps/details?id=app.gotall.play&pli=1', '_blank', 'noopener,noreferrer')
+    window.open(downloadLinks.android, '_blank', 'noopener,noreferrer')
   }
 
   return (
@@ -60,7 +62,7 @@ export default function TikTokLandingPage() {
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-3">Android</h2>
             <p className="text-primary-gray mb-6">Download GoTall on Google Play.</p>
             <a 
-              href="https://play.google.com/store/apps/details?id=app.gotall.play&pli=1"
+              href={downloadLinks.android}
               target="_blank"
               rel="noopener noreferrer"
               onClick={handleGooglePlayClick}

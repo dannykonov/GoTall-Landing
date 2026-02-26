@@ -1,18 +1,16 @@
 'use client'
 
-import { useEffect } from 'react'
+import { Suspense, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useAnalytics } from '@/hooks/useAnalytics'
+import { getActiveDownloadLinks } from '@/lib/downloadLinks'
 
-export default function RedirectPage() {
+function RedirectPageContent() {
   const searchParams = useSearchParams()
   const platform = searchParams.get('platform') as 'ios' | 'android' | null
   const { track } = useAnalytics()
 
-  const urls = {
-    ios: 'https://apps.apple.com/us/app/gotall/id6747467975',
-    android: 'https://play.google.com/store/apps/details?id=app.gotall.play&pli=1'
-  }
+  const urls = getActiveDownloadLinks()
 
   useEffect(() => {
     if (platform && urls[platform]) {
@@ -46,4 +44,24 @@ export default function RedirectPage() {
       </div>
     </div>
   )
-} 
+}
+
+function RedirectPageFallback() {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl p-8 max-w-md w-full text-center">
+        <h1 className="text-2xl font-bold text-gray-900 mb-4">
+          Preparing redirect...
+        </h1>
+      </div>
+    </div>
+  )
+}
+
+export default function RedirectPage() {
+  return (
+    <Suspense fallback={<RedirectPageFallback />}>
+      <RedirectPageContent />
+    </Suspense>
+  )
+}

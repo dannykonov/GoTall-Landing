@@ -4,19 +4,21 @@ import { motion } from 'framer-motion'
 import { ArrowLeft, Copy, Check } from 'lucide-react'
 import { useState } from 'react'
 import Link from 'next/link'
+import { getActiveDownloadLinks } from '@/lib/downloadLinks'
 
 export default function IOSRedirectPage() {
   const [copied, setCopied] = useState(false)
+  const { ios: iosDownloadUrl } = getActiveDownloadLinks()
 
   const handleCopyLink = async () => {
     try {
-      await navigator.clipboard.writeText('https://apps.apple.com/us/app/gotall/id6747467975')
+      await navigator.clipboard.writeText(iosDownloadUrl)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch (err) {
       // Fallback for older browsers
       const textArea = document.createElement('textarea')
-      textArea.value = 'https://apps.apple.com/us/app/gotall/id6747467975'
+      textArea.value = iosDownloadUrl
       document.body.appendChild(textArea)
       textArea.select()
       document.execCommand('copy')
@@ -99,7 +101,7 @@ export default function IOSRedirectPage() {
                 </div>
                 <div className="bg-black rounded-lg p-2 sm:p-3 border border-gray-600">
                   <code className="text-primary-neon text-xs sm:text-sm break-all">
-                    https://apps.apple.com/us/app/gotall/id6747467975
+                    {iosDownloadUrl}
                   </code>
                 </div>
               </div>

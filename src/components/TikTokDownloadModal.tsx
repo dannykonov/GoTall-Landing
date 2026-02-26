@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
+import { getActiveDownloadLinks } from '@/lib/downloadLinks'
 
 interface TikTokDownloadModalProps {
   isOpen: boolean
@@ -12,13 +13,9 @@ interface TikTokDownloadModalProps {
 export default function TikTokDownloadModal({ isOpen, onClose, platform }: TikTokDownloadModalProps) {
   const [copied, setCopied] = useState(false)
   const [showQR, setShowQR] = useState(false)
-  
-  const urls = {
-    ios: 'https://apps.apple.com/us/app/gotall/id6747467975',
-    android: 'https://play.google.com/store/apps/details?id=app.gotall.play&pli=1'
-  }
-  
-  const url = urls[platform]
+
+  const downloadLinks = getActiveDownloadLinks()
+  const url = downloadLinks[platform]
   const platformName = platform === 'ios' ? 'App Store' : 'Google Play'
   const browserName = platform === 'ios' ? 'Safari' : 'Chrome'
   

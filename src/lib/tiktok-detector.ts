@@ -1,4 +1,5 @@
 import { FORCE_TIKTOK_BROWSER } from '@/lib/featureFlags'
+import { getActiveDownloadLinks } from '@/lib/downloadLinks'
 
 export interface TikTokBrowserInfo {
   isTikTokBrowser: boolean
@@ -55,8 +56,9 @@ export async function openInExternalBrowser(url: string, fallbackMessage?: strin
   // For TikTok browser, use the simple redirect page approach
   try {
     // Extract platform from URL
+    const downloadLinks = getActiveDownloadLinks()
     let platform = 'ios'
-    if (url.includes('play.google.com')) {
+    if (url === downloadLinks.android || url.includes('play.google.com')) {
       platform = 'android'
     }
     
@@ -71,14 +73,15 @@ export async function openInExternalBrowser(url: string, fallbackMessage?: strin
 }
 
 export function showTikTokInstructions(): void {
+  const downloadLinks = getActiveDownloadLinks()
   const instructions = `
 To download the app:
 1. Copy the link below
 2. Open your external browser (Safari/Chrome)
 3. Paste the link and press Enter
 
-iOS: https://apps.apple.com/us/app/gotall/id6747467975
-Android: https://play.google.com/store/apps/details?id=app.gotall.play&pli=1
+iOS: ${downloadLinks.ios}
+Android: ${downloadLinks.android}
   `.trim()
   
   alert(instructions)
@@ -162,12 +165,8 @@ export async function handleDirectAppStoreDownload(platform: 'ios' | 'android'):
     return false
   }
 
-  const urls = {
-    ios: 'https://apps.apple.com/us/app/gotall/id6747467975',
-    android: 'https://play.google.com/store/apps/details?id=app.gotall.play&pli=1'
-  }
-
-  const url = urls[platform]
+  const downloadLinks = getActiveDownloadLinks()
+  const url = downloadLinks[platform]
   
   // Enhanced methods for direct app store access
   const methods = [

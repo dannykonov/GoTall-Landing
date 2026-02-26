@@ -1,4 +1,5 @@
 import { supabase } from './supabase'
+import { getCreatorAttribution } from './attribution'
 
 // Generate a session ID that persists for the browser session
 const getSessionId = (): string => {
@@ -73,6 +74,18 @@ const getLocationData = async (): Promise<{ country?: string; city?: string }> =
   }
 }
 
+const getAttributionSnapshot = () => {
+  const attribution = getCreatorAttribution()
+  const creatorSlug =
+    attribution.creator_slug || attribution.last_touch_creator || attribution.first_touch_creator || null
+
+  return {
+    creatorSlug,
+    firstTouchCreator: attribution.first_touch_creator,
+    lastTouchCreator: attribution.last_touch_creator,
+  }
+}
+
 // Main function to track a page visit
 export const trackPageVisit = async (customPath?: string): Promise<void> => {
   try {
@@ -86,6 +99,7 @@ export const trackPageVisit = async (customPath?: string): Promise<void> => {
     const browser = getBrowser()
     const os = getOS()
     const location = await getLocationData()
+    const { creatorSlug, firstTouchCreator, lastTouchCreator } = getAttributionSnapshot()
     
     const visitData = {
       session_id: sessionId,
@@ -97,6 +111,9 @@ export const trackPageVisit = async (customPath?: string): Promise<void> => {
       device_type: deviceType,
       browser,
       os,
+      creator_slug: creatorSlug,
+      creator_first_touch: firstTouchCreator,
+      creator_last_touch: lastTouchCreator,
       created_at: new Date().toISOString(),
     }
     
@@ -123,45 +140,54 @@ export const trackEvent = async (eventName: string, eventData?: Record<string, a
   try {
     if (typeof window === 'undefined') return
 
-    // Check if this is a platform-specific click event
-    if (eventName.includes('_ios_clicked') || eventName.includes('_android_clicked')) {
-      const platform = eventName.includes('_ios_clicked') ? 'ios' : 'android'
-      const sessionId = getSessionId()
-      
-      const { error } = await supabase
-        .from('app_clicks')
-        .insert([{
-          event_name: eventName,
-          platform: platform,
-          metadata: {
-            ...eventData,
-            session_id: sessionId,
-            device_type: getDeviceType(),
-            browser: getBrowser(),
-            os: getOS()
-          }
-        }])
-      
-      if (error) {
-        if (error.code !== '42501') { 
+    const sessionId = getSessionId()
+    const deviceType = getDeviceType()
+    const browser = getBrowser()
+    const os = getOS()
+    const { creatorSlug, firstTouchCreator, lastTouchCreator } = getAttributionSnapshot()
+
+    let platform: 'ios' | 'android' | null = null
+    if (eventName.includes('_ios_clicked')) {
+      platform = 'ios'
+    } else if (eventName.includes('_android_clicked')) {
+      platform = 'android'
+    } else if (eventData?.platform === 'ios' || eventData?.platform === 'android') {
+      platform = eventData.platform
+    }
+
+    const payload = {
+      event_name: eventName,
+      platform,
+      creator_slug: creatorSlug,
+      creator_first_touch: firstTouchCreator,
+      creator_last_touch: lastTouchCreator,
+      metadata: {
+        ...(eventData || {}),
+        session_id: sessionId,
+        device_type: deviceType,
+        browser,
+        os,
+        creator_slug: creatorSlug,
+        creator_first_touch: firstTouchCreator,
+        creator_last_touch: lastTouchCreator,
+      },
+    }
+
+    const { error } = await supabase
+      .from('app_clicks')
+      .insert([payload])
+
+    if (error) {
+      if (error.code !== '42501') {
+        if (platform) {
           console.warn('Platform click tracking error:', error)
-        }
-      } else {
-        console.log('Platform click tracked:', eventName, platform)
-      }
-    } else {
-      // Fallback to original app_clicks table for non-platform events
-      const { error } = await supabase
-        .from('app_clicks')
-        .insert([{
-          event_name: eventName,
-          metadata: eventData || null
-        }])
-      
-      if (error) {
-        if (error.code !== '42501') { 
+        } else {
           console.warn('Event tracking error:', error)
         }
+      }
+    } else {
+      if (platform) {
+        console.log('Platform click tracked:', eventName, platform)
       } else {
         console.log('Event tracked:', eventName)
       }

@@ -1,12 +1,15 @@
 'use client'
 
 import { useEffect } from 'react'
+import { getActiveDownloadLinks } from '@/lib/downloadLinks'
 
 export default function OpenIOSPage() {
+  const { ios } = getActiveDownloadLinks()
+
   useEffect(() => {
     // JavaScript redirect to force Safari opening
-    window.location.replace("https://apps.apple.com/us/app/gotall/id6747467975");
-  }, [])
+    window.location.replace(ios)
+  }, [ios])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">
