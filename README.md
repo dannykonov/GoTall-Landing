@@ -135,6 +135,19 @@ The waitlist table has the following structure:
 
 ## 🚀 Deployment
 
+### Cloudflare (www + apex router)
+
+- `www.gotall.app` should continue pointing to the existing OpenNext worker (`wrangler.jsonc`).
+- `gotall.app` should point to the apex router worker (`wrangler.apex-router.jsonc`).
+- The apex router serves legacy R2 object URLs first, and redirects non-object paths to `https://www.gotall.app`.
+
+Deploy commands:
+
+```bash
+npm run deploy
+npm run deploy:apex-router
+```
+
 ### Vercel (Recommended)
 
 1. Push your code to GitHub
