@@ -4,7 +4,7 @@ import { Suspense, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useSearchParams } from 'next/navigation'
 import { useAnalytics } from '@/hooks/useAnalytics'
-import { getActiveDownloadLinks } from '@/lib/downloadLinks'
+import { useActiveDownloadLinks } from '@/hooks/useActiveDownloadLinks'
 
 function DownloadPageContent() {
   const searchParams = useSearchParams()
@@ -13,12 +13,14 @@ function DownloadPageContent() {
   const [countdown, setCountdown] = useState(3)
   const [showManual, setShowManual] = useState(false)
 
-  const urls = getActiveDownloadLinks()
+  const { downloadLinks: urls, isReady } = useActiveDownloadLinks()
 
   const platformName = platform === 'ios' ? 'App Store' : 'Google Play'
   const browserName = platform === 'ios' ? 'Safari' : 'Chrome'
 
   useEffect(() => {
+    if (!isReady) return
+
     if (!platform || !urls[platform]) {
       setShowManual(true)
       return
@@ -41,7 +43,7 @@ function DownloadPageContent() {
     }, 1000)
 
     return () => clearInterval(timer)
-  }, [platform, track])
+  }, [isReady, platform, track, urls])
 
   const handleManualDownload = () => {
     if (platform && urls[platform]) {

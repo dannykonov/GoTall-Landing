@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import { getActiveDownloadLinks } from '@/lib/downloadLinks'
+import { useActiveDownloadLinks } from '@/hooks/useActiveDownloadLinks'
 
 interface QRCodeDownloadProps {
   isOpen: boolean
@@ -13,7 +13,7 @@ interface QRCodeDownloadProps {
 export default function QRCodeDownload({ isOpen, onClose, platform }: QRCodeDownloadProps) {
   const [qrCodeUrl, setQrCodeUrl] = useState('')
 
-  const downloadLinks = getActiveDownloadLinks()
+  const { downloadLinks } = useActiveDownloadLinks()
   const url = downloadLinks[platform]
   const platformName = platform === 'ios' ? 'App Store' : 'Google Play'
   

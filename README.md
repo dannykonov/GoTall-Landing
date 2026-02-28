@@ -70,6 +70,8 @@ Create a `.env.local` file in the project root:
 # Supabase Configuration
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url_here
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_public_api_key_here
+# Required for admin API routes (server-only secret, never expose to client)
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key_here
 
 # Feature flags
 # false (default): normal link behavior on TikTok
@@ -84,6 +86,21 @@ NEXT_PUBLIC_FORCE_TIKTOK_BROWSER=false
 **Replace the values with your actual Supabase credentials:**
 - `NEXT_PUBLIC_SUPABASE_URL`: Your Supabase project URL (found in Project Settings > API)
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Your public API key (found in Project Settings > API)
+- `SUPABASE_SERVICE_ROLE_KEY`: Your Supabase service role key (found in Project Settings > API, keep secret)
+
+#### Admin Attribution Setup
+
+1. Run [`admin_attribution_dashboard_setup.sql`](admin_attribution_dashboard_setup.sql) in your target Supabase project.
+2. Create at least one admin auth user in Supabase Auth.
+3. Allowlist that user in `public.admin_users`:
+
+```sql
+insert into public.admin_users (user_id, email)
+values ('<auth_user_uuid>', '<admin_email>')
+on conflict (user_id) do nothing;
+```
+
+4. Sign in at `/admin/login`.
 
 ### 3. Run the Development Server
 
@@ -126,6 +143,9 @@ The waitlist table has the following structure:
 
 ```
 /                 - Landing page with hero, features, how it works, community preview
+/admin/login      - Admin authentication page
+/admin            - Attribution dashboard (opens, clicks, CTR)
+/admin/creators   - Creator management + singular link generation
 /nutrition        - Nutrition tracking feature page
 /sleep           - Sleep tracking feature page  
 /exercise        - Exercise plans feature page

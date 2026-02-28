@@ -1,6 +1,7 @@
 type CreatorLinkOverrides = Record<string, Partial<Record<'ios' | 'android', string>>>
 
-// Add or update creators here. The key must match `?c=<slug>`.
+// Deprecated: creator links are now managed via `public.creators` and `/api/public/creator-links`.
+// This file remains only as historical reference.
 export const CREATOR_LINK_OVERRIDES: CreatorLinkOverrides = {
   dobbin: {
     ios: 'https://gotall.sng.link/D1s0b/svcb?_smtype=3',

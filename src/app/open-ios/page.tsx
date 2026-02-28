@@ -1,15 +1,19 @@
 'use client'
 
 import { useEffect } from 'react'
-import { getActiveDownloadLinks } from '@/lib/downloadLinks'
+import { useActiveDownloadLinks } from '@/hooks/useActiveDownloadLinks'
 
 export default function OpenIOSPage() {
-  const { ios } = getActiveDownloadLinks()
+  const {
+    downloadLinks: { ios },
+    isReady,
+  } = useActiveDownloadLinks()
 
   useEffect(() => {
+    if (!isReady) return
     // JavaScript redirect to force Safari opening
     window.location.replace(ios)
-  }, [ios])
+  }, [ios, isReady])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">

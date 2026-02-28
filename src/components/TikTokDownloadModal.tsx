@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
-import { getActiveDownloadLinks } from '@/lib/downloadLinks'
+import { useActiveDownloadLinks } from '@/hooks/useActiveDownloadLinks'
 
 interface TikTokDownloadModalProps {
   isOpen: boolean
@@ -14,7 +14,7 @@ export default function TikTokDownloadModal({ isOpen, onClose, platform }: TikTo
   const [copied, setCopied] = useState(false)
   const [showQR, setShowQR] = useState(false)
 
-  const downloadLinks = getActiveDownloadLinks()
+  const { downloadLinks } = useActiveDownloadLinks()
   const url = downloadLinks[platform]
   const platformName = platform === 'ios' ? 'App Store' : 'Google Play'
   const browserName = platform === 'ios' ? 'Safari' : 'Chrome'

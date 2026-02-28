@@ -1,9 +1,11 @@
 'use client'
 
-import { getActiveDownloadLinks } from '@/lib/downloadLinks'
+import { useActiveDownloadLinks } from '@/hooks/useActiveDownloadLinks'
 
 export default function AndroidRedirectPage() {
-  const { android: androidDownloadUrl } = getActiveDownloadLinks()
+  const {
+    downloadLinks: { android: androidDownloadUrl },
+  } = useActiveDownloadLinks()
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-brand-start/10 to-brand-end/10 flex items-center justify-center p-4">

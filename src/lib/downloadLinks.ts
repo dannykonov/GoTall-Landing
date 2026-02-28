@@ -1,5 +1,4 @@
 import { getActiveCreatorSlug } from './attribution'
-import { CREATOR_LINK_OVERRIDES } from './creatorLinkOverrides'
 
 export type DownloadPlatform = 'ios' | 'android'
 
@@ -23,39 +22,62 @@ const isValidExternalUrl = (value: unknown): value is string => {
   }
 }
 
-const getValidatedCreatorOverrides = (): Record<string, Partial<Record<DownloadPlatform, string>>> => {
-  const validated: Record<string, Partial<Record<DownloadPlatform, string>>> = {}
-
-  for (const [rawSlug, links] of Object.entries(CREATOR_LINK_OVERRIDES)) {
-    const creatorSlug = rawSlug.trim().toLowerCase()
-    if (!creatorSlug) continue
-
-    const ios = isValidExternalUrl(links.ios) ? links.ios : undefined
-    const android = isValidExternalUrl(links.android) ? links.android : undefined
-
-    if ((links.ios && !ios) || (links.android && !android)) {
-      console.warn(`Invalid creator link override for "${creatorSlug}"; expected https URLs`)
-    }
-
-    if (ios || android) {
-      validated[creatorSlug] = { ios, android }
-    }
-  }
-
-  return validated
+const normalizeCreatorSlug = (creatorSlug?: string | null): string | null => {
+  if (!creatorSlug) return null
+  const normalized = creatorSlug.trim().toLowerCase()
+  return normalized.length > 0 ? normalized : null
 }
 
-const VALIDATED_CREATOR_LINK_OVERRIDES = getValidatedCreatorOverrides()
-
 export const getDownloadLinksForCreator = (creatorSlug?: string | null): DownloadLinks => {
-  if (!creatorSlug) return { ...DEFAULT_DOWNLOAD_LINKS }
+  const normalizedSlug = normalizeCreatorSlug(creatorSlug)
+  if (!normalizedSlug) return { ...DEFAULT_DOWNLOAD_LINKS }
+  return { ...DEFAULT_DOWNLOAD_LINKS }
+}
 
-  const override = VALIDATED_CREATOR_LINK_OVERRIDES[creatorSlug.trim().toLowerCase()]
-  if (!override) return { ...DEFAULT_DOWNLOAD_LINKS }
+interface CreatorLinksResponse {
+  creator?: {
+    slug: string
+    display_name: string
+    ios_url: string | null
+    android_url: string | null
+  } | null
+}
 
-  return {
-    ios: override.ios || DEFAULT_DOWNLOAD_LINKS.ios,
-    android: override.android || DEFAULT_DOWNLOAD_LINKS.android,
+export const resolveDownloadLinksForCreator = async (
+  creatorSlug?: string | null
+): Promise<DownloadLinks> => {
+  const normalizedSlug = normalizeCreatorSlug(creatorSlug)
+  const fallbackLinks = getDownloadLinksForCreator(normalizedSlug)
+
+  if (!normalizedSlug || typeof window === 'undefined') {
+    return fallbackLinks
+  }
+
+  try {
+    const response = await fetch(`/api/public/creator-links?slug=${encodeURIComponent(normalizedSlug)}`, {
+      method: 'GET',
+      cache: 'no-store',
+    })
+
+    if (!response.ok) {
+      return fallbackLinks
+    }
+
+    const payload = (await response.json()) as CreatorLinksResponse
+    const creator = payload.creator
+    if (!creator) {
+      return fallbackLinks
+    }
+
+    const ios = isValidExternalUrl(creator.ios_url) ? creator.ios_url : undefined
+    const android = isValidExternalUrl(creator.android_url) ? creator.android_url : undefined
+
+    return {
+      ios: ios || fallbackLinks.ios,
+      android: android || fallbackLinks.android,
+    }
+  } catch {
+    return fallbackLinks
   }
 }
 

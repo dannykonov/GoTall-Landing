@@ -1,15 +1,19 @@
 'use client'
 
 import { useEffect } from 'react'
-import { getActiveDownloadLinks } from '@/lib/downloadLinks'
+import { useActiveDownloadLinks } from '@/hooks/useActiveDownloadLinks'
 
 export default function OpenAndroidPage() {
-  const { android } = getActiveDownloadLinks()
+  const {
+    downloadLinks: { android },
+    isReady,
+  } = useActiveDownloadLinks()
 
   useEffect(() => {
+    if (!isReady) return
     // JavaScript redirect to force external browser opening
     window.location.replace(android)
-  }, [android])
+  }, [android, isReady])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">

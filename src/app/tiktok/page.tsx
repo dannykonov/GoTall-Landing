@@ -3,13 +3,11 @@
 import { motion } from 'framer-motion'
 import Navigation from '@/components/Navigation'
 import { useAnalytics } from '@/hooks/useAnalytics'
-import { useTikTokBrowser } from '@/hooks/useTikTokBrowser'
-import { getActiveDownloadLinks } from '@/lib/downloadLinks'
+import { useActiveDownloadLinks } from '@/hooks/useActiveDownloadLinks'
 
 export default function TikTokLandingPage() {
   const { track } = useAnalytics()
-  const { isTikTokBrowser, handleDownload } = useTikTokBrowser()
-  const downloadLinks = getActiveDownloadLinks()
+  const { downloadLinks } = useActiveDownloadLinks()
 
   const handleCopyLink = async () => {
     try {

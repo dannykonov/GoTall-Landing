@@ -4,11 +4,13 @@ import { motion } from 'framer-motion'
 import { ArrowLeft, Copy, Check } from 'lucide-react'
 import { useState } from 'react'
 import Link from 'next/link'
-import { getActiveDownloadLinks } from '@/lib/downloadLinks'
+import { useActiveDownloadLinks } from '@/hooks/useActiveDownloadLinks'
 
 export default function IOSRedirectPage() {
   const [copied, setCopied] = useState(false)
-  const { ios: iosDownloadUrl } = getActiveDownloadLinks()
+  const {
+    downloadLinks: { ios: iosDownloadUrl },
+  } = useActiveDownloadLinks()
 
   const handleCopyLink = async () => {
     try {

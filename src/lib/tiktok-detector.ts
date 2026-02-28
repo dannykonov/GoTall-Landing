@@ -1,5 +1,6 @@
 import { FORCE_TIKTOK_BROWSER } from '@/lib/featureFlags'
-import { getActiveDownloadLinks } from '@/lib/downloadLinks'
+import { getActiveCreatorSlug } from '@/lib/attribution'
+import { getActiveDownloadLinks, resolveDownloadLinksForCreator } from '@/lib/downloadLinks'
 
 export interface TikTokBrowserInfo {
   isTikTokBrowser: boolean
@@ -56,7 +57,7 @@ export async function openInExternalBrowser(url: string, fallbackMessage?: strin
   // For TikTok browser, use the simple redirect page approach
   try {
     // Extract platform from URL
-    const downloadLinks = getActiveDownloadLinks()
+    const downloadLinks = await resolveDownloadLinksForCreator(getActiveCreatorSlug())
     let platform = 'ios'
     if (url === downloadLinks.android || url.includes('play.google.com')) {
       platform = 'android'
@@ -165,7 +166,7 @@ export async function handleDirectAppStoreDownload(platform: 'ios' | 'android'):
     return false
   }
 
-  const downloadLinks = getActiveDownloadLinks()
+  const downloadLinks = await resolveDownloadLinksForCreator(getActiveCreatorSlug())
   const url = downloadLinks[platform]
   
   // Enhanced methods for direct app store access

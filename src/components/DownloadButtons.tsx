@@ -4,8 +4,8 @@ import { motion } from 'framer-motion'
 import { useState, useEffect, useRef } from 'react'
 import { useAnalytics } from '@/hooks/useAnalytics'
 import { useTikTokBrowser } from '@/hooks/useTikTokBrowser'
+import { useActiveDownloadLinks } from '@/hooks/useActiveDownloadLinks'
 import { ENABLE_TIKTOK_REDIRECT_FLOW } from '@/lib/featureFlags'
-import { getActiveDownloadLinks } from '@/lib/downloadLinks'
 import TikTokDownloadModal from './TikTokDownloadModal'
 
 interface DownloadButtonsProps {
@@ -33,7 +33,7 @@ export default function DownloadButtons({
   const [origin, setOrigin] = useState('')
   const tutorialFrameRef = useRef<HTMLDivElement | null>(null)
   const tiktokLottieContainerRef = useRef<HTMLDivElement | null>(null)
-  const downloadLinks = getActiveDownloadLinks()
+  const { downloadLinks } = useActiveDownloadLinks()
 
   useEffect(() => {
     // Set origin only on client side

@@ -3,16 +3,18 @@
 import { Suspense, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useAnalytics } from '@/hooks/useAnalytics'
-import { getActiveDownloadLinks } from '@/lib/downloadLinks'
+import { useActiveDownloadLinks } from '@/hooks/useActiveDownloadLinks'
 
 function RedirectPageContent() {
   const searchParams = useSearchParams()
   const platform = searchParams.get('platform') as 'ios' | 'android' | null
   const { track } = useAnalytics()
 
-  const urls = getActiveDownloadLinks()
+  const { downloadLinks: urls, isReady } = useActiveDownloadLinks()
 
   useEffect(() => {
+    if (!isReady) return
+
     if (platform && urls[platform]) {
       // Track the redirect attempt
       track('redirect_page_visited', { platform })
@@ -23,7 +25,7 @@ function RedirectPageContent() {
       // Fallback to main page if no platform specified
       window.location.href = '/'
     }
-  }, [platform, track])
+  }, [isReady, platform, track, urls])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center p-4">
